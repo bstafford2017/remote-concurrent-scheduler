@@ -5,27 +5,27 @@
         public $building;
         private $database;
 
-        public getAllRooms(){
+        public function getAllRooms(){
 
         }
 
-        public getRoom(){
+        public function getRoom(){
 
         }
 
-        public createRoom(){
+        public function createRoom(){
 
         }
 
-        public deleteRoom(){
+        public function deleteRoom(){
 
         }
 
-        public updateRoomRecur(){
+        public function updateRoomRecur(){
 
         }
 
-        public updateRoomBuilding(){
+        public function updateRoomBuilding(){
 
         }
     }

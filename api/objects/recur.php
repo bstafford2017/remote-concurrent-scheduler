@@ -5,27 +5,27 @@
         public $endDate;
         private $database;
 
-        public getAllRecurs(){
+        public function getAllRecurs(){
 
         }
 
-        public getRecur(){
+        public function getRecur(){
 
         }
 
-        public createRecur(){
+        public function createRecur(){
 
         }
 
-        public deleteRecur(){
+        public function deleteRecur(){
 
         }
 
-        public updateRecurEvent(){
+        public function updateRecurEvent(){
 
         }
 
-        public updateRecurEndDate(){
+        public function updateRecurEndDate(){
 
         }
     }

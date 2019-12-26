@@ -5,7 +5,7 @@
     $database = new Database();
     $connection = $database->getConnection();
 
-    $building = new Building();
+    $building = new Building($connection);
     $query = building->getBuildings();
 
 

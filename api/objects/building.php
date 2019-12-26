@@ -4,23 +4,27 @@
         public $name;
         private $database;
 
-        public getBuilding(){
+        public function __construct($db){
+            $this->conn = $db;
+        }
+
+        public function getBuilding(){
             
         }
 
-        public getAllBuildings(){
+        public function getAllBuildings(){
             
         }
 
-        public createBuilding(){
+        public function createBuilding(){
             
         }
 
-        public deleteBuilding(){
+        public function deleteBuilding(){
 
         }
 
-        public updateBuildingName(){
+        public function updateBuildingName(){
 
         }
     }

@@ -5,15 +5,15 @@
         public $password
         private $database;
 
-        public getBuilding(){
+        public function getBuilding(){
             
         }
 
-        public getAllBuildings(){
+        public function getAllBuildings(){
             
         }
 
-        public createBuilding(){
+        public function createBuilding(){
             
         }
     }

@@ -10,7 +10,7 @@
         public $username;
         private $database;
 
-        public getEvent(){
+        public function getEvent(){
             $args = func_num_args();
             $query = "SELECT * FROM event WHERE ";
             for($i = 1; $i <= $args; $i++){
@@ -19,14 +19,14 @@
             
         }
 
-        public getAllEvents(){
+        public function getAllEvents(){
             $query = "SELECT * FROM event WHERE ";
             for($i = 1; $i <= $args; $i++){
                 $query += func_get_arg(i);
             }
         }
 
-        public createEvent(){
+        public function createEvent(){
             // 1 - Name, 2 - Title, 3 - Room, 4 - Building, 5 - User, 6 - Projector, 7 - Seats
             $list_of_inserts = array();
             $create_event = "INSERT INTO event VALUES (NULL, NULL, )"
@@ -39,12 +39,12 @@
             }
         }
 
-        public deleteEvent(){
+        public function deleteEvent(){
 
         }
 
         // Update for each attribute
-        public updateEvent(){
+        public function updateEvent(){
 
         }
     }
