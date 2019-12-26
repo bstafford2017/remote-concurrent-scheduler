@@ -3,7 +3,11 @@
         public $id;
         public $username;
         public $password
-        private $database;
+        private $connection;
+
+        public function __construct($connection){
+            $this->connection = $connection;
+        }
 
         public function getBuilding(){
             

@@ -8,7 +8,11 @@
         public $date;
         public $projector;
         public $username;
-        private $database;
+        private $connection;
+
+        public function __construct($connection){
+            $this->connection = $connection;
+        }
 
         public function getEvent(){
             $args = func_num_args();

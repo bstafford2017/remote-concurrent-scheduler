@@ -2,10 +2,10 @@
     class Building {
         public $id;
         public $name;
-        private $database;
+        private $connection;
 
-        public function __construct($db){
-            $this->conn = $db;
+        public function __construct($connection){
+            $this->connection = $connection;
         }
 
         public function getBuilding(){
