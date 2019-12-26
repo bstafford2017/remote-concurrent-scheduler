@@ -1,9 +1,7 @@
 <?php
-    class User {
-
+    class Building {
         public $id;
-        public $username;
-        public $password
+        public $name;
         private $database;
 
         public getBuilding(){
@@ -16,6 +14,14 @@
 
         public createBuilding(){
             
+        }
+
+        public deleteBuilding(){
+
+        }
+
+        public updateBuildingName(){
+
         }
     }
 ?>

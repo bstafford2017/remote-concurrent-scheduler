@@ -1,20 +1,18 @@
 <?php
     class Event {
-
-        public var $id;
-        public var $title;
-        public var $room;
-        public var $building;
-        public var $time;
-        public var $date;
-        public var $projector;
-        public var $username;
-
-        private var $database;
+        public $id;
+        public $title;
+        public $room;
+        public $building;
+        public $time;
+        public $date;
+        public $projector;
+        public $username;
+        private $database;
 
         public getEvent(){
-            var $args = func_num_args();
-            var $query = "SELECT * FROM event WHERE ";
+            $args = func_num_args();
+            $query = "SELECT * FROM event WHERE ";
             for($i = 1; $i <= $args; $i++){
                 $query += func_get_arg(i);
             }
@@ -22,7 +20,7 @@
         }
 
         public getAllEvents(){
-            var $query = "SELECT * FROM event WHERE ";
+            $query = "SELECT * FROM event WHERE ";
             for($i = 1; $i <= $args; $i++){
                 $query += func_get_arg(i);
             }
@@ -39,6 +37,15 @@
                     array_push($list_of_inserts, "INSERT INTO ");
                 }
             }
+        }
+
+        public deleteEvent(){
+
+        }
+
+        // Update for each attribute
+        public updateEvent(){
+
         }
     }
 ?>
