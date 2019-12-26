@@ -15,5 +15,4 @@
         public static $DATE_ID_COLUMN = "dateId";
         public static $TIME_ID_COLUMN = "timeId";
     }
-
 ?>
