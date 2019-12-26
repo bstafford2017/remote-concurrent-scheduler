@@ -1,5 +1,6 @@
 <?php include_once "checkSession.php" ?>
 <!doctype html>
+<html lang="en">
     <head>
         <title>Remote Concurrent Scheduling System</title>
     </head>
