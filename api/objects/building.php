@@ -1,4 +1,5 @@
 <?php
+    include_once '../helper/ValidateHelper.php';
     class Building {
         public $id;
         public $name;

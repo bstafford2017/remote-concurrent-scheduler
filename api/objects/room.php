@@ -1,4 +1,5 @@
 <?php
+    include_once '../helper/ValidateHelper.php';
     class Room {
         public $id;
         public $recur;

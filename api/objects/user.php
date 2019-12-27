@@ -1,4 +1,5 @@
 <?php
+    include_once '../helper/ValidateHelper.php';
     class User {
         public $id;
         public $username;

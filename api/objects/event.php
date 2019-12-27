@@ -1,4 +1,5 @@
 <?php
+    include_once '../helper/ValidateHelper.php';
     class Event {
         public $id;
         public $title;
