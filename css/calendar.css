@@ -89,7 +89,12 @@ a:hover {
 
 /* Increase height for by week */
 #week-by-week .days li {
-  height: 35%;
+  height: 65%;
+}
+
+/* Dynamic hovering over dates */
+.days li:hover {
+  background-color: #fafafa;
 }
 
 /* Add media queries for smaller screens */
@@ -104,8 +109,4 @@ a:hover {
 
 @media screen and (max-width: 290px) {
   .weekdays li, .days li {width: 12.2%;}
-}
-
-.days li:hover {
-  background-color: #fafafa;
 }
