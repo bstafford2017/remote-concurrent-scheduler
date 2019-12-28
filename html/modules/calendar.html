@@ -1,3 +1,4 @@
+<!doctype html>
 <htmL>
     <head>
         <title>Test</title>
@@ -5,73 +6,84 @@
     </head>
     <body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <div id="calendar">
-            <div class="month">
-                <ul>
-                    <li id="prev" class="change"><a href="#">&#10094;</a></li>
-                    <li id="next" class="change"><a href="#">&#10095;</a></li>
-                    <li>August<br><span style="font-size:18px">2017</span></li>
-                    <li style="font-size: 14px">
-                        <input id="by-week" type="radio" name="selector"><label> By Week</label>
-                        <input id="by-month" type="radio" name="selector" checked><label> By Month</label>
-                    </li>
-                </ul>
-            </div>
-            <ul class="weekdays">
-                <li>Monday</li>
-                <li>Tuesday</li>
-                <li>Wednesday</li>
-                <li>Thursday</li>
-                <li>Friday</li>
-                <li>Saturday</li>
-                <li>Sunday</li>
+        <div class="month">
+            <ul>
+                <li id="prev" class="change"><a href="#">&#10094;</a></li>
+                <li id="next" class="change"><a href="#">&#10095;</a></li>
+                <li>August<br><span style="font-size:18px">2017</span></li>
+                <li style="font-size: 14px">
+                    <input id="by-week" type="radio" name="selector"><label> By Week</label>
+                    <input id="by-month" type="radio" name="selector" checked><label> By Month</label>
+                </li>
             </ul>
-            <div id="month-by-month">
-                <ul class="days">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li><span class="active">10</span></li>
-                    <li>11</li>
-                    <li>12</li>
-                    <li>13</li>
-                    <li>14</li>
-                    <li>15</li>
-                    <li>16</li>
-                    <li>17</li>
-                    <li>18</li>
-                    <li>19</li>
-                    <li>20</li>
-                    <li>21</li>
-                    <li>22</li>
-                    <li>23</li>
-                    <li>24</li>
-                    <li>25</li>
-                    <li>26</li>
-                    <li>27</li>
-                    <li>28</li>
-                    <li>29</li>
-                    <li>30</li>
-                    <li>31</li>
-                </ul>
-            </div>
-            <div id="week-by-week" style="display: none">
-                <ul class="days">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                </ul>
-            </div>
+        </div>
+        <table id="calendar">
+            <thead>
+                <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody id="month-by-month">
+                <tr class="days">
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                </tr>
+                <tr class="days">
+                    <td>8</td>
+                    <td>9</td>
+                    <td><span class="active">10</span></td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                </tr>
+                <tr class="days">
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>19</td>
+                    <td>20</td>
+                    <td>21</td>
+                </tr>
+                <tr class="days">
+                    <td>22</td>
+                    <td>23</td>
+                    <td>24</td>
+                    <td>25</td>
+                    <td>26</td>
+                    <td>27</td>
+                    <td>28</td>
+                </tr>
+                <tr class="days">
+                    <td>29</td>
+                    <td>30</td>
+                    <td>31</td>
+                </tr>
+            </tbody>
+            <tbody class="week-by-week">
+                <tr class="days">
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                </tr>
+            </tbody>
+        </table>
         </div>
         <script type="text/javascript" src="../../js/modules/selector.js"></script>
     </body>
