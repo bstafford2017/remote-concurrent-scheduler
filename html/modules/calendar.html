@@ -12,9 +12,9 @@
                 <li id="next" class="change"><a href="javascript:next()">&#10095;</a></li>
                 <li id="month"></li>
                 <li style="font-size: 14px">
-                    <input id="by-week" type="radio" name="selector">
+                    <input id="by-week" type="radio" name="selector" value="week">
                     <label for="by-week"> By Week</label>
-                    <input id="by-month" type="radio" name="selector" checked>
+                    <input id="by-month" type="radio" name="selector" value = "month" checked>
                     <label for="by-month"> By Month</label>
                 </li>
             </ul>
@@ -22,13 +22,13 @@
         <table cellspacing="0">
             <thead>
                 <tr>
+                    <th>Sunday</th>
                     <th>Monday</th>
                     <th>Tuesday</th>
                     <th>Wednesday</th>
                     <th>Thursday</th>
                     <th>Friday</th>
                     <th>Saturday</th>
-                    <th>Sunday</th>
                 </tr>
             </thead>
             <tbody id="month-by-month">
