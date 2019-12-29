@@ -12,12 +12,14 @@
                 <li id="next" class="change"><a href="#">&#10095;</a></li>
                 <li>August<br><span style="font-size:18px">2017</span></li>
                 <li style="font-size: 14px">
-                    <input id="by-week" type="radio" name="selector"><label> By Week</label>
-                    <input id="by-month" type="radio" name="selector" checked><label> By Month</label>
+                    <input id="by-week" type="radio" name="selector">
+                    <label for="by-week"> By Week</label>
+                    <input id="by-month" type="radio" name="selector" checked>
+                    <label for="by-month"> By Month</label>
                 </li>
             </ul>
         </div>
-        <table id="calendar">
+        <table cellspacing="0">
             <thead>
                 <tr>
                     <th>Monday</th>
@@ -42,7 +44,7 @@
                 <tr class="days">
                     <td>8</td>
                     <td>9</td>
-                    <td><span class="active">10</span></td>
+                    <td class="active">10</td>
                     <td>11</td>
                     <td>12</td>
                     <td>13</td>
@@ -72,7 +74,7 @@
                     <td>31</td>
                 </tr>
             </tbody>
-            <tbody class="week-by-week">
+            <tbody id="week-by-week" style="display: none">
                 <tr class="days">
                     <td>1</td>
                     <td>2</td>
