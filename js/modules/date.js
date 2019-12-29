@@ -1,8 +1,10 @@
 // For global variables
-let today = new Date();
-let months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const today = new Date();
+const months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
+let weekCounter = 0;
+let recentDate = 0;
 onload();
 
 $('#by-week').click(() => {
@@ -32,27 +34,46 @@ function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
     clear();
-    showCalendar(currentMonth, currentYear);
+    if($('input[name=\'selector\']:checked').val() === "week"){
+        getWeek();
+        weekCounter += 7;
+    } else {
+        showCalendar(currentMonth, currentYear);
+    }
 }
 
 function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
     clear();
-    showCalendar(currentMonth, currentYear);
+    if($('input[name=\'selector\']:checked').val() === "week"){
+        getWeek();
+        weekCounter -= 7;
+    } else {
+        showCalendar(currentMonth, currentYear);
+    }
 }
 
 function getWeek(){
-    let curr = new Date();
-    $('#week-by-week').append("<tr>");        
+    $('#month').empty();
+    $('#month').append(months[new Date().getMonth()] + "<br/><span>" + new Date().getFullYear() + "</span>");
+    $('#week-by-week').append("<tr>");   
+    let curr = new Date();     
     for (let i = 1; i <= 7; i++) {
-        let first = curr.getDate() - curr.getDay() + i - 1;
-        let day = new Date(curr.setDate(first));
-        console.log(first + " " + day + " " + curr.getDate());
-        if(new Date().getDate() === day.getDate()){
-            $('#week-by-week').append("<td class=\"active\">" + day.getDate() + "</td>");        
+        let day;
+        if(weekCounter === 0){
+            let first = curr.getDate() - curr.getDay() + i - 1;
+            day = new Date(curr.setDate(first)).getDate();
         } else {
-            $('#week-by-week').append("<td>" + day.getDate() + "</td>");        
+            day = recentDate + i - 1;
+        }
+        if(new Date().getDate() === day){
+            $('#week-by-week').append("<td class=\"active\">" + day + "</td>");        
+        } else {
+            $('#week-by-week').append("<td>" + day + "</td>");        
+        }
+        if(i === 7){
+            recentDate = day;
         }
     }
     $('#week-by-week').append("</tr>");
