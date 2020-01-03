@@ -9,7 +9,7 @@ showMonthCalendar()
 
 // Handles click event for changing displays
 $('#by-week').click(() => {
-    showWeekCalendar(true)
+    showWeekCalendar()
 })
 
 $('#by-month').click(() => {
@@ -27,7 +27,7 @@ function next() {
 
     // Checks whether in weekly or monthly mode
     if($('input[name=\'selector\']:checked').val() === "week"){
-        showWeekCalendar(true)
+        showWeekCalendar()
     } else {
         currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear
         currentMonth = (currentMonth + 1) % 12
@@ -40,7 +40,7 @@ function previous() {
 
     // Checks whether in weekly or monthly mode
     if($('input[name=\'selector\']:checked').val() === "week"){
-        showWeekCalendar(false)
+        showWeekCalendar()
     } else {
         currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear
         currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1
@@ -65,71 +65,61 @@ function printWeek(date){
     }
 }
 
-// positive: true - 'next' was clicked or 'by-week' was clicked
-//          false - 'prev' was clicked
-function showWeekCalendar(positive){
-    $('#week-by-week').append("<tr>")
-    changeHeader(currentMonth, currentYear)
-    let monthDays = new Date(currentYear, currentMonth, 0).getDate()
-    let recentlyHalf = false
-    if(positive){
-        // If 'prev' or 'next' hasn't been clicked
-        currentDate = (week[0] === 0) ? currentDate : week[6]
-        console.log(positive + " " + currentDate)
-        for(let i = 1; i <= 7; i++){
-            currentDate += 1
-            if(currentDate > monthDays){
-                currentDate = 1
-                printWeek(currentDate) // Print before month / year change to check active
-                if(currentMonth === 11){
-                    addToHeader(0, currentYear + 1)
-                    currentMonth = 0
-                    currentYear += 1
-                } else {
-                    addToHeader(currentMonth + 1, currentYear)
-                    currentMonth += 1
-                }
-                recentlyHalf = true
-            } else {
-                // Changes date back from two months to one again
-                recentlyHalf = false
-                printWeek(currentDate)
-            }
-            week[i-1] = currentDate
-        }
-    } else {
-        let monthDays = new Date(currentYear, currentMonth - 1, 0).getDate()
-        // If 'prev' or 'next' hasn't been clicked
-        currentDate = (week[0] === 0) ? currentDate : week[0] - 7
-        
-        // Check for underflow within substraction
-        currentDate = (currentDate < 0) ? monthDays + currentDate : currentDate
-        console.log(positive + " " + currentDate)
-
-        for(let i = 7; i >= 1; i--){
-            currentDate -= 1
-            if(currentDate < 0){
-                currentDate = 1
-                printWeek(currentDate) // Print before month / year change to check active
-                if(currentMonth === 0){
-                    addToHeader(11, currentYear - 1)
-                    currentMonth = 11
-                    currentYear -= 1
-                } else {
-                    console.log(currentMonth)
-                    addToHeader(currentMonth - 1, currentYear)
-                    currentMonth -= 1
-                }
-                recentlyHalf = true
-            }
-            recentlyHalf = false
-            week[7-i] = currentDate
-        }
-        week.reverse().forEach((element) => {
-            printWeek(element)
-        })
+function incrementCheck(date, increment){
+    date = (increment) ? date + 1 : date - 1
+    if(date < 0 && currentMonth === 0){
+        changeHeader(currentMonth, currentYear);
+        currentMonth = 11
+        currentYear--
+        date = (32 - new Date(currentYear, currentMonth,32).getDate())
+        addToHeader(currentMonth, currentYear);
+    } else if(date > 32 - new Date(currentYear, currentMonth,32).getDate() && currentMonth === 11){
+        changeHeader(currentMonth, currentYear);
+        currentMonth = 0
+        currentYear++
+        date = 1
+        addToHeader(currentMonth, currentYear);
+    } else if(date < 0) {
+        changeHeader(currentMonth, currentYear);
+        currentMonth--
+        date = (32 - new Date(currentYear, currentMonth,32).getDate())
+        addToHeader(currentMonth, currentYear);
+    } else if(date > 32 - new Date(currentYear, currentMonth,32).getDate()){
+        changeHeader(currentMonth, currentYear);
+        currentMonth++
+        addToHeader(currentMonth, currentYear);
     }
-    console.log(week)
+    return date
+}
+
+function showWeekCalendar(){
+    $('#week-by-week').append("<tr>")
+
+    // Check if 'prev' or 'next' has been clicked
+    let first = (week[0] === 0) ? today.getDate() - today.getDay() : week[0] - 7
+
+    // If the week needs to wrap around to the previous month
+    if(first < 0 && currentMonth === 0){
+        changeHeader(currentMonth, currentYear)
+        currentMonth = 11
+        currentYear--
+        first = (32 - new Date(currentYear, currentMonth,32).getDate()) + first
+        addToHeader(currentMonth, currentYear)
+    } else if(first < 0){
+        changeHeader(currentMonth, currentYear)
+        currentMonth--
+        first = (32 - new Date(currentYear, currentMonth,32).getDate()) + first
+        addToHeader(currentMonth, currentYear)
+    } else {
+        changeHeader(currentMonth, currentYear);
+        console.log(currentMonth + " " + currentYear)
+    }
+
+    for(let i = 0; i < 7; i++){
+        week[i] = first;
+        printWeek(first)
+        first = incrementCheck(first, true)
+    }
     $('#week-by-week').append("</tr>")
 }
 
