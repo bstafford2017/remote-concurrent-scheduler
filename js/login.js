@@ -7,12 +7,12 @@ $('#submit').onclick(function(){
             password: $('#password').val()
         },
         success: function(){
-            $('#alert').empty();
-            $('#alert').append("");
+            $('#alert').empty()
+            $('#alert').append("")
         },
         error: function(){
-            $('#alert').empty();
-            $('#alert').append("");
+            $('#alert').empty()
+            $('#alert').append("")
         }
-    });
-});
+    })
+})
