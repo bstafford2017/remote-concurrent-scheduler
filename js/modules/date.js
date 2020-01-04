@@ -9,7 +9,7 @@ showMonthCalendar()
 
 // Handles click event for changing displays
 $('#by-week').click(() => {
-    showWeekCalendar()
+    showWeekCalendar(true)
 })
 
 $('#by-month').click(() => {
@@ -23,12 +23,11 @@ function clear() {
 }
 
 function next() {
-    clear()
-
     // Checks whether in weekly or monthly mode
     if($('input[name=\'selector\']:checked').val() === "week"){
-        showWeekCalendar()
+        showWeekCalendar(true)
     } else {
+        clear()
         currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear
         currentMonth = (currentMonth + 1) % 12
         showMonthCalendar()
@@ -36,12 +35,11 @@ function next() {
 }
 
 function previous() {
-    clear()
-
     // Checks whether in weekly or monthly mode
     if($('input[name=\'selector\']:checked').val() === "week"){
-        showWeekCalendar()
+        showWeekCalendar(false)
     } else {
+        clear()
         currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear
         currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1
         showMonthCalendar()
@@ -92,11 +90,15 @@ function incrementCheck(date, increment){
     return date
 }
 
-function showWeekCalendar(){
+function showWeekCalendar(positive){
+    $('#week-by-week').empty()
     $('#week-by-week').append("<tr>")
 
     // Check if 'prev' or 'next' has been clicked
-    let first = (week[0] === 0) ? today.getDate() - today.getDay() : week[0] - 7
+    let first = today.getDate() - today.getDay()
+    if(week[0] !== 0){
+        first = (positive) ? week[6] : week[0] - 7
+    }
 
     // If the week needs to wrap around to the previous month
     if(first < 0 && currentMonth === 0){
@@ -111,8 +113,20 @@ function showWeekCalendar(){
         first = (32 - new Date(currentYear, currentMonth,32).getDate()) + first
         addToHeader(currentMonth, currentYear)
     } else {
-        changeHeader(currentMonth, currentYear);
-        console.log(currentMonth + " " + currentYear)
+        // Check if split month
+        let monthText = $('#month').text() + ""
+        if(monthText.includes('/')){
+            // Current month is sometimes one ahead due to 0 - 7 looping
+            if(positive){
+                changeHeader(currentMonth, currentYear)
+            } else {
+                if(currentMonth === 0){
+                    currentMonth = 11
+                    currentYear--
+                }
+                changeHeader(currentMonth, currentYear)
+            }
+        }
     }
 
     for(let i = 0; i < 7; i++){
@@ -120,6 +134,7 @@ function showWeekCalendar(){
         printWeek(first)
         first = incrementCheck(first, true)
     }
+    console.log(week)
     $('#week-by-week').append("</tr>")
 }
 
