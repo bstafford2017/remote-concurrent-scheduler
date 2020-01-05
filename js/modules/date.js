@@ -64,6 +64,7 @@ function printWeek(date){
 }
 
 function incrementCheck(date, increment){
+    console.log("before increment: " + date + " " + currentMonth + " " + currentYear)
     date = (increment) ? date + 1 : date - 1
     if(date < 0 && currentMonth === 0){
         changeHeader(currentMonth, currentYear);
@@ -87,6 +88,7 @@ function incrementCheck(date, increment){
         currentMonth++
         addToHeader(currentMonth, currentYear);
     }
+    console.log("after increment: " + date + " " + currentMonth + " " + currentYear)
     return date
 }
 
@@ -97,11 +99,22 @@ function showWeekCalendar(positive){
     // Check if 'prev' or 'next' has been clicked
     let first = today.getDate() - today.getDay()
     if(week[0] !== 0){
-        first = (positive) ? week[6] : week[0] - 7
+        first = (positive) ? week[6] : week[0]
+        // true - first = week[6] + 1
+        // false - first = week[0] - 1
+        if(positive){
+            first = incrementCheck(first, true)
+        } else {
+            for(let i = 0; i < 6; i++){
+                first = incrementCheck(first, false)
+                console.log("first day loop - 7: " + first)
+            }
+        }
     }
+    console.log("first day: " + first)
 
     // If the week needs to wrap around to the previous month
-    if(first < 0 && currentMonth === 0){
+    /*if(first < 0 && currentMonth === 0){
         changeHeader(currentMonth, currentYear)
         currentMonth = 11
         currentYear--
@@ -117,23 +130,22 @@ function showWeekCalendar(positive){
         let monthText = $('#month').text() + ""
         if(monthText.includes('/')){
             // Current month is sometimes one ahead due to 0 - 7 looping
-            if(positive){
-                changeHeader(currentMonth, currentYear)
-            } else {
+            if(!positive){
                 if(currentMonth === 0){
                     currentMonth = 11
                     currentYear--
                 }
-                changeHeader(currentMonth, currentYear)
             }
+            changeHeader(currentMonth, currentYear)
         }
-    }
+    }*/
 
     for(let i = 0; i < 7; i++){
-        week[i] = first;
+        week[i] = first
         printWeek(first)
         first = incrementCheck(first, true)
     }
+    console.log(currentMonth + " " + currentYear)
     console.log(week)
     $('#week-by-week').append("</tr>")
 }
