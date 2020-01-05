@@ -81,11 +81,11 @@ function incrementCheck(date, increment){
         changeHeader(currentMonth, currentYear);
         currentMonth--
         date = (32 - new Date(currentYear, currentMonth,32).getDate())
-        addToHeader(currentMonth, currentYear);
+        //addToHeader(currentMonth, currentYear);
     } else if(date > 32 - new Date(currentYear, currentMonth,32).getDate()){
         changeHeader(currentMonth, currentYear);
         currentMonth++
-        addToHeader(currentMonth, currentYear);
+        //addToHeader(currentMonth, currentYear);
     }
     return date
 }
