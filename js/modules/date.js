@@ -9,10 +9,12 @@ showMonthCalendar()
 
 // Handles click event for changing displays
 $('#by-week').click(() => {
+    clear()
     showWeekCalendar(true)
 })
 
 $('#by-month').click(() => {
+    clear()
     showMonthCalendar()
 })
 
@@ -23,7 +25,7 @@ function clear() {
 }
 
 function daysInMonth(){
-    return 32 - new Date(currentYear, currentMonth,32).getDate()
+    return 32 - new Date(currentYear, currentMonth, 32).getDate()
 }
 
 function next() {
@@ -39,6 +41,15 @@ function next() {
 }
 
 function previous() {
+    if(Math.abs(week[0] - week[6]) > 7){
+        if(currentMonth === 0){
+            currentMonth = 11
+            currentYear--
+        } else {
+            currentMonth--
+        }
+    }
+
     // Checks whether in weekly or monthly mode
     if($('input[name=\'selector\']:checked').val() === "week"){
         showWeekCalendar(false)
@@ -67,63 +78,56 @@ function printWeek(date){
     }
 }
 
-function incrementCheck(date, increment){
-    console.log("before increment: " + date + " " + currentMonth + " " + currentYear)
-    date = (increment) ? date + 1 : date - 1
-    if(date < 0 && currentMonth === 0){
-        currentMonth = 11
-        currentYear--
-        date = daysInMonth()
-    } else if(date > daysInMonth() && currentMonth === 11){
-        currentMonth = 0
-        currentYear++
-        date = 1
-    } else if(date < 0) {
-        currentMonth--
-        date = daysInMonth()
-    } else if(date > daysInMonth()){
-        currentMonth++
-        date = 1
+// NEEDS TO HANDLE NEGATIVE
+function changeAndCheck(valueToCheck, changeToValue){
+    console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
+    valueToCheck = valueToCheck + changeToValue
+    // Handles if negative value
+    if(valueToCheck < 0){
+        changeHeader(currentMonth, currentYear)
+        if(currentMonth === 0) {
+            currentMonth = 11
+            currentYear--
+        } else {
+            currentMonth--
+        }
+        valueToCheck += daysInMonth()
+        addToHeader(currentMonth, currentYear)
+    } else if(valueToCheck > daysInMonth()){
+        changeHeader(currentMonth, currentYear)
+        valueToCheck -= daysInMonth()
+        if(currentMonth === 11) {
+            currentMonth = 0
+            currentYear++
+        } else {
+            currentMonth++
+        }
+        addToHeader(currentMonth, currentYear)
     }
-    console.log("after increment: " + date + " " + currentMonth + " " + currentYear)
-    return date
+    console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
+    return valueToCheck
 }
 
 function showWeekCalendar(positive){
     $('#week-by-week').empty()
     $('#week-by-week').append("<tr>")
 
-    // Check if 'prev' or 'next' has been clicked
+    // If on today's week, keep first as this
     let first = today.getDate() - today.getDay()
-    while(first < 0) {
-        first = incrementCheck(first, true)
-    }
-
     if(first < 0){
-        first = daysInMonth() + first
         if(currentMonth === 0){
             currentMonth = 11
             currentYear--
-            changeHeader(currentMonth, currentYear)
+            first = daysInMonth + first
         } else {
             currentMonth--
-            changeHeader(currentMonth, currentYear)
+            first = daysInMonth + first
         }
     }
-
+    
     // Check if 'prev' or 'next' has been clicked
     if(week[0] !== 0){
-        first = (positive) ? week[6] : week[0]
-        // true - first = week[6] + 1
-        // false - first = week[0] - 1
-        if(positive){
-            first = incrementCheck(first, true)
-        } else {
-            for(let i = 0; i < 6; i++){
-                first = incrementCheck(first, false)
-                console.log("first day loop - 7: " + first)
-            }
-        }
+        first = (positive) ? changeAndCheck(week[6], 1) : changeAndCheck(week[0], -7)
     }
     console.log("first day: " + first + " " + currentMonth + " " + currentYear)
 
@@ -131,18 +135,14 @@ function showWeekCalendar(positive){
     for(let i = 0; i < 7; i++){
         week[i] = first
         printWeek(first)
-        first = incrementCheck(first, true)
+        // Do NOT increment if last iteration, already incremented at start
+        if(i !== 6){
+            first = changeAndCheck(first, 1)
+        }
     }
 
     // Update header
-    if(Math.abs(week[0] - week[6]) > 7){
-        if(positive){
-            addToHeader((currentMonth === 0) ? 11 : currentMonth - 1, (currentMonth === 0) ? currentYear - 1 : currentYear)
-        } else {
-            changeHeader((currentMonth === 0) ? 11 : currentMonth - 1, (currentMonth === 0) ? currentYear - 1 : currentYear)
-            addToHeader(currentMonth, currentYear)
-        }
-    } else {
+    if(Math.abs(week[0] - week[6]) <= 7){
         changeHeader(currentMonth, currentYear)
     }
     console.log(week)
