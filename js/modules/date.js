@@ -22,6 +22,10 @@ function clear() {
     $('#month').empty()
 }
 
+function daysInMonth(){
+    return 32 - new Date(currentYear, currentMonth,32).getDate()
+}
+
 function next() {
     // Checks whether in weekly or monthly mode
     if($('input[name=\'selector\']:checked').val() === "week"){
@@ -67,26 +71,19 @@ function incrementCheck(date, increment){
     console.log("before increment: " + date + " " + currentMonth + " " + currentYear)
     date = (increment) ? date + 1 : date - 1
     if(date < 0 && currentMonth === 0){
-        changeHeader(currentMonth, currentYear);
         currentMonth = 11
         currentYear--
-        date = (32 - new Date(currentYear, currentMonth,32).getDate())
-        addToHeader(currentMonth, currentYear);
-    } else if(date > 32 - new Date(currentYear, currentMonth,32).getDate() && currentMonth === 11){
-        changeHeader(currentMonth, currentYear);
+        date = daysInMonth()
+    } else if(date > daysInMonth() && currentMonth === 11){
         currentMonth = 0
         currentYear++
         date = 1
-        addToHeader(currentMonth, currentYear);
     } else if(date < 0) {
-        changeHeader(currentMonth, currentYear);
         currentMonth--
-        date = (32 - new Date(currentYear, currentMonth,32).getDate())
-        //addToHeader(currentMonth, currentYear);
-    } else if(date > 32 - new Date(currentYear, currentMonth,32).getDate()){
-        changeHeader(currentMonth, currentYear);
+        date = daysInMonth()
+    } else if(date > daysInMonth()){
         currentMonth++
-        //addToHeader(currentMonth, currentYear);
+        date = 1
     }
     console.log("after increment: " + date + " " + currentMonth + " " + currentYear)
     return date
@@ -98,6 +95,23 @@ function showWeekCalendar(positive){
 
     // Check if 'prev' or 'next' has been clicked
     let first = today.getDate() - today.getDay()
+    while(first < 0) {
+        first = incrementCheck(first, true)
+    }
+
+    if(first < 0){
+        first = daysInMonth() + first
+        if(currentMonth === 0){
+            currentMonth = 11
+            currentYear--
+            changeHeader(currentMonth, currentYear)
+        } else {
+            currentMonth--
+            changeHeader(currentMonth, currentYear)
+        }
+    }
+
+    // Check if 'prev' or 'next' has been clicked
     if(week[0] !== 0){
         first = (positive) ? week[6] : week[0]
         // true - first = week[6] + 1
@@ -111,41 +125,26 @@ function showWeekCalendar(positive){
             }
         }
     }
-    console.log("first day: " + first)
+    console.log("first day: " + first + " " + currentMonth + " " + currentYear)
 
-    // If the week needs to wrap around to the previous month
-    /*if(first < 0 && currentMonth === 0){
-        changeHeader(currentMonth, currentYear)
-        currentMonth = 11
-        currentYear--
-        first = (32 - new Date(currentYear, currentMonth,32).getDate()) + first
-        addToHeader(currentMonth, currentYear)
-    } else if(first < 0){
-        changeHeader(currentMonth, currentYear)
-        currentMonth--
-        first = (32 - new Date(currentYear, currentMonth,32).getDate()) + first
-        addToHeader(currentMonth, currentYear)
-    } else {
-        // Check if split month
-        let monthText = $('#month').text() + ""
-        if(monthText.includes('/')){
-            // Current month is sometimes one ahead due to 0 - 7 looping
-            if(!positive){
-                if(currentMonth === 0){
-                    currentMonth = 11
-                    currentYear--
-                }
-            }
-            changeHeader(currentMonth, currentYear)
-        }
-    }*/
-
+    // Set days for the week
     for(let i = 0; i < 7; i++){
         week[i] = first
         printWeek(first)
         first = incrementCheck(first, true)
     }
-    console.log(currentMonth + " " + currentYear)
+
+    // Update header
+    if(Math.abs(week[0] - week[6]) > 7){
+        if(positive){
+            addToHeader((currentMonth === 0) ? 11 : currentMonth - 1, (currentMonth === 0) ? currentYear - 1 : currentYear)
+        } else {
+            changeHeader((currentMonth === 0) ? 11 : currentMonth - 1, (currentMonth === 0) ? currentYear - 1 : currentYear)
+            addToHeader(currentMonth, currentYear)
+        }
+    } else {
+        changeHeader(currentMonth, currentYear)
+    }
     console.log(week)
     $('#week-by-week').append("</tr>")
 }
@@ -154,7 +153,7 @@ function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
 
     let firstDay = (new Date(currentYear, currentMonth)).getDay()
-    let daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate()
+    let monthDays = daysInMonth()
 
     let table = $('#month-by-month')
 
@@ -165,7 +164,7 @@ function showMonthCalendar() {
             if (i === 0 && j < firstDay) {
                 table.append("<td></td>")
             }
-            else if (date > daysInMonth) {
+            else if (date > monthDays) {
                 break
             }
             else {
