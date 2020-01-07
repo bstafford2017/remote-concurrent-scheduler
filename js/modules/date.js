@@ -72,10 +72,24 @@ function addToHeader(monthToAdd, yearToAdd){
 
 function printWeek(date){
     if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $('#week-by-week').append("<td class=\"active\">" + date + "</td>")        
+        $('#week-by-week').append("<td class=\"active\">" + date)
     } else {
-        $('#week-by-week').append("<td>" + date + "</td>")        
+        $('#week-by-week').append("<td>" + date)        
     }
+    $.ajax({
+        type: "get",
+        url: "../../api/scripts/event/list.php",
+        data: {
+            date: date,
+            month: currentMonth,
+            year: currentYear
+        },
+        success: (response) => {
+            $('#week-by-week').append(response)        
+
+        }
+    })
+    $('#week-by-week').append("</td>")
 }
 
 // NEEDS TO HANDLE NEGATIVE
