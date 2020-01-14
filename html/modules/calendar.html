@@ -1,5 +1,5 @@
 <!doctype html>
-<htmL>
+<htmL lang="en">
     <head>
         <title>Test</title>
         <link rel="stylesheet" href="../../css/calendar.css">
@@ -19,23 +19,18 @@
                 </li>
             </ul>
         </div>
-        <table class="calendar" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody id="month-by-month">
-            </tbody>
-            <tbody id="week-by-week" style="display: none">
-            </tbody>
-        </table>
+        <div class="table">
+            <div class="header">
+                <div>Sunday</div>
+                <div>Monday</div>
+                <div>Tuesday</div>
+                <div>Wednesday</div>
+                <div>Thursday</div>
+                <div>Friday</div>
+                <div>Saturday</div>
+            </div>
+            <div class="month-by-month"></div>
+            <div class="week-by-week"></div>
         </div>
         <script type="text/javascript" src="../../js/modules/selector.js"></script>
         <script type="text/javascript" src="../../js/modules/date.js"></script>

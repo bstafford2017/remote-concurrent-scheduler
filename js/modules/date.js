@@ -19,8 +19,8 @@ $('#by-month').click(() => {
 })
 
 function clear() {
-    $('#week-by-week').empty()
-    $('#month-by-month').empty()
+    $('.week-by-week').empty()
+    $('.month-by-month').empty()
     $('#month').empty()
 }
 
@@ -72,9 +72,9 @@ function addToHeader(monthToAdd, yearToAdd){
 
 function printWeek(date){
     if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $('#week-by-week').append("<td class=\"active\">" + date)
+        $("#" + i).append("<div class=\"active valid\">" + date)
     } else {
-        $('#week-by-week').append("<td>" + date)        
+        $("#" + i).append("<div class=\"valid\">" + date)        
     }
     $.ajax({
         type: "get",
@@ -85,11 +85,11 @@ function printWeek(date){
             year: currentYear
         },
         success: (response) => {
-            $('#week-by-week').append(response)        
+            $("#" + i).append(response)        
 
         }
     })
-    $('#week-by-week').append("</td>")
+    $("#" + i).append("</div>")
 }
 
 // NEEDS TO HANDLE NEGATIVE
@@ -123,8 +123,8 @@ function changeAndCheck(valueToCheck, changeToValue){
 }
 
 function showWeekCalendar(positive){
-    $('#week-by-week').empty()
-    $('#week-by-week').append("<tr>")
+    $('.week-by-week').empty()
+    $('.week-by-week').append("<div class=\"row\">")
 
     // If on today's week, keep first as this
     let first = today.getDate() - today.getDay()
@@ -160,37 +160,38 @@ function showWeekCalendar(positive){
         changeHeader(currentMonth, currentYear)
     }
     console.log(week)
-    $('#week-by-week').append("</tr>")
+    $('.week-by-week').append("</div>")
 }
 
 function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
 
     let firstDay = (new Date(currentYear, currentMonth)).getDay()
-    let monthDays = daysInMonth()
-
-    let table = $('#month-by-month')
+    let table = $('.month-by-month')
 
     let date = 1 // Change to Date so you can compare dates for active (easier)
     for (let i = 0; i < 6; i++) {
-        table.append("<tr>")
+        table.append("<div id=\"" + i + "\" class=\"row\">")
         for (let j = 0; j < 7; j++) {
+            // Border must be the same as table background
             if (i === 0 && j < firstDay) {
-                table.append("<td></td>")
+                $("#" + i).append("<div style=\"border: solid 1px " + $('.table').css("background-color") + "\"></div>")
             }
-            else if (date > monthDays) {
+            else if (date > daysInMonth()) {
+                for(;j < 7; j++){
+                    $("#" + i).append("<div style=\"border: solid 1px " + $('.table').css("background-color") + "\"></div>")
+                }
                 break
             }
             else {
                 if (date === today.getDate() && currentYear === today.getFullYear() && currentMonth === today.getMonth()) {
-                    table.append("<td class=\"active\">" + date + "</td>")
+                    $("#" + i).append("<div class=\"active valid\">" + date + "</div>")
                 } else {
-                    table.append("<td>" + date + "</td>")
+                    $("#" + i).append("<div class=\"valid\">" + date + "</div>")
                 }
                 date++
             }
         }
-        table.append("</tr>")
+        table.append("</div>")
     }
-
 }

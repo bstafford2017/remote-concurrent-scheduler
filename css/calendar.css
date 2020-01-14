@@ -43,12 +43,16 @@ a:hover {
   text-shadow: 5px 5px 5px #005324;
 }
 
+.table {
+  background-color: #f3f3f3;
+}
+
 /* Weekdays (Mon-Sun) */
-.calendar {
+.header {
   display: flex;
 }
 
-th {
+.header div {
   flex: 1;
   color: #666;
   text-align: center;
@@ -58,19 +62,33 @@ th {
 }
 
 /* Days (1-31) */
+.row {
+  display: flex;
+}
 
+.row div {
+  flex: 1;
+  height: 150px;
+  padding: 5px 0px 0px 5px;
+}
+
+.valid {
+  background-color: #eee;
+  border: solid 1px #ddd;
+}
 
 /* Dynamic hovering over dates */
-td:hover {
+.valid:hover {
   background-color: #fafafa;
 }
 
+/* Handle current date */
 .active {
-  background: #009a44;
+  background-color: #009a44;
   color: white;
 }
 
 .active:hover {
-  background: #009a4383;
-  color: white;
+  background-color: #009a4383;
+  color: black;
 }
