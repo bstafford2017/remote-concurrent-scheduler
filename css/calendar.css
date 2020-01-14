@@ -78,14 +78,18 @@ a:hover {
   border: solid 1px #ddd;
 }
 
+.valid:hover {
+  background-color: #fafafa;
+}
+
+.invalid {
+  background-color: #ccc;
+  border: solid 1px #ddd;
+}
+
 .week-by-week div {
   height: 750px;
   font-size: 20px;
-}
-
-/* Dynamic hovering over dates */
-.valid:hover {
-  background-color: #fafafa;
 }
 
 /* Handle current date */

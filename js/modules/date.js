@@ -18,7 +18,7 @@ $('#by-month').click(() => {
     showMonthCalendar()
 })
 
-function clear() {
+function clear(){
     $('.week-by-week').empty()
     $('.month-by-month').empty()
     $('#month').empty()
@@ -26,6 +26,22 @@ function clear() {
 
 function daysInMonth(){
     return 32 - new Date(currentYear, currentMonth, 32).getDate()
+}
+
+function daysInNextMonth(){
+    if(currentMonth - 1 < 0){
+        return 32 - new Date(currentYear - 1, 11, 32).getDate()
+    } else {
+        return 32 - new Date(currentYear, currentMonth - 1, 32).getDate()
+    }
+}
+
+function daysInPreviousMonth(){
+    if(currentMonth - 1 < 11){
+        return 32 - new Date(currentYear + 1, 0, 32).getDate()
+    } else {
+        return 32 - new Date(currentYear, currentMonth - 1, 32).getDate()
+    }
 }
 
 function next() {
@@ -179,15 +195,10 @@ function showMonthCalendar() {
         for (let j = 0; j < 7; j++) {
             // Border must be the same as table background
             if (i === 0 && j < firstDay) {
-                $("#" + i).append("<div style=\"border: solid 1px " + $('.table').css("background-color") + "\"></div>")
-            } else if (date > daysInMonth() && i == 0 ) {
-                for(;j < 7; j++){
-                    $("#" + i).append("<div style=\"display: none;\"></div>")
-                }
-                break
+                $("#" + i).append("<div class=\"invalid\">" + (daysInPreviousMonth() - (firstDay - j) + 1) + "</div>")
             } else if(date > daysInMonth()){
-                for(;j < 7; j++){
-                    $("#" + i).append("<div style=\"border: solid 1px " + $('.table').css("background-color") + "\"></div>")
+                for(let nextMonth = 1; j < 7; j++, nextMonth++){
+                    $("#" + i).append("<div class=\"invalid\">" + nextMonth + "</div>")
                 }
                 break
             } else {
