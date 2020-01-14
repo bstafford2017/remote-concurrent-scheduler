@@ -120,7 +120,7 @@ function changeAndCheck(valueToCheck, changeToValue){
     console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     return valueToCheck
 }
-
+// BUG: clicking back and forth with by week and by month
 function showWeekCalendar(positive){
     $('.week-by-week').empty()
     $('.week-by-week').append("<div id=\"0\" class=\"row\">")
