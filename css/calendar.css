@@ -1,5 +1,5 @@
 ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
+body {font-family: Verdana, sans-serif; margin: 0;}
 
 /* Month */
 .month {
@@ -73,8 +73,14 @@ a:hover {
 }
 
 .valid {
+  color: #666;
   background-color: #eee;
   border: solid 1px #ddd;
+}
+
+.week-by-week div {
+  height: 750px;
+  font-size: 20px;
 }
 
 /* Dynamic hovering over dates */
@@ -90,5 +96,4 @@ a:hover {
 
 .active:hover {
   background-color: #009a4383;
-  color: black;
 }

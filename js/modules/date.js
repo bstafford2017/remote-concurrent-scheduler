@@ -72,9 +72,9 @@ function addToHeader(monthToAdd, yearToAdd){
 
 function printWeek(date){
     if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $("#" + i).append("<div class=\"active valid\">" + date)
+        $("#0").append("<div class=\"active valid\">" + date)
     } else {
-        $("#" + i).append("<div class=\"valid\">" + date)        
+        $("#0").append("<div class=\"valid\">" + date)        
     }
     $.ajax({
         type: "get",
@@ -85,14 +85,13 @@ function printWeek(date){
             year: currentYear
         },
         success: (response) => {
-            $("#" + i).append(response)        
+            $("#0").append(response)        
 
         }
     })
-    $("#" + i).append("</div>")
+    $("#0").append("</div>")
 }
 
-// NEEDS TO HANDLE NEGATIVE
 function changeAndCheck(valueToCheck, changeToValue){
     console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     valueToCheck = valueToCheck + changeToValue
@@ -124,7 +123,7 @@ function changeAndCheck(valueToCheck, changeToValue){
 
 function showWeekCalendar(positive){
     $('.week-by-week').empty()
-    $('.week-by-week').append("<div class=\"row\">")
+    $('.week-by-week').append("<div id=\"0\" class=\"row\">")
 
     // If on today's week, keep first as this
     let first = today.getDate() - today.getDay()
@@ -171,19 +170,27 @@ function showMonthCalendar() {
 
     let date = 1 // Change to Date so you can compare dates for active (easier)
     for (let i = 0; i < 6; i++) {
-        table.append("<div id=\"" + i + "\" class=\"row\">")
+
+        // In order to stop from printing last row blank
+        if(date <= daysInMonth()){
+            table.append("<div id=\"" + i + "\" class=\"row\">") 
+        }
+
         for (let j = 0; j < 7; j++) {
             // Border must be the same as table background
             if (i === 0 && j < firstDay) {
                 $("#" + i).append("<div style=\"border: solid 1px " + $('.table').css("background-color") + "\"></div>")
-            }
-            else if (date > daysInMonth()) {
+            } else if (date > daysInMonth() && i == 0 ) {
+                for(;j < 7; j++){
+                    $("#" + i).append("<div style=\"display: none;\"></div>")
+                }
+                break
+            } else if(date > daysInMonth()){
                 for(;j < 7; j++){
                     $("#" + i).append("<div style=\"border: solid 1px " + $('.table').css("background-color") + "\"></div>")
                 }
                 break
-            }
-            else {
+            } else {
                 if (date === today.getDate() && currentYear === today.getFullYear() && currentMonth === today.getMonth()) {
                     $("#" + i).append("<div class=\"active valid\">" + date + "</div>")
                 } else {
@@ -192,6 +199,10 @@ function showMonthCalendar() {
                 date++
             }
         }
-        table.append("</div>")
+
+        // In order to stop from printing last row blank
+        if(date <= daysInMonth()){
+            table.append("</div>") 
+        }
     }
 }
