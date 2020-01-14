@@ -83,6 +83,7 @@ a:hover {
 }
 
 .invalid {
+  color: #666;
   background-color: #ccc;
   border: solid 1px #ddd;
 }
