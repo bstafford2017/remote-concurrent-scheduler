@@ -95,12 +95,11 @@ a:hover {
 
 /* Handle current date */
 .active {
-  background-color: #009a44;
-  color: white;
+  border-top: solid 4px #009a44;
 }
 
 .active:hover {
-  background-color: #009a4383;
+  background-color: #fafafa;
 }
 
 /* Handles week event items */
@@ -125,11 +124,6 @@ a:hover {
   border: solid 1px #009a44;
 }
 
-.active .week-event {
-  background-color: #eee;
-  color: #009a44;
-}
-
 /* Handles week event items */
 .month-event {
   background-color: #009a44;
@@ -151,9 +145,3 @@ a:hover {
   border-radius: 10px;
   border: solid 1px #009a44;
 }
-
-.active .month-event {
-  background-color: #eee;
-  color: #009a44;
-}
-

@@ -188,21 +188,25 @@ function printMonth(active, valid, row, date){
     } else {
         $("#row-" + row).append("<div class=\"invalid\">" + date)
     }
-    $.ajax({
-        type: "get",
-        url: "../../api/scripts/event/list.php",
-        data: {
-            date: date,
-            month: currentMonth,
-            year: currentYear
-        },
-        success: (response) => {
-            $("#0").append(response)        
-
-        }
-    })
     $("#row-" + row).append("</div>")
-    $("#" + date).append("<div class=\"month-event\">9pm - ACM Meeting</div>")
+
+    // Only call for valid dates
+    if(valid){
+        $.ajax({
+            type: "get",
+            url: "../../api/scripts/event/list.php",
+            data: {
+                date: date,
+                month: currentMonth,
+                year: currentYear
+            },
+            success: (response) => {
+                $("#row-" + row).append(response)        
+    
+            }
+        })
+        $("#" + date).append("<div class=\"month-event\">9pm - ACM Meeting</div>")
+    }
 }
 
 function showMonthCalendar() {
@@ -220,7 +224,7 @@ function showMonthCalendar() {
         }
 
         for (let j = 0; j < 7; j++) {
-            let nextMonth
+            let nextMonth = 1
             if (i === 0 && j < firstDay) {
                 printMonth(false, false, i, daysInPreviousMonth() - (firstDay - j) + 1)
             } else if(date > daysInMonth()){
