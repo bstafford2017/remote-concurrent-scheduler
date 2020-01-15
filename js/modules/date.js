@@ -88,10 +88,11 @@ function addToHeader(monthToAdd, yearToAdd){
 
 function printWeek(date){
     if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $("#0").append("<div class=\"active valid\">" + date)
+        $("#0").append("<div id=\"" + date + "\" class=\"active valid\">" + date)
     } else {
-        $("#0").append("<div class=\"valid\">" + date)        
+        $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
+    $("#" + date).append("<div class=\"event\">9pm - ACM Meeting</div>")
     $.ajax({
         type: "get",
         url: "../../api/scripts/event/list.php",
@@ -193,7 +194,6 @@ function showMonthCalendar() {
         }
 
         for (let j = 0; j < 7; j++) {
-            // Border must be the same as table background
             if (i === 0 && j < firstDay) {
                 $("#" + i).append("<div class=\"invalid\">" + (daysInPreviousMonth() - (firstDay - j) + 1) + "</div>")
             } else if(date > daysInMonth()){

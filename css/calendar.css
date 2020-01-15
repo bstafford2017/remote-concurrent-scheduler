@@ -15,7 +15,7 @@ body {font-family: Verdana, sans-serif; margin: 0;}
 
 .month ul li {
   color: white;
-  font-size: 20px;
+  font-size: 25px;
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -66,7 +66,7 @@ a:hover {
   display: flex;
 }
 
-.row div {
+.row .valid, .row .invalid {
   flex: 1;
   height: 150px;
   padding: 5px 0px 0px 5px;
@@ -88,7 +88,7 @@ a:hover {
   border: solid 1px #ddd;
 }
 
-.week-by-week div {
+.week-by-week .valid {
   height: 750px;
   font-size: 20px;
 }
@@ -102,3 +102,19 @@ a:hover {
 .active:hover {
   background-color: #009a4383;
 }
+
+/* Handles event items */
+.event {
+  background-color: #009a44;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 550;
+}
+
+.active .event {
+  background-color: #eee;
+  color: #009a44;
+}
+
