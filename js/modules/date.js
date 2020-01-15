@@ -86,29 +86,6 @@ function addToHeader(monthToAdd, yearToAdd){
     $('#month').append("/" + months[monthToAdd] + "<br/><span>" + yearToAdd + "</span>")
 }
 
-function printWeek(date){
-    if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $("#0").append("<div id=\"" + date + "\" class=\"active valid\">" + date)
-    } else {
-        $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
-    }
-    $("#" + date).append("<div class=\"event\">9pm - ACM Meeting</div>")
-    $.ajax({
-        type: "get",
-        url: "../../api/scripts/event/list.php",
-        data: {
-            date: date,
-            month: currentMonth,
-            year: currentYear
-        },
-        success: (response) => {
-            $("#0").append(response)        
-
-        }
-    })
-    $("#0").append("</div>")
-}
-
 function changeAndCheck(valueToCheck, changeToValue){
     console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     valueToCheck = valueToCheck + changeToValue
@@ -137,6 +114,30 @@ function changeAndCheck(valueToCheck, changeToValue){
     console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     return valueToCheck
 }
+
+function printWeek(date){
+    if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
+        $("#0").append("<div id=\"" + date + "\" class=\"active valid\">" + date)
+    } else {
+        $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
+    }
+    $.ajax({
+        type: "get",
+        url: "../../api/scripts/event/list.php",
+        data: {
+            date: date,
+            month: currentMonth,
+            year: currentYear
+        },
+        success: (response) => {
+            $("#0").append(response)        
+
+        }
+    })
+    $("#0").append("</div>")
+    $("#" + date).append("<div class=\"week-event\">9pm - ACM Meeting</div>")
+}
+
 // BUG: clicking back and forth with by week and by month
 function showWeekCalendar(positive){
     $('.week-by-week').empty()
@@ -179,6 +180,31 @@ function showWeekCalendar(positive){
     $('.week-by-week').append("</div>")
 }
 
+function printMonth(active, valid, row, date){
+    if(active && valid){
+        $("#row-" + row).append("<div id=\"" + date + "\" class=\"active valid\">" + date)
+    } else if(valid){
+        $("#row-" + row).append("<div id=\"" + date + "\" class=\"valid\">" + date)
+    } else {
+        $("#row-" + row).append("<div class=\"invalid\">" + date)
+    }
+    $.ajax({
+        type: "get",
+        url: "../../api/scripts/event/list.php",
+        data: {
+            date: date,
+            month: currentMonth,
+            year: currentYear
+        },
+        success: (response) => {
+            $("#0").append(response)        
+
+        }
+    })
+    $("#row-" + row).append("</div>")
+    $("#" + date).append("<div class=\"month-event\">9pm - ACM Meeting</div>")
+}
+
 function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
 
@@ -190,22 +216,22 @@ function showMonthCalendar() {
 
         // In order to stop from printing last row blank
         if(date <= daysInMonth()){
-            table.append("<div id=\"" + i + "\" class=\"row\">") 
+            table.append("<div id=\"row-" + i + "\" class=\"row\">") 
         }
 
         for (let j = 0; j < 7; j++) {
+            let nextMonth
             if (i === 0 && j < firstDay) {
-                $("#" + i).append("<div class=\"invalid\">" + (daysInPreviousMonth() - (firstDay - j) + 1) + "</div>")
+                printMonth(false, false, i, daysInPreviousMonth() - (firstDay - j) + 1)
             } else if(date > daysInMonth()){
-                for(let nextMonth = 1; j < 7; j++, nextMonth++){
-                    $("#" + i).append("<div class=\"invalid\">" + nextMonth + "</div>")
-                }
+                printMonth(false, false, i, nextMonth)
+                nextMonth++
                 break
             } else {
                 if (date === today.getDate() && currentYear === today.getFullYear() && currentMonth === today.getMonth()) {
-                    $("#" + i).append("<div class=\"active valid\">" + date + "</div>")
+                    printMonth(true, true, i, date)
                 } else {
-                    $("#" + i).append("<div class=\"valid\">" + date + "</div>")
+                    printMonth(false, true, i, date)
                 }
                 date++
             }

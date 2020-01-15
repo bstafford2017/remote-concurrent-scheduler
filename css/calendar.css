@@ -103,8 +103,8 @@ a:hover {
   background-color: #009a4383;
 }
 
-/* Handles event items */
-.event {
+/* Handles week event items */
+.week-event {
   background-color: #009a44;
   color: white;
   margin: 5px;
@@ -114,7 +114,7 @@ a:hover {
   border-radius: 10px;
 }
 
-.event:hover {
+.week-event:hover {
   background-color: #009a44;
   color: white;
   margin: 5px;
@@ -125,7 +125,34 @@ a:hover {
   border: solid 1px #009a44;
 }
 
-.active .event {
+.active .week-event {
+  background-color: #eee;
+  color: #009a44;
+}
+
+/* Handles week event items */
+.month-event {
+  background-color: #009a44;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 550;
+  border-radius: 10px;
+}
+
+.month-event:hover {
+  background-color: #009a44;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 550;
+  border-radius: 10px;
+  border: solid 1px #009a44;
+}
+
+.active .month-event {
   background-color: #eee;
   color: #009a44;
 }
