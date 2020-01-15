@@ -18,14 +18,30 @@ $('#by-month').click(() => {
     showMonthCalendar()
 })
 
-function clear() {
-    $('#week-by-week').empty()
-    $('#month-by-month').empty()
+function clear(){
+    $('.week-by-week').empty()
+    $('.month-by-month').empty()
     $('#month').empty()
 }
 
 function daysInMonth(){
     return 32 - new Date(currentYear, currentMonth, 32).getDate()
+}
+
+function daysInNextMonth(){
+    if(currentMonth - 1 < 0){
+        return 32 - new Date(currentYear - 1, 11, 32).getDate()
+    } else {
+        return 32 - new Date(currentYear, currentMonth - 1, 32).getDate()
+    }
+}
+
+function daysInPreviousMonth(){
+    if(currentMonth - 1 < 11){
+        return 32 - new Date(currentYear + 1, 0, 32).getDate()
+    } else {
+        return 32 - new Date(currentYear, currentMonth - 1, 32).getDate()
+    }
 }
 
 function next() {
@@ -72,10 +88,11 @@ function addToHeader(monthToAdd, yearToAdd){
 
 function printWeek(date){
     if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $('#week-by-week').append("<td class=\"active\">" + date)
+        $("#0").append("<div id=\"" + date + "\" class=\"active valid\">" + date)
     } else {
-        $('#week-by-week').append("<td>" + date)        
+        $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
+    $("#" + date).append("<div class=\"event\">9pm - ACM Meeting</div>")
     $.ajax({
         type: "get",
         url: "../../api/scripts/event/list.php",
@@ -85,14 +102,13 @@ function printWeek(date){
             year: currentYear
         },
         success: (response) => {
-            $('#week-by-week').append(response)        
+            $("#0").append(response)        
 
         }
     })
-    $('#week-by-week').append("</td>")
+    $("#0").append("</div>")
 }
 
-// NEEDS TO HANDLE NEGATIVE
 function changeAndCheck(valueToCheck, changeToValue){
     console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     valueToCheck = valueToCheck + changeToValue
@@ -121,10 +137,10 @@ function changeAndCheck(valueToCheck, changeToValue){
     console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     return valueToCheck
 }
-
+// BUG: clicking back and forth with by week and by month
 function showWeekCalendar(positive){
-    $('#week-by-week').empty()
-    $('#week-by-week').append("<tr>")
+    $('.week-by-week').empty()
+    $('.week-by-week').append("<div id=\"0\" class=\"row\">")
 
     // If on today's week, keep first as this
     let first = today.getDate() - today.getDay()
@@ -160,37 +176,44 @@ function showWeekCalendar(positive){
         changeHeader(currentMonth, currentYear)
     }
     console.log(week)
-    $('#week-by-week').append("</tr>")
+    $('.week-by-week').append("</div>")
 }
 
 function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
 
     let firstDay = (new Date(currentYear, currentMonth)).getDay()
-    let monthDays = daysInMonth()
-
-    let table = $('#month-by-month')
+    let table = $('.month-by-month')
 
     let date = 1 // Change to Date so you can compare dates for active (easier)
     for (let i = 0; i < 6; i++) {
-        table.append("<tr>")
+
+        // In order to stop from printing last row blank
+        if(date <= daysInMonth()){
+            table.append("<div id=\"" + i + "\" class=\"row\">") 
+        }
+
         for (let j = 0; j < 7; j++) {
             if (i === 0 && j < firstDay) {
-                table.append("<td></td>")
-            }
-            else if (date > monthDays) {
+                $("#" + i).append("<div class=\"invalid\">" + (daysInPreviousMonth() - (firstDay - j) + 1) + "</div>")
+            } else if(date > daysInMonth()){
+                for(let nextMonth = 1; j < 7; j++, nextMonth++){
+                    $("#" + i).append("<div class=\"invalid\">" + nextMonth + "</div>")
+                }
                 break
-            }
-            else {
+            } else {
                 if (date === today.getDate() && currentYear === today.getFullYear() && currentMonth === today.getMonth()) {
-                    table.append("<td class=\"active\">" + date + "</td>")
+                    $("#" + i).append("<div class=\"active valid\">" + date + "</div>")
                 } else {
-                    table.append("<td>" + date + "</td>")
+                    $("#" + i).append("<div class=\"valid\">" + date + "</div>")
                 }
                 date++
             }
         }
-        table.append("</tr>")
-    }
 
+        // In order to stop from printing last row blank
+        if(date <= daysInMonth()){
+            table.append("</div>") 
+        }
+    }
 }

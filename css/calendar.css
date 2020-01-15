@@ -1,10 +1,9 @@
 ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
+body {font-family: Verdana, sans-serif; margin: 0;}
 
 /* Month */
 .month {
   padding: 40px 0;
-  width: 100%;
   background: #009a44;
   text-align: center;
 }
@@ -16,7 +15,7 @@ body {font-family: Verdana, sans-serif;}
 
 .month ul li {
   color: white;
-  font-size: 20px;
+  font-size: 25px;
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -44,10 +43,17 @@ a:hover {
   text-shadow: 5px 5px 5px #005324;
 }
 
+.table {
+  background-color: #f3f3f3;
+}
+
 /* Weekdays (Mon-Sun) */
-thead tr th {
-  display: inline-block;
-  width: 14.28%;
+.header {
+  display: flex;
+}
+
+.header div {
+  flex: 1;
   color: #666;
   text-align: center;
   padding: 10px 0;
@@ -56,55 +62,59 @@ thead tr th {
 }
 
 /* Days (1-31) */
-html, body, table {
-  width: 100%;
-  margin: 0;
+.row {
+  display: flex;
 }
 
-thead, tbody {
-  width: 100%;
-}
-
-table {
-  border-spacing: 0;
-  border-collapse: collapse;
-  color: #777;
-}
-
-tr {
-  margin: 0px;
-}
-
-th {
-  border: none;
-}
-
-td {
-  background-color: #eee;
-  display: inline-block;
-  height: 110px;
-  width: 13.8%;
-  /*font-size:12px;*/
-  color: #777;
-  border: solid 1px #ddd;
+.row .valid, .row .invalid {
+  flex: 1;
+  height: 150px;
   padding: 5px 0px 0px 5px;
 }
 
-#week-by-week td {
-  height: 550px;
+.valid {
+  color: #666;
+  background-color: #eee;
+  border: solid 1px #ddd;
 }
 
-/* Dynamic hovering over dates */
-td:hover {
+.valid:hover {
   background-color: #fafafa;
 }
 
+.invalid {
+  color: #666;
+  background-color: #ccc;
+  border: solid 1px #ddd;
+}
+
+.week-by-week .valid {
+  height: 750px;
+  font-size: 20px;
+}
+
+/* Handle current date */
 .active {
-  background: #009a44;
+  background-color: #009a44;
   color: white;
 }
 
 .active:hover {
-  background: #009a4383;
-  color: white;
+  background-color: #009a4383;
 }
+
+/* Handles event items */
+.event {
+  background-color: #009a44;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 550;
+}
+
+.active .event {
+  background-color: #eee;
+  color: #009a44;
+}
+
