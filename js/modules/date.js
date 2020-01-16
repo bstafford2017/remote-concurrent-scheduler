@@ -7,6 +7,20 @@ let currentDate = today.getDate() - 1
 let week = [0, 0, 0, 0, 0, 0, 0]
 showMonthCalendar()
 
+/* Handles click event for day */
+$('.valid').mouseenter((event) => {
+    $('#' + event.target.id + '>.month-event').hide()
+    $('#' + event.target.id + '>.week-event').hide()
+    $('#' + event.target.id).append("<div class=\"item\">Create Event</div>")
+    $('#' + event.target.id).append("<div class=\"item\">See More</div>")
+})
+
+$('.valid').mouseleave((event) => {
+    $('.item').remove()
+    $('#' + event.target.id + '>.month-event').show()
+    $('#' + event.target.id + '>.week-event').show()
+})
+
 // Handles click event for changing displays
 $('#by-week').click(() => {
     clear()

@@ -91,7 +91,7 @@ a:hover {
 
 /* Handle current date */
 .active {
-  border-top: solid 5px #009a44;
+  background-color: #009a4350;
 }
 
 /* Handles week event items */
@@ -126,9 +126,9 @@ a:hover {
 
 /* Handles item for each event */
 .item {
-  background-color: #000;
-  color: white;
-  margin: 30px;
+  background-color: #ddd;
+  color: #666;
+  margin: 20px;
   padding: 5px;
   text-align: center;
   font-weight: 550;
