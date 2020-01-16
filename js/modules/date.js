@@ -121,7 +121,7 @@ function printWeek(date){
     } else {
         $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
-    $.ajax({
+    /*$.ajax({
         type: "get",
         url: "../../api/scripts/event/list.php",
         data: {
@@ -133,7 +133,7 @@ function printWeek(date){
             $("#0").append(response)        
 
         }
-    })
+    })*/
     $("#0").append("</div>")
     $("#" + date).append("<div class=\"week-event\">9pm - ACM Meeting</div>")
 }
@@ -192,7 +192,7 @@ function printMonth(active, valid, row, date){
 
     // Only call for valid dates
     if(valid){
-        $.ajax({
+        /*$.ajax({
             type: "get",
             url: "../../api/scripts/event/list.php",
             data: {
@@ -204,7 +204,7 @@ function printMonth(active, valid, row, date){
                 $("#row-" + row).append(response)        
     
             }
-        })
+        })*/
         $("#" + date).append("<div class=\"month-event\">9pm - ACM Meeting</div>")
     }
 }
