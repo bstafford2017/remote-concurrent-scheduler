@@ -91,7 +91,8 @@ a:hover {
 
 /* Handle current date */
 .active {
-  background-color: #009a4344;
+  background-color: #009a431e;
+  border: solid 1px #009a44;
   color: #000;
   font-weight: bold;
 }
