@@ -33,8 +33,9 @@ $(document).click((event) => {
             // If something is not selected (clicked)
             if(!clicked){
                 $('#' + event.target.id + '>.month-event').hide()
-                $('#' + event.target.id).append("<div class=\'item\'>Create Event</div>")
-                $('#' + event.target.id).append("<div class=\'item\'>See More</div>")
+                $('#' + event.target.id + '>.week-event').hide()
+                $('#' + event.target.id).append("<button class=\'item\'>Create Event</button>")
+                $('#' + event.target.id).append("<button class=\'item\'>See More</button>")
                 clicked = true;
             } else {
 
@@ -42,17 +43,20 @@ $(document).click((event) => {
                 if(event.target.id === previousId){
                     // now clickable buttons
                 } else {
+                    $('#' + previousId + '>.week-event').show()
                     $('#' + previousId + '>.month-event').show()
                     $('.item').remove()
                     clicked = false
                 }
             }
         } else {
+            $('#' + previousId + '>.week-event').show()
             $('#' + previousId + '>.month-event').show()
             $('.item').remove()
             clicked = false
         }
     } else {
+        $('#' + previousId + '>.week-event').show()
         $('#' + previousId + '>.month-event').show()
         $('.item').remove()
         clicked = false
