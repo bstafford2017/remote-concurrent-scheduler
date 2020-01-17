@@ -91,7 +91,9 @@ a:hover {
 
 /* Handle current date */
 .active {
-  background-color: #009a4350;
+  background-color: #009a4344;
+  color: #000;
+  font-weight: bold;
 }
 
 /* Handles week event items */
