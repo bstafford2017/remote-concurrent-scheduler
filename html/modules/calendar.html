@@ -11,7 +11,7 @@
                 <li id="prev" class="change"><a href="javascript:previous()">&#10094;</a></li>
                 <li id="next" class="change"><a href="javascript:next()">&#10095;</a></li>
                 <li id="month"></li>
-                <li style="font-size: 14px">
+                <li style="font-size: 17px">
                     <input id="by-week" type="radio" name="selector" value="week">
                     <label for="by-week"> By Week</label>
                     <input id="by-month" type="radio" name="selector" value = "month" checked>
@@ -20,18 +20,37 @@
             </ul>
         </div>
         <div class="table">
-            <div class="header">
-                <div>Sunday</div>
-                <div>Monday</div>
-                <div>Tuesday</div>
-                <div>Wednesday</div>
-                <div>Thursday</div>
-                <div>Friday</div>
-                <div>Saturday</div>
+            <div class="scale">
+                <div>6a</div>
+                <div>7a</div>
+                <div>8a</div>
+                <div>9a</div>
+                <div>10a</div>
+                <div>11a</div>
+                <div>12p</div>
+                <div>1p</div>
+                <div>2p</div>
+                <div>3p</div>
+                <div>4p</div>
+                <div>5p</div>
+                <div>6p</div>
+                <div>7p</div>
             </div>
-            <div class="month-by-month"></div>
-            <div class="week-by-week"></div>
+            <div class="main-content">
+                <div class="header">
+                    <div>Sunday</div>
+                    <div>Monday</div>
+                    <div>Tuesday</div>
+                    <div>Wednesday</div>
+                    <div>Thursday</div>
+                    <div>Friday</div>
+                    <div>Saturday</div>
+                </div>
+                <div class="month-by-month"></div>
+                <div class="week-by-week"></div>
+            </div>
         </div>
         <script type="text/javascript" src="../../js/modules/date.js"></script>
+        <script type="text/javascript" src="../../js/modules/selector.js"></script>
     </body>
 </htmL>

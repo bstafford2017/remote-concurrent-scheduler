@@ -61,6 +61,39 @@ a:hover {
   margin: 0;
 }
 
+/* Handles time scale */
+#blank {
+  flex: 0.22;
+  background-color: #eee;
+  border-right: solid 2px #ddd;
+}
+
+.scale {
+  flex: 0.02;
+  font-size: 14px;
+  background-color: #eee;
+  color: #666;
+  height: 750px;
+  text-align: center;
+}
+
+.scale div {
+  height: 7%;
+}
+
+.scale div:first-of-type {
+  padding-top: 25px;
+  height: 7%;
+}
+
+.table {
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+}
+
 /* Days (1-31) */
 .row {
   display: flex;
