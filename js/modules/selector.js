@@ -15,6 +15,14 @@ $('.valid').mouseleave((event) => {
     $('#' + event.target.id + '>.week-event').show()
 })*/
 
+$('span').click((event) => {
+    $('#myModal').css("display", "none")
+})
+
+function showModal(){
+    $('#myModal').css("display", "block")
+}
+
 // Handles clicked event
 $(document).click((event) => {
     console.log(event.target.id + " " + $(event.target).attr('class'))
@@ -26,14 +34,14 @@ $(document).click((event) => {
             if(!clicked){
                 $('#' + event.target.id + '>.month-event').hide()
                 $('#' + event.target.id + '>.week-event').hide()
-                $('#' + event.target.id).append("<button class=\'item\'>Create Event</button>")
-                $('#' + event.target.id).append("<button class=\'item\'>See More</button>")
+                $('#' + event.target.id).append("<button id=\"create-event\" class=\"item\" onclick=\"showModal()\">Create Event</button>")
+                $('#' + event.target.id).append("<button id=\"see-more\" class=\"item\" onclick=\"showModal()\">See More</button>")
                 clicked = true;
             } else {
 
                 // If clicked same cell
                 if(event.target.id === previousId){
-                    // now clickable buttons
+                    $('#myModal').css("display", "block")
                 } else {
                     $('#' + previousId + '>.week-event').show()
                     $('#' + previousId + '>.month-event').show()
