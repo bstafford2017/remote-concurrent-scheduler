@@ -139,7 +139,7 @@ function printWeek(date){
         }
     })*/
     $("#0").append("</div>")
-    $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').height() + "px; height: " + $('.scale div').height() + "px;\">3pm - ACM Meeting</div>")
+    $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').height() + "px; height: " + $('.scale div').height() + "px;\">ACM Meeting</div>")
 }
 
 // BUG: clicking back and forth with by week and by month
