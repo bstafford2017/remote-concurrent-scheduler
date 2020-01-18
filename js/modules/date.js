@@ -227,14 +227,14 @@ function showMonthCalendar() {
             table.append("<div id=\"row-" + i + "\" class=\"row\">") 
         }
 
+        let nextMonth = 1
         for (let j = 0; j < 7; j++) {
-            let nextMonth = 1
             if (i === 0 && j < firstDay) {
                 printMonth(false, false, i, daysInPreviousMonth() - (firstDay - j) + 1)
             } else if(date > daysInMonth()){
+                console.log(date + " " + daysInMonth() + " " + currentMonth + " j:" + j + " i:" + i);
                 printMonth(false, false, i, nextMonth)
                 nextMonth++
-                break
             } else {
                 if (date === today.getDate() && currentYear === today.getFullYear() && currentMonth === today.getMonth()) {
                     printMonth(true, true, i, date)
