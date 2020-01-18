@@ -82,11 +82,11 @@ function previous() {
 
 function changeHeader(month, year){
     $('#month').empty()
-    $('#month').append(months[month] + "<br/><span>" + year + "</span>")
+    $('#month').append(months[month] + " " + year)
 }
 
 function addToHeader(monthToAdd, yearToAdd){
-    $('#month').append("/" + months[monthToAdd] + "<br/><span>" + yearToAdd + "</span>")
+    $('#month').append("/" + months[monthToAdd] + " " + yearToAdd)
 }
 
 function changeAndCheck(valueToCheck, changeToValue){
@@ -125,19 +125,6 @@ function printWeek(date){
         $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
 
-    // Print time scale
-    /*$("#" + date).append("<div id=\"" + date + "-scale\" class=\"scale\">")        
-    for(let i = 6; i < 20; i++){
-        if(i === 12){
-            $("#" + date + "-scale").append("<div id=\"" + date + "-12p\">12p</div>")
-            continue
-        }
-        if(i > 12){
-            $("#" + date + "-scale").append("<div id=\"" + date + "-" + i % 12 + "p\">" + i % 12 + "p</div>")
-        } else {
-            $("#" + date + "-scale").append("<div id=\"" + date + "-" + i % 12 + "a\">" + i % 12 + "a</div>")
-        }
-    }*/
     /*$.ajax({
         type: "get",
         url: "../../api/scripts/event/list.php",
@@ -152,7 +139,7 @@ function printWeek(date){
         }
     })*/
     $("#0").append("</div>")
-    $("#" + date).append("<div class=\"week-event\">3pm - ACM Meeting</div>")
+    $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').height() + "px; height: " + $('.scale div').height() + "px;\">3pm - ACM Meeting</div>")
 }
 
 // BUG: clicking back and forth with by week and by month

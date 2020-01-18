@@ -2,6 +2,11 @@ ul {list-style-type: none;}
 body {font-family: Verdana, sans-serif; margin: 0;}
 
 /* Month */
+#month {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
 .month {
   padding: 40px 0;
   background: #009a44;
@@ -82,7 +87,7 @@ a:hover {
 }
 
 .scale div:first-of-type {
-  padding-top: 25px;
+  padding-top: 65px;
   height: 7%;
 }
 
