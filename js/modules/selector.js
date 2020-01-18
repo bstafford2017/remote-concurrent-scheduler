@@ -17,7 +17,7 @@ $('.valid').mouseleave((event) => {
 
 // Handles clicked event
 $(document).click((event) => {
-    console.log(event.target.id)
+    console.log(event.target.id + " " + $(event.target).attr('class'))
     // Check if id and class are defined
     if(event.target.id && $(event.target).attr('class')){
         // Check if cell is clicked
@@ -47,11 +47,11 @@ $(document).click((event) => {
             $('.item').remove()
             clicked = false
         }
+        previousId = event.target.id
     } else {
         $('#' + previousId + '>.week-event').show()
         $('#' + previousId + '>.month-event').show()
         $('.item').remove()
         clicked = false
     }
-    previousId = event.target.id
 })
