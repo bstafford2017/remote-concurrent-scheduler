@@ -232,7 +232,6 @@ function showMonthCalendar() {
             if (i === 0 && j < firstDay) {
                 printMonth(false, false, i, daysInPreviousMonth() - (firstDay - j) + 1)
             } else if(date > daysInMonth()){
-                console.log(date + " " + daysInMonth() + " " + currentMonth + " j:" + j + " i:" + i);
                 printMonth(false, false, i, nextMonth)
                 nextMonth++
             } else {
@@ -248,6 +247,10 @@ function showMonthCalendar() {
         // In order to stop from printing last row blank
         if(date <= daysInMonth()){
             table.append("</div>") 
+        }
+
+        if(i === 5){
+            $('#spinner').hide()
         }
     }
 }
