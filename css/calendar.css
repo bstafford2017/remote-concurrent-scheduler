@@ -38,12 +38,12 @@ body {font-family: Verdana, sans-serif; margin: 0;}
   padding-right: 20px;
 }
 
-a {
+.change {
   text-decoration: none;
   color: white;
 }
 
-a:hover {
+.change:hover {
   color: #005324;
   text-shadow: 5px 5px 5px #005324;
   text-decoration: none;\
