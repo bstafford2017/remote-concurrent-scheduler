@@ -46,7 +46,7 @@ a {
 a:hover {
   color: #005324;
   text-shadow: 5px 5px 5px #005324;
-  text-decoration: none;
+  text-decoration: none;\
 }
 
 .table {
