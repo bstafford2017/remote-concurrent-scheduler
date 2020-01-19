@@ -40,9 +40,7 @@ $(document).click((event) => {
             } else {
 
                 // If clicked same cell
-                if(event.target.id === previousId){
-                    $('#myModal').css("display", "block")
-                } else {
+                if(event.target.id !== previousId){
                     $('#' + previousId + '>.week-event').show()
                     $('#' + previousId + '>.month-event').show()
                     $('.item').remove()
