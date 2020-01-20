@@ -46,7 +46,7 @@ body {font-family: Verdana, sans-serif; margin: 0;}
 .change a:hover {
   color: #005324;
   text-shadow: 5px 5px 5px #005324;
-  text-decoration: none;\
+  text-decoration: none;
 }
 
 .table {
