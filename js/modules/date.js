@@ -90,7 +90,7 @@ function addToHeader(monthToAdd, yearToAdd){
 }
 
 function changeAndCheck(valueToCheck, changeToValue){
-    console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
+    //console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     valueToCheck = valueToCheck + changeToValue
     // Handles if negative value
     if(valueToCheck < 0){
@@ -114,7 +114,7 @@ function changeAndCheck(valueToCheck, changeToValue){
         }
         addToHeader(currentMonth, currentYear)
     }
-    console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
+    //console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     return valueToCheck
 }
 
@@ -139,7 +139,7 @@ function printWeek(date){
         }
     })*/
     $("#0").append("</div>")
-    $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').height() + "px; height: " + $('.scale div').height() + "px;\">ACM Meeting</div>")
+    $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').outerHeight() + "px; height: " + $('.scale div').outerHeight() + "px;\">ACM Meeting</div>")
 }
 
 // BUG: clicking back and forth with by week and by month
@@ -164,7 +164,7 @@ function showWeekCalendar(positive){
     if(week[0] !== 0){
         first = (positive) ? changeAndCheck(week[6], 1) : changeAndCheck(week[0], -7)
     }
-    console.log("first day: " + first + " " + currentMonth + " " + currentYear)
+    //console.log("first day: " + first + " " + currentMonth + " " + currentYear)
 
     // Set days for the week
     for(let i = 0; i < 7; i++){
@@ -180,7 +180,7 @@ function showWeekCalendar(positive){
     if(Math.abs(week[0] - week[6]) <= 7){
         changeHeader(currentMonth, currentYear)
     }
-    console.log(week)
+    //console.log(week)
     $('.week-by-week').append("</div>")
 }
 

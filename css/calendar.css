@@ -79,17 +79,18 @@ body {font-family: Verdana, sans-serif; margin: 0;}
   font-size: 14px;
   background-color: #eee;
   color: #666;
-  height: 750px;
+  height: 794px;
   text-align: center;
+  padding-top: 70px;
+
+  /* Center vertically each time increment */
+  display: flex;
+  flex-direction: column;
 }
 
 .scale div {
-  height: 7%;
-}
-
-.scale div:first-of-type {
-  padding-top: 65px;
-  height: 7%;
+  /* Center vertically each time increment */
+  flex: 1;
 }
 
 .table {
@@ -103,6 +104,7 @@ body {font-family: Verdana, sans-serif; margin: 0;}
 /* Days (1-31) */
 .row {
   display: flex;
+  /* Remove Bootstrap default */
   margin: 0;
 }
 
