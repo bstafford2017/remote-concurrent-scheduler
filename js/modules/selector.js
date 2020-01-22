@@ -17,8 +17,24 @@ $('.valid').mouseleave((event) => {
 
 // Handles clicked event
 $(document).click((event) => {
+
+    // Check if clicked or not
+    if(!clicked){
+        $('#' + event.target.id + '>.month-event').hide()
+        $('#' + event.target.id + '>.week-event').hide()
+        $('#' + event.target.id).append("<button type=\"button\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">Create Event</button>")
+        $('#' + event.target.id).append("<button type=\"button\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">See More</button>")
+        previousId = event.target.id
+        clicked = true;
+    } else {
+        $('#' + previousId + '>.week-event').show()
+        $('#' + previousId + '>.month-event').show()
+        $('.item').remove()
+        clicked = false
+    }
+
     // Check if id and class are defined
-    if(event.target.id && $(event.target).attr('class')){
+    /*if(event.target.id && $(event.target).attr('class')){
         // Check if cell is clicked
         if($(event.target).attr('class').includes("valid")){
             // If something is not selected (clicked)
@@ -50,5 +66,5 @@ $(document).click((event) => {
         $('#' + previousId + '>.month-event').show()
         $('.item').remove()
         clicked = false
-    }
+    }*/
 })
