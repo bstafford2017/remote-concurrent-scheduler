@@ -19,11 +19,12 @@ $('.valid').mouseleave((event) => {
 $(document).click((event) => {
 
     // Check if clicked or not
+    if($('.modal'))
     if(!clicked){
         $('#' + event.target.id + '>.month-event').hide()
         $('#' + event.target.id + '>.week-event').hide()
-        $('#' + event.target.id).append("<button type=\"button\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">Create Event</button>")
-        $('#' + event.target.id).append("<button type=\"button\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">See More</button>")
+        $('#' + event.target.id).append("<button type=\"button\" id=\"create-event-btn\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">Create Event</button>")
+        $('#' + event.target.id).append("<button type=\"button\" id=\"see-more-btn\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">See More</button>")
         previousId = event.target.id
         clicked = true;
     } else {
