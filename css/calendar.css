@@ -152,6 +152,7 @@ body {font-family: Verdana, sans-serif; margin: 0;}
 
 .week-event:hover {
   background-color: #009a43a1;
+  cursor: pointer;
 }
 
 /* Handles week event items */
@@ -167,6 +168,7 @@ body {font-family: Verdana, sans-serif; margin: 0;}
 
 .month-event:hover {
   background-color: #009a43ce;
+  cursor: pointer;
 }
 
 /* Handles item for each event */
