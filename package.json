@@ -1,0 +1,32 @@
+{
+  "name": "Remote-Concurrent-Scheduler",
+  "version": "1.0.0",
+  "description": "Co-creator: Nancy Nettum Professor Advisor: John Nordlie Created by: Benjamin Stafford, Zachary Popek, and Jonathan Schmitz",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bstafford2017/Remote-Concurrent-Scheduler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bstafford2017/Remote-Concurrent-Scheduler/issues"
+  },
+  "homepage": "https://github.com/bstafford2017/Remote-Concurrent-Scheduler#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
+    "react-router-dom": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
