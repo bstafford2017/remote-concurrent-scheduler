@@ -1,5 +1,5 @@
 {
-  "name": "Remote-Concurrent-Scheduler",
+  "name": "remote-concurrent-scheduler",
   "version": "1.0.0",
   "description": "Co-creator: Nancy Nettum Professor Advisor: John Nordlie Created by: Benjamin Stafford, Zachary Popek, and Jonathan Schmitz",
   "main": "index.js",
