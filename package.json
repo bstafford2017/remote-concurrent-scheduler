@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/bstafford2017/Remote-Concurrent-Scheduler.git"
+    "url": "git+ssh://git@github.com/bstafford2017/remote-concurrent-scheduler.git"
   },
   "keywords": [],
   "author": "",
