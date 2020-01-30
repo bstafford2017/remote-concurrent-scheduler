@@ -8,10 +8,12 @@ app.use(logger)
 
 // Set static directory
 app.use('/', express.static(__dirname + '/client/html'));
+
 // Routes for API
 app.use('/api/event', require('./routes/api/event'))
 
 let port = process.env.PORT || 5000
 
+// Listen for request
 app.listen(port, () => console.log(`Server started on port ${port}`))
 
