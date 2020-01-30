@@ -1,4 +1,4 @@
-const con = require('../../utils/database')
+const con = require('../utils/database')
 
 function query(sql) {
   con.query(sql, (err, result) => 
