@@ -15,9 +15,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bstafford2017/Remote-Concurrent-Scheduler/issues"
+    "url": "https://github.com/bstafford2017/remote-concurrent-scheduler/issues"
   },
-  "homepage": "https://github.com/bstafford2017/Remote-Concurrent-Scheduler#readme",
+  "homepage": "https://github.com/bstafford2017/remote-concurrent-scheduler#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "express": "^4.17.1",
