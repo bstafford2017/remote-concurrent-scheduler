@@ -6,9 +6,8 @@ const app = express()
 // Middleware for logging requests
 app.use(logger)
 
-// Middleware for body parsing uploaded files
-app.use(fileupload())
-
+// Set static directory
+app.use('/', express.static(__dirname + '/client/html'));
 // Routes for API
 app.use('/api/event', require('./routes/api/event'))
 
