@@ -11,6 +11,7 @@ body {font-family: Verdana, sans-serif; margin: 0;}
   padding: 40px 0;
   background: #009a44;
   text-align: center;
+  height: 15%;
 }
 
 .month ul {
@@ -47,10 +48,6 @@ body {font-family: Verdana, sans-serif; margin: 0;}
   color: #005324;
   text-shadow: 5px 5px 5px #005324;
   text-decoration: none;
-}
-
-.table {
-  background-color: #f3f3f3;
 }
 
 /* Weekdays (Mon-Sun) */
@@ -95,6 +92,12 @@ body {font-family: Verdana, sans-serif; margin: 0;}
 
 .table {
   display: flex;
+  height: 85%;
+  margin-bottom: 0;
+}
+
+html, body {
+  height: 100%;
 }
 
 /* Change width scaling */
@@ -104,6 +107,7 @@ body {
 
 .main-content {
   flex: 1;
+  background-color: #f3f3f3;
 }
 
 /* Days (1-31) */
