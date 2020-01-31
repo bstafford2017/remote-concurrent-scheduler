@@ -7,7 +7,7 @@ const app = express()
 app.use(logger)
 
 // Set static directory
-app.use('/', express.static(__dirname + '/client/html'));
+app.use('/', express.static(__dirname + '/client'));
 
 // Routes for API
 app.use('/api/event', require('./routes/api/event'))

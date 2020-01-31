@@ -97,6 +97,11 @@ body {font-family: Verdana, sans-serif; margin: 0;}
   display: flex;
 }
 
+/* Change width scaling */
+body {
+  min-width: 785px;
+}
+
 .main-content {
   flex: 1;
 }
