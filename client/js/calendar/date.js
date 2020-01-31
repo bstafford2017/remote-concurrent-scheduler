@@ -12,7 +12,7 @@ showMonthCalendar()
 $('#by-week').click(() => {
     clear()
     $(".scale").show();
-    showWeekCalendar(true)
+    showWeekCalendar()
 })
 
 $('#by-month').click(() => {
@@ -142,10 +142,26 @@ function printWeek(date){
     $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').outerHeight() + "px; height: " + $('.scale div').outerHeight() + "px;\">ACM Meeting</div>")
 }
 
-// BUG: clicking back and forth with by week and by month
 function showWeekCalendar(positive){
     $('.row').remove()
     $('.week-by-week').append("<div id=\"0\" class=\"row\">")
+
+    if(typeof positive === 'undefined'){
+        // Make sure week has been populated at least once
+        if(week[0] === 0){
+            showWeekCalendar(true)
+        } else {
+            // Update header
+            if(Math.abs(week[0] - week[6]) <= 7){
+                changeHeader(currentMonth - 1, currentYear)
+                addToHeader(currentMonth, currentYear)
+            } else {
+                changeHeader(currentMonth, currentYear)
+            }
+            week.forEach(day => printWeek(day))
+        }
+        return
+    }
 
     // If on today's week, keep first as this
     let first = today.getDate() - today.getDay()
@@ -180,7 +196,7 @@ function showWeekCalendar(positive){
     if(Math.abs(week[0] - week[6]) <= 7){
         changeHeader(currentMonth, currentYear)
     }
-    //console.log(week)
+
     $('.week-by-week').append("</div>")
 }
 

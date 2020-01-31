@@ -15,57 +15,29 @@ $('.valid').mouseleave((event) => {
     $('#' + event.target.id + '>.week-event').show()
 })*/
 
+function resetElement() {
+    $('#' + previousId + '>.week-event').show()
+    $('#' + previousId + '>.month-event').show()
+    $('.item').remove()
+    clicked = false
+}
+
 // Handles clicked event
 $(document).click((event) => {
 
     // Check if clicked or not
-    if($('.modal'))
     if(!clicked){
-        $('#' + event.target.id + '>.month-event').hide()
-        $('#' + event.target.id + '>.week-event').hide()
-        $('#' + event.target.id).append("<button type=\"button\" id=\"create-event-btn\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">Create Event</button>")
-        $('#' + event.target.id).append("<button type=\"button\" id=\"see-more-btn\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">See More</button>")
-        previousId = event.target.id
-        clicked = true;
-    } else {
-        $('#' + previousId + '>.week-event').show()
-        $('#' + previousId + '>.month-event').show()
-        $('.item').remove()
-        clicked = false
-    }
-
-    // Check if id and class are defined
-    /*if(event.target.id && $(event.target).attr('class')){
-        // Check if cell is clicked
-        if($(event.target).attr('class').includes("valid")){
-            // If something is not selected (clicked)
-            if(!clicked){
-                $('#' + event.target.id + '>.month-event').hide()
-                $('#' + event.target.id + '>.week-event').hide()
-                $('#' + event.target.id).append("<button type=\"button\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">Create Event</button>")
-                $('#' + event.target.id).append("<button type=\"button\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">See More</button>")
-                clicked = true;
-            } else {
-
-                // If clicked same cell
-                if(event.target.id !== previousId){
-                    $('#' + previousId + '>.week-event').show()
-                    $('#' + previousId + '>.month-event').show()
-                    $('.item').remove()
-                    clicked = false
-                }
-            }
+        if(event.target.id > 0){
+            $('#' + event.target.id + '>.month-event').hide()
+            $('#' + event.target.id + '>.week-event').hide()
+            $('#' + event.target.id).append("<button type=\"button\" id=\"create-event-btn\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">Create Event</button>")
+            $('#' + event.target.id).append("<button type=\"button\" id=\"see-more-btn\" class=\"item\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\">See More</button>")
+            previousId = event.target.id
+            clicked = true;
         } else {
-            $('#' + previousId + '>.week-event').show()
-            $('#' + previousId + '>.month-event').show()
-            $('.item').remove()
-            clicked = false
+            resetElement()
         }
-        previousId = event.target.id
     } else {
-        $('#' + previousId + '>.week-event').show()
-        $('#' + previousId + '>.month-event').show()
-        $('.item').remove()
-        clicked = false
-    }*/
+        resetElement()
+    }
 })
