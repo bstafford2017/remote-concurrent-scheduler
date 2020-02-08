@@ -16,7 +16,7 @@
 
 /* Handles week event items */
 .month-event {
-  font-size: 12px;
+  font-size: 13px;
   background-color: #009a44;
   color: white;
   margin: 5px;
@@ -28,7 +28,7 @@
 
 /* Handles item for each event */
 .item {
-  font-size: 15px;
+  font-size: 13px;
   display: block;
   width: 80%;
   background-color: #ddd;
