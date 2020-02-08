@@ -16,6 +16,7 @@
 
 /* Handles week event items */
 .month-event {
+  font-size: 12px;
   background-color: #009a44;
   color: white;
   margin: 5px;
