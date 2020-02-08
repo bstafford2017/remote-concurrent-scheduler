@@ -80,6 +80,11 @@ body {
   border: solid 1px #ddd;
 }
 
+.valid:hover {
+  border: solid 1px #009a43;
+  cursor: pointer;
+}
+
 .invalid {
   color: #666;
   background-color: #ccc;

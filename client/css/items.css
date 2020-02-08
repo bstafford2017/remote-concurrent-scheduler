@@ -14,11 +14,6 @@
   border-radius: 10px;
 }
 
-.week-event:hover {
-  background-color: #009a43a1;
-  cursor: pointer;
-}
-
 /* Handles week event items */
 .month-event {
   background-color: #009a44;
@@ -28,11 +23,6 @@
   text-align: center;
   font-weight: 550;
   border-radius: 10px;
-}
-
-.month-event:hover {
-  background-color: #009a43ce;
-  cursor: pointer;
 }
 
 /* Handles item for each event */
