@@ -225,7 +225,8 @@ function printMonth(active, valid, row, date){
     
             }
         })*/
-        $("#" + date).append("<div class=\"month-event\">3pm - ACM Meeting</div>")
+        //$("#" + date).append("<div class=\"month-event\">3pm - ACM Meeting</div>")
+        $("#" + date).append("<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">3pm - ACM Meeting</div>")
     }
 }
 
