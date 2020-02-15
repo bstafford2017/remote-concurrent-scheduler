@@ -1,5 +1,5 @@
 .modal-body {
-    height: 410px;
+    min-height: 410px;
 }
 
 .view-header {

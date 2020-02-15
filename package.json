@@ -20,10 +20,13 @@
   "homepage": "https://github.com/bstafford2017/remote-concurrent-scheduler#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
+    "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "react-router-dom": "^5.1.2"
   },
