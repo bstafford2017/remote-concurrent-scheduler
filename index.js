@@ -10,7 +10,7 @@ app.use(logger)
 // Set static directories
 app.use('/', express.static(__dirname + '/client'));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'))
-app.use('/bootstrapjs', express.static(__dirname + '/node_modules/bootstrap/js/dist/'))
+app.use('/bootstrapjs', express.static(__dirname + '/node_modules/bootstrap/dist/js/'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'))
 app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'))
 
