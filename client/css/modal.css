@@ -1,0 +1,39 @@
+.modal-body {
+    height: 410px;
+}
+
+.view-header {
+
+}
+
+.view-item {
+    height: 30px;
+    font-size: 20px;
+    background-color: #009a44;
+    color: white;
+    border-radius: 5px;
+}
+
+.view-item-header {
+    
+}
+
+.view-item-title {
+    
+}
+
+.view-item-body {
+    font-size: 14px;
+    background-color: #eee;
+    color: black
+}
+
+.view-link {
+    text-decoration: none;
+    color: white;
+}
+
+.view-link:hover {
+    text-decoration: none;
+    color: #aaa;
+}
