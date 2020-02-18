@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const parser = require('cookie-parser')
 const logger = require('./utils/logger')
 const verifyToken = require('./utils/verifyToken')
+const obfuscate = require('./utils/obfuscate')
 
 const app = express()
 
@@ -14,6 +15,9 @@ app.use(parser())
 
 // Middleware for verifying token
 app.use('/calendar.html', verifyToken)
+
+// Middleware for obfuscating javascript
+app.use('/js', obfuscate)
 
 // Static directories for dependencies
 app.use('/', express.static(__dirname + '/client/', {index: 'login.html'}));
