@@ -13,7 +13,7 @@ $('#submit').click(function(event){
             date.setDate(date.getDate() + 1)
 
             // Set cookie
-            document.cookie = 'token=' + token + '; path=/; expires=' + date.toUTCString()
+            document.cookie = 'token=' + token + '; expires=' + date.toUTCString()
             window.location.replace('../html/calendar.html')
         },
         error: function(response){
