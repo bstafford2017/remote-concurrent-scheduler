@@ -1,18 +1,24 @@
-$('#submit').onclick(function(){
+$('#submit').click(function(event){
+    event.preventDefault()
     $.ajax({
         type: "post",
-        url: "login.php",
+        url: "../api/login",
         data: {
             username: $('#username').val(),
             password: $('#password').val()
         },
-        success: function(){
-            $('#alert').empty()
-            $('#alert').append("")
+        success: function(response){
+            let token = response.token
+            let date = new Date()
+            date.setDate(date.getDate() + 1)
+
+            // Set cookie
+            document.cookie = 'token=' + token + '; path=/; expires=' + date.toUTCString()
+            window.location.replace('../html/calendar.html')
         },
-        error: function(){
+        error: function(response){
             $('#alert').empty()
-            $('#alert').append("")
+            $('#alert').append(response)
         }
     })
 })

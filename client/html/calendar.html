@@ -1,5 +1,10 @@
 <!doctype html>
 <htmL lang="en">
+    <!--<script type="text/javascript">
+        const token = getItem('token')
+        if(typeof token === 'undefined')
+            window.location.replace('login.html')
+    </script>-->
     <head>
         <title>Calendar</title>
         <link rel="icon" type="image/png" href="../images/logo-circle.png">
@@ -16,16 +21,26 @@
 
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
-        <script src="../popper/popper.js"></script>
-        <script src="../bootstrapjs/bootstrap.js"></script>
-        
+        <!--<script src="../popper/popper.min.js"></script>-->
+        <script src="../bootstrapjs/bootstrap.js"></script>  
     </head>
     <body>
-        <!--<div id="spinner" class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>-->
-        </div>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sign Out</a>
+                </li>
+                </form>
+            </div>
+        </nav>
+
+        <!-- Header -->
         <div class="month">
             <ul>
                 <li id="prev" class="change"><a href="javascript:previous()">&#10094;</a></li>
@@ -70,6 +85,8 @@
                 <div class="week-by-week"></div>
             </div>
         </div>
+
+        <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
