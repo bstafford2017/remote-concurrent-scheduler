@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 function verifyToken(req, res, next) {
 
     const token = req.cookies.token
-    if(typeof req.cookies !== 'undefined'){
+    if(typeof token !== 'undefined'){
         // Verify token with jwt
         jwt.verify(token, 'secret-key', (err, authData) => {
             if(err) {
