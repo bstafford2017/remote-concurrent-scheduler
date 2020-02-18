@@ -14,7 +14,7 @@ $('#submit').click(function(event){
 
             // Set cookie
             document.cookie = 'token=' + token + '; expires=' + date.toUTCString()
-            window.location.replace('../html/calendar.html')
+            window.location.replace('calendar.html')
         },
         error: function(response){
             $('#alert').empty()

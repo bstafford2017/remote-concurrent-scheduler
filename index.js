@@ -13,10 +13,14 @@ app.use(logger)
 app.use(parser())
 
 // Middleware for verifying token
-app.use('/html/calendar.html', verifyToken)
+app.use('/calendar.html', verifyToken)
 
-// Set static directories
-app.use('/', express.static(__dirname + '/client'));
+// Static directories for HTML, CSS, and JS
+app.use('/', express.static(__dirname + '/client/html/'));
+app.use('/js', express.static(__dirname + '/client/js/'))
+app.use('/css', express.static(__dirname + '/client/css/'))
+
+// Static directories for dependencies
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'))
 app.use('/bootstrapjs', express.static(__dirname + '/node_modules/bootstrap/dist/js/'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'))

@@ -9,12 +9,12 @@ function verifyToken(req, res, next) {
             if(err) {
                 //res.status(500).json({ msg: err }) 
                 console.log(err) 
-                res.redirect('../html/login.html')
+                res.redirect('login.html')
             }
             next()
         })
     } else {
-        res.redirect('../html/login.html')
+        res.redirect('login.html')
     }
 }
 
