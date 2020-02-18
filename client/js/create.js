@@ -1,4 +1,4 @@
-$('#submit').onclick(function(){
+$('#submit').click(function(){
     $.ajax({
         type: "get",
         url: "create.php",
