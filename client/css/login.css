@@ -1,9 +1,15 @@
-.sign-up {
-    text-align: center;
-    padding-top: 15px;
-    color: #009a44;
+nav {
+    background-color: #009a44;
 }
 
-.sign-up:hover {
-    color: #009a44;
+nav a {
+    color: white;
+}
+
+nav a:hover {
+    color: #ccc;
+}
+
+.content {
+    padding-top: 5%;
 }

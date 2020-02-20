@@ -35,6 +35,11 @@ app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'))
 app.use('/api/event', require('./routes/api/event'))
 app.use('/api/user', require('./routes/api/user'))
 
+// Catch 404
+app.use((req, res, next) => {
+    res.redirect('error.html')
+})
+
 
 let port = process.env.PORT || 5000
 
