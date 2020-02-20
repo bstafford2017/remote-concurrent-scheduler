@@ -11,7 +11,7 @@ $('#submit').click(function(){
             projector: $('#projector').val(),
             seats: $('#seats').val()
         },
-        success: function(){
+        success: function(response){
             $('#alert').empty()
             $('#alert').append("")
         },
