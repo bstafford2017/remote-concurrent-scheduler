@@ -2,7 +2,7 @@ $('#submit').click(function(event){
     event.preventDefault()
     $.ajax({
         type: "post",
-        url: "../api/login",
+        url: "../api/user/login",
         data: {
             username: $('#username').val(),
             password: $('#password').val()
@@ -18,7 +18,7 @@ $('#submit').click(function(event){
         },
         error: function(response){
             $('#alert').empty()
-            $('#alert').append(response)
+            $('#alert').append('<div class="alert alert-danger" role="alert">System Error: ' + response.responseText + '</div>')
         }
     })
 })

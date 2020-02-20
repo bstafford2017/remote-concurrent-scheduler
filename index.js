@@ -1,11 +1,16 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')
 const parser = require('cookie-parser')
 const logger = require('./utils/logger')
 const verifyToken = require('./utils/verifyToken')
 const obfuscate = require('./utils/obfuscate')
 
 const app = express()
+
+// Middleware for body parsing
+app.use(express.urlencoded({extended: true}));
+
+// Middleware for parsing JSON
+app.use(express.json());
 
 // Middleware for logging requests
 app.use(logger)
@@ -26,21 +31,10 @@ app.use('/bootstrapjs', express.static(__dirname + '/node_modules/bootstrap/dist
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'))
 app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'))
 
-app.post('/api/login', (req, res) => {
-    // Send signed JWT token
-    jwt.sign({username: req.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
-        if(err) 
-            res.sendStatus(500)
-        else 
-            res.json({ token })
-    })
-})
-
-//localStorage.setItem('token', token)
-//localStorage.getItem('token')
-
 // Routes for API
 app.use('/api/event', require('./routes/api/event'))
+app.use('/api/user', require('./routes/api/user'))
+
 
 let port = process.env.PORT || 5000
 
