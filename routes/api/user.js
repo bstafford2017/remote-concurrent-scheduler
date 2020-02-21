@@ -19,9 +19,9 @@ router.post('/login', (req, res) => {
         if(err)
             throw err
 
-        // Check if defined
-        if(typeof result === 'undefined')
-            res.sendStatus(400)
+        // Check if any results
+        if(result.length === 0)
+            return res.sendStatus(400)
 
         // Check if succcessful login
         if(result[0].username === req.body.username && result[0].password === req.body.password) {
@@ -32,7 +32,7 @@ router.post('/login', (req, res) => {
                 res.json({ token })
             })
         } else {
-            res.sendStatus(400)
+            return res.sendStatus(400)
         }
     })
 })

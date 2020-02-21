@@ -26,3 +26,15 @@ nav a:hover {
 .content {
     padding-top: 2.5%;
 }
+
+.footer {
+    background-color: black;
+    color: #00aa4f;
+    padding: 10px;
+    text-align: center;
+    line-height: 1;
+}
+
+.footer p:last-child {
+    margin: 0;
+}

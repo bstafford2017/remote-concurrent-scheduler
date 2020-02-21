@@ -17,8 +17,7 @@ $('#submit').click(function(event){
             window.location.replace('calendar.html')
         },
         error: function(response){
-            $('#alert').empty()
-            $('#alert').append('<div class="alert alert-danger" role="alert">System Error: ' + response.responseText + '</div>')
+            $('#alert').show()
         }
     })
 })
