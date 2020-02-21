@@ -1,13 +1,26 @@
+.navbar-header {
+    background-color: black;
+}
+
+.logo {
+    width: 5250x;
+    height: 75px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
 nav {
-    background-color: #009a44;
+    background-color: black;
 }
 
 nav a {
-    color: white;
+    color: #00aa4f;
+    border-bottom: solid transparent 2px;
 }
 
 nav a:hover {
-    color: #ccc;
+    color: #00aa4f;
+    border-bottom: solid #f36f21 2px;
 }
 
 .content {
