@@ -1,10 +1,5 @@
 <!doctype html>
 <htmL lang="en">
-    <!--<script type="text/javascript">
-        const token = getItem('token')
-        if(typeof token === 'undefined')
-            window.location.replace('login.html')
-    </script>-->
     <head>
         <title>Calendar</title>
         <link rel="icon" type="image/png" href="../images/logo-circle.png">
@@ -14,6 +9,7 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/document.css">
+        <link rel="stylesheet" type="text/css" href="css/navbar.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
         <link rel="stylesheet" type="text/css" href="css/table.css">
         <link rel="stylesheet" type="text/css" href="css/items.css">
@@ -25,21 +21,44 @@
         <script src="../bootstrapjs/bootstrap.js"></script>  
     </head>
     <body>
-        <!-- Header -->
-        <div class="month">
-            <ul>
-                <li id="prev" class="change"><a href="javascript:previous()">&#10094;</a></li>
-                <li id="next" class="change"><a href="javascript:next()">&#10095;</a></li>
-                <li id="month"></li>
-                <li style="font-size: 17px">
-                    <input id="by-week" type="radio" name="selector" value="week">
-                    <label for="by-week"> By Week</label>
-                    <input id="by-month" type="radio" name="selector" value = "month" checked>
-                    <label for="by-month"> By Month</label>
-                    <button class="btn btn-secondary" id="signout">Sign out</button>
-                </li>
-            </ul>
+        <!-- Navbar -->
+        <div class="navbar-header">
+            <img class="logo" src="images/new_logo.png" style="position: absolute">
+
+            <!-- Header -->
+            <div class="month">
+                <ul>
+                    <li id="prev" class="change"><a href="javascript:previous()">&#10094;</a></li>
+                    <li id="next" class="change"><a href="javascript:next()">&#10095;</a></li>
+                    <li id="month"></li>
+                    <li style="font-size: 17px">
+                        <input id="by-week" type="radio" name="selector" value="week">
+                        <label for="by-week"> By Week</label>
+                        <input id="by-month" type="radio" name="selector" value = "month" checked>
+                        <label for="by-month"> By Month</label>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#">Remote Concurrent Scheduler</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="login.html">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a id="signout" class="nav-link" href="#">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         <div class="table">
             <div class="scale">
                 <div>6a</div>

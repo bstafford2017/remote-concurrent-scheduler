@@ -120,7 +120,7 @@ function changeAndCheck(valueToCheck, changeToValue){
 
 function printWeek(date){
     if(today.getDate() === date & today.getMonth() === currentMonth && today.getFullYear() === currentYear){
-        $("#0").append("<div id=\"" + date + "\" class=\"active valid\">" + date)
+        $("#0").append("<div id=\"" + date + "\" class=\"active-date valid\">" + date)
     } else {
         $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
@@ -202,7 +202,7 @@ function showWeekCalendar(positive){
 
 function printMonth(active, valid, row, date){
     if(active && valid){
-        $("#row-" + row).append("<div id=\"" + date + "\" class=\"active valid\">" + date)
+        $("#row-" + row).append("<div id=\"" + date + "\" class=\"active-date valid\">" + date)
     } else if(valid){
         $("#row-" + row).append("<div id=\"" + date + "\" class=\"valid\">" + date)
     } else {

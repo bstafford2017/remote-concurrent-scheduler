@@ -92,7 +92,7 @@ body {
 }
 
 /* Handle current date */
-.active {
+.active-date {
   background-color: #009a431e;
   border: solid 1px #009a44;
   color: #000;
