@@ -1,6 +1,6 @@
 /* Month */
 #month {
-  font-size: 22px;  
+  font-size: 35px;  
 }
 
 .month {
@@ -20,17 +20,20 @@ ul {
 .month ul li {
   color: white;
   font-size: 25px;
-  text-transform: uppercase;
   letter-spacing: 3px;
+  display: inline;
 }
 
-/* For side arrows */
+.month ul li:last-child {
+  display: block;
+}
+
 #prev {
-  display: inline;
+  padding-right: 20px;
 }
 
 #next {
-  display: inline;
+  padding-left: 20px;
 }
 
 .change a{
@@ -39,7 +42,21 @@ ul {
 }
 
 .change a:hover {
-  color: #005324;
-  text-shadow: 5px 5px 5px #005324;
+  color: #f36f21;
   text-decoration: none;
+}
+
+/* Change radio button color */
+input[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #00aa4f;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
 }
