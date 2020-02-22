@@ -2,19 +2,6 @@
     padding-top: 5%;
 }
 
-.card {
-    background-color: #eee;
-}
-
-#submit {
-    background-color: #f36f21;
-    border: none;
-}
-
-#submit:hover {
-    opacity: 0.6;
-}
-
 .footer {
     background-color: black;
     color: #00aa4f;

@@ -8,6 +8,7 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/card.css">
 
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
@@ -47,7 +48,29 @@
             </div>
         </nav>
 
-        <h2>Manage Buildings</h2>
+        <div class="content">
+            <div class="card col-sm-4 offset-sm-4 shadow p-3 mb-5 rounded">
+                <div>
+                    <h2 style="text-align: center;">Create Building</h2>
+                </div>
+                <div class="card-body">
+                    <div id="alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Invalid login. Please try again.
+                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="username">Building Name</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <button type="submit" id="submit" class="btn btn-secondary col-sm-4 offset-sm-4">Create</button>
+                    </form>
+                </div> 
+            </div>
+        </div>
+
         <script type="text/javascript" src="js/signout.js"></script>
     </body>
 </html>
