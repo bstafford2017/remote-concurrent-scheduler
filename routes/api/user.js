@@ -12,20 +12,19 @@ const router = express.Router()
 
 // Get particular user
 router.post('/login', (req, res) => {
-    const sql = `SELECT * FROM users WHERE username = '${req.body.username}' AND password = '${req.body.password}';`
+    const username = req.body.username.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    const password = req.body.password;
+
+    const sql = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}';`
 
     con.query(sql, (err, result) => {
-        // Check if error in query
         if(err)
             throw err
 
-        // Check if any results
         if(result.length === 0)
             return res.sendStatus(400)
 
-        // Check if succcessful login
         if(result[0].username === req.body.username && result[0].password === req.body.password) {
-            // Send signed JWT token
             jwt.sign({username: req.body.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
                 if(err) 
                     throw err

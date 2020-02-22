@@ -152,7 +152,7 @@ function showWeekCalendar(positive){
             showWeekCalendar(true)
         } else {
             // Update header
-            if(Math.abs(week[0] - week[6]) <= 7){
+            if(Math.abs(week[0] - week[6]) > 7){
                 changeHeader(currentMonth - 1, currentYear)
                 addToHeader(currentMonth, currentYear)
             } else {
