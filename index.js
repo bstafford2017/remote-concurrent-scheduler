@@ -19,7 +19,7 @@ app.use(logger)
 app.use(parser())
 
 // Middleware for verifying token
-app.use('/calendar.html', verifyToken)
+app.use(['/calendar.html', '/manageBuildings.html', '/manageRooms.html', '/manageUsers.html'], verifyToken)
 
 // Middleware for obfuscating javascript
 app.use('/js', obfuscate)

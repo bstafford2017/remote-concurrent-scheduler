@@ -10,6 +10,34 @@ router.get('/', (req, res) => {
   query(sql, res)
 })
 
+// Check if user is admin
+router.get('/admin', (req, res) => {
+    const token = req.cookies.token;
+
+    jwt.verify(token, 'secret-key', (err, authData) => {
+        if(err) {
+            console.log(err) 
+            res.redirect('login.html')
+        }
+
+        const sql = `SELECT * FROM users WHERE username = '${authData.username}';`
+
+        con.query(sql, (err, result) => {
+            if(err)
+                throw err
+
+            if(result.length === 0)
+                return res.sendStatus(400)
+            
+            if(result[0].admin === 1) {
+                res.json({ admin: 'true'})
+            } else {
+                res.json({ admin: 'false'}) 
+            }
+        })
+    })
+})
+
 // Get particular user
 router.post('/login', (req, res) => {
     const username = req.body.username.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');

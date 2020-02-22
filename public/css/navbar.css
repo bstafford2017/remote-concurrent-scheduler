@@ -9,6 +9,15 @@
     padding-left: 10px;
 }
 
+/* For active tab */
+.active a {
+    color: #f36f21;
+}
+
+.active a:hover {
+    color: #f36f21;
+}
+
 nav {
     background-color: black;
 }
