@@ -5,10 +5,10 @@ const con = require('../../utils/database')
 const router = express.Router()
 
 // Get all users
-/*router.get('/', (req, res) => {
-  const sql = 'SELECT * FROM events'
-  query(sql)
-})*/
+router.get('/', (req, res) => {
+  const sql = 'SELECT * FROM users'
+  query(sql, res)
+})
 
 // Get particular user
 router.post('/login', (req, res) => {

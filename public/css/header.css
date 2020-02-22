@@ -24,7 +24,7 @@ ul {
   display: inline;
 }
 
-.month ul li:last-child {
+.month ul li:first-child {
   display: block;
 }
 

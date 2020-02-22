@@ -25,7 +25,7 @@ app.use('/calendar.html', verifyToken)
 app.use('/js', obfuscate)
 
 // Static directories for dependencies
-app.use('/', express.static(__dirname + '/client/', {index: 'login.html'}));
+app.use('/', express.static(__dirname + '/public/', {index: 'login.html'}));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'))
 app.use('/bootstrapjs', express.static(__dirname + '/node_modules/bootstrap/dist/js/'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'))

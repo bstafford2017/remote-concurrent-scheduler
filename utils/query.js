@@ -1,9 +1,9 @@
 const con = require('../utils/database')
 
-function query(sql) {
+function sendJSONResultBack(sql, res) {
   con.query(sql, (err, result) => 
-    (err) ? res.stats(400) : res.json(result)
+    (err) ? res.sendStatus(400) : res.json(result)
   )
 }
 
-module.exports = query
+module.exports = sendJSONResultBack
