@@ -9,13 +9,12 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
         <link rel="stylesheet" type="text/css" href="css/card.css">
-
+        <link rel="stylesheet" type="text/css" href="css/manageBuilding.css">
+        
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
         <!--<script src="../popper/popper.min.js"></script>-->
         <script src="../bootstrapjs/bootstrap.js"></script>
-
-        <script type="text/javascript" src="js/calendar/admin.js"></script>
         <script>
             $(() => $('#manage-buildings').addClass('active'))
         </script>
@@ -23,7 +22,7 @@
     <body>
         <!-- Navbar -->
         <div class="navbar-header">
-            <img class="logo" src="images/new_logo.png">
+            <img class="logo img-fluid" src="images/new_logo.png">
         </div>
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="#">Remote Concurrent Scheduler</a>
@@ -63,14 +62,29 @@
                     <form>
                         <div class="form-group">
                             <label for="username">Building Name</label>
-                            <input type="text" class="form-control" id="username" required>
+                            <input type="text" class="form-control" id="building-name" required>
+                            <small class="form-text text-muted">Note: Special characters will be remove</small>
                         </div>
-                        <button type="submit" id="submit" class="btn btn-secondary col-sm-4 offset-sm-4">Create</button>
+                        <button id="create-building" class="btn btn-secondary col-sm-4 offset-sm-4">Create</button>
                     </form>
                 </div> 
             </div>
-        </div>
+            <div class="card col-sm-6 offset-sm-3 shadow p-3 mb-5 rounded">
+                <div class="card-header">
+                    <h2 style="text-align: center;">Manage Buildings</h2>
+                    
+                </div>
+                <div class="card-body" id="building-list">
 
+                </div>
+                <div class="card-footer">
+                    <button id="save" class="btn btn-secondary">Save</button>
+                </div>
+            </div>
+        </div>
         <script type="text/javascript" src="js/signout.js"></script>
+        <script type="text/javascript" src="js/calendar/admin.js"></script>
+        <script type="text/javascript" src="js/building/create.js"></script>
+        <script type="text/javascript" src="js/building/get.js"></script>
     </body>
 </html>

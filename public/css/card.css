@@ -6,6 +6,14 @@
     background-color: #eee;
 }
 
+.card-header {
+    background-color: #eee;
+}
+
+.card-footer {
+    background-color: #eee;
+}
+
 .btn {
     background-color: #f36f21;
     border: none;
