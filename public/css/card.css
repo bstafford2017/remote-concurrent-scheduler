@@ -12,5 +12,6 @@
 }
 
 .btn:hover {
-    opacity: 0.6;
+    background-color: #f36f21;
+    opacity: 0.7;
 }
