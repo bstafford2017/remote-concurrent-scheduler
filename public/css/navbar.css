@@ -28,12 +28,13 @@ nav {
     background-color: black;
 }
 
+/* Overwrite navbar-dark color*/
 nav a {
-    color: #00aa4f;
+    color: #00aa4f !important;
     border-bottom: solid transparent 2px;
 }
 
 nav a:hover {
-    color: #00aa4f;
+    color: #00aa4f !important;
     border-bottom: solid #f36f21 2px;
 }

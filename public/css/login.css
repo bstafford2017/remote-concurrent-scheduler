@@ -8,6 +8,11 @@
     padding: 10px;
     text-align: center;
     line-height: 1;
+
+    /* Footer stay at the botoom */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer p:last-child {
