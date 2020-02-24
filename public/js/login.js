@@ -1,3 +1,7 @@
+if(document.cookie){
+    window.location.replace('calendar.html')
+}
+
 $('#submit').click(function(event){
     event.preventDefault()
     $.ajax({
