@@ -1,0 +1,25 @@
+.content {
+    padding-top: 2%;
+}
+
+.card {
+    background-color: #eee;
+}
+
+.card-header {
+    background-color: #eee;
+}
+
+.card-footer {
+    background-color: #eee;
+}
+
+.btn {
+    background-color: #f36f21;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #f36f21;
+    opacity: 0.7;
+}

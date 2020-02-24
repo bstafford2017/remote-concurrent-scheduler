@@ -1,0 +1,39 @@
+html, body {
+    /*font-family: Arial, Helvetica, sans-serif;*/
+    font-family: Verdana, sans-serif; 
+}
+
+.navbar-header {
+    background-color: black;
+    height: 95px;
+}
+
+.logo {
+    height: 75px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+/* For active tab */
+.active a {
+    color: #f36f21;
+}
+
+.active a:hover {
+    color: #f36f21;
+}
+
+nav {
+    background-color: black;
+}
+
+/* Overwrite navbar-dark color*/
+nav a {
+    color: #00aa4f !important;
+    border-bottom: solid transparent 2px;
+}
+
+nav a:hover {
+    color: #00aa4f !important;
+    border-bottom: solid #f36f21 2px;
+}
