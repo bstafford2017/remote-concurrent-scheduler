@@ -3,13 +3,13 @@ $.ajax({
     type: 'get',
     url: 'api/building',
     success: (response) => {
-        $('#building-list').append(`<div class="col-sm-2 d-inline">Select</div>
-                                    <div class="col-sm-10 d-inline">Edit Building Name</div>`)
+        $('#building-list').append(`<div class="col-2 d-inline">Select</div>
+                                    <div class="col-10 d-inline">Edit Building Name</div>`)
         response.forEach(building => {
             $('#building-list').append(
                 `<div class="building" id="${building.name}">
-                    <input type="checkbox" class="checkbox">
-                    <input type="text" class="text form-control col-xs-10 offset-xs-1 col-sm-10 offset-sm-1 d-inline" value="${building.name}">
+                    <input type="checkbox" class="checkbox col-1">
+                    <input type="text" class="text form-control col-10 d-inline" value="${building.name}">
                 </div>`)
         })
     },
