@@ -3,7 +3,7 @@ $.ajax({
     type: 'get',
     url: 'api/building',
     success: (response) => {
-        $('#building-list').append(`<div class="col-2 d-inline">Select</div>
+        $('#building-list').append(`<div class="col-2 d-inline" style="padding: 0px">Select</div>
                                     <div class="col-10 d-inline">Edit Building Name</div>`)
         response.forEach(building => {
             $('#building-list').append(
