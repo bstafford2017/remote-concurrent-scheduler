@@ -14,6 +14,8 @@ $.ajax({
                         <option value="0" ${(user.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(user.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
+                    <td><button class="btn btn-primary">Update</button></td>
+                    <td><button class="btn btn-primary">Delete</button></td>
                 </tr>`)
         })
     },
