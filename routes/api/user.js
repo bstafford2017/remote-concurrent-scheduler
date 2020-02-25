@@ -40,8 +40,8 @@ router.get('/admin', (req, res) => {
 
 // Get particular user
 router.post('/login', (req, res) => {
-    const username = req.body.username.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
-    const password = req.body.password;
+    const username = req.body.username.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
+    const password = req.body.password
 
     const sql = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}';`
 
@@ -65,17 +65,57 @@ router.post('/login', (req, res) => {
 })
 
 // Create a user
-/*router.post('/create', (req, res) => {
-    const sql = "INSERT INTO users VALUES ('" + req.body.username + "', '" + 
-    req.body.password + "', '" + req.body.buiding + "', " + req.body.date + ", " + 
-    req.body.time + ", " + req.body.recur + ")"
-    query(sql)
-})*/
+router.post('/create', (req, res) => {
+    const user = {
+        username: req.body.username,
+        password: req.body.password,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        admin: parseInt(req.body.admin)
+    }
+    if(!user.username || !user.password || !user.fname || !user.lname || typeof user.admin === 'undefined')
+        return res.sendStatus(400)
+    const sql = `INSERT INTO users VALUES ('${user.username}', '${user.password}', 
+        ${user.admin}, '${user.fname}', '${user.lname}')`
+    con.query(sql, (err, result) => {
+        if(err)
+            throw err
+    })
+})
+
+// Update a user
+router.post('/update', (req, res) => {
+    const user = {
+        username: req.body.username,
+        password: req.body.password,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        admin: parseInt(req.body.admin)
+    }
+    if(!user.username || !user.password || !user.fname || !user.lname || typeof user.admin === 'undefined')
+        return res.sendStatus(400)
+    const sql = `UPDATE users SET password = '${user.password}', admin = ${user.admin}, f_name = '${user.fname}', l_name = '${user.lname}' WHERE username = '${user.username}'`
+    con.query(sql, (err, result) => {
+        if(err)
+            throw err
+    })
+})
 
 // Delete a user
-/*router.delete('/:id', (req, res) => {
-  const sql = "DELETE FROM events WHERE title = '" + req.params.id + "', "
-  query(sql)
-})*/
+router.post('/delete', (req, res) => {
+    const usernames = req.body.usernames
+    if(typeof usernames !== 'undefined'){
+        usernames.forEach(username => {
+            const deleteBuilding = `DELETE FROM users WHERE username = '${username}'`
+            con.query(deleteBuilding, (err, result) => {
+                if(err)
+                    throw err
+            })
+        })
+        res.json({ usernames })
+    } else {
+        res.sendStatus(400)
+    }
+})
 
 module.exports = router

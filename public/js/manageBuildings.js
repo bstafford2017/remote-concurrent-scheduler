@@ -2,7 +2,7 @@
 $.ajax({
     type: 'get',
     url: 'api/building',
-    success: (response) => {
+    success: function(response) {
         $('#building-list').append(`<div class="col-2 d-inline" style="padding: 0px">Select</div>
                                     <div class="col-10 d-inline">Edit Building Name</div>`)
         response.forEach(building => {
@@ -13,7 +13,7 @@ $.ajax({
                 </div>`)
         })
     },
-    error: (response) => {
+    error: function(response) {
         $('#alert').empty()
         $('#alert').append(response)
     }
@@ -40,7 +40,7 @@ $('#create-building').click((event) => {
                     <input type="text" class="text form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">
                 </div>`)
         },
-        error: function(){
+        error: function(response){
             $('#alert').empty()
             $('#alert').append(response)
         }
@@ -71,13 +71,13 @@ $('#update-building').click((event) => {
         data: {
             names: namesToUpdate
         },
-        success: (response) => {
+        success: function(response) {
             response.listOfNames.forEach((name) => {
                 $('#' + response.name).html(`<input id="${response.name}-check" type="checkbox" class="checkbox">
                 <input id="${response.name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">`)
             })
         },
-        error: (response) => {
+        error: function(response) {
             $('#alert').empty()
             $('#alert').append(response)
         }

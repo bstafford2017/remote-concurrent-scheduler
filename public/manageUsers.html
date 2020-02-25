@@ -10,7 +10,9 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/card.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
+        <link rel="stylesheet" type="text/css" href="css/manageUsers.css">
 
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
@@ -49,9 +51,76 @@
             </div>
         </nav>
 
-        <h2>Manage Users</h2>
-
-        <div class="content"></div>
+        <div class="content row">
+            <div class="card col-lg-3 offset-lg-1 shadow p-3 mb-5 rounded" id="create-card">
+                <div>
+                    <h2 style="text-align: center;">Create User</h2>
+                </div>
+                <div class="card-body">
+                    <div id="alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Invalid login. Please try again.
+                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="user-username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="user-password">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="user-fname">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" id="user-lname">
+                            </div>
+                        </div>
+                        <div class="form-group form-check col-6 offset-3">
+                            <label for="user-admin">Administrator</label>
+                            <select class="form-control" id="user-admin">
+                                <option selected="" disabled="" hidden="">Select</option>
+                                <option value="0">False</option>
+                                <option value="1">True</option>
+                            </select>
+                        </div>
+                        <button id="create-user" class="btn btn-secondary col-4 offset-4">Create</button>
+                    </form>
+                </div> 
+            </div>
+            <div class="card col-lg-6 offset-lg-1 shadow p-3 mb-5 rounded" id="manage-card">
+                <div class="card-header">
+                    <h2 style="text-align: center;">Manage Users</h2>
+                    
+                </div>
+                <div class="card-bod>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Admin</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button id="delete-user" class="btn btn-secondary col-4 offset-1 col-sm-2 offset-sm-3">Delete</button>
+                    <button id="update-user" class="btn btn-secondary col-4 offset-2 col-sm-2 offset-sm-3">Update</button>
+                </div>
+            </div>
+        </div>
 
         <footer class="footer">
             <p>Remote Concurrent Scheduler 2020</p>
@@ -61,5 +130,6 @@
         </footer>
 
         <script type="text/javascript" src="js/signout.js"></script>
+        <script type="text/javascript" src="js/manageUsers.js"></script>
     </body>
 </html>

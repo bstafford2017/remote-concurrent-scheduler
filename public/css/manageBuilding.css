@@ -1,3 +1,11 @@
 .building {
     padding: 10px;
 }
+
+.row {
+    margin: 0px;
+}
+
+#create-card {
+    height: 250px;
+}
