@@ -7,7 +7,7 @@ $.ajax({
                                     <div class="col-10 d-inline">Edit Building Name</div>`)
         response.forEach(building => {
             $('#building-list').append(
-                `<div class="building" id="${building.name}">
+                `<div class="building" id="${building.name.replace(' ', '_')}">
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-10 d-inline" value="${building.name}">
                 </div>`)
@@ -35,10 +35,11 @@ $('#create-building').click((event) => {
         },
         success: function(response){
             $('#building-list').append(
-                `<div class="building" id="${response.name}">
-                    <input type="checkbox" class="checkbox">
-                    <input type="text" class="text form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">
+                `<div class="building" id="${response.name.replace(' ', '_')}">
+                    <input type="checkbox" class="checkbox col-1">
+                    <input type="text" class="text form-control col-10 d-inline" value="${response.name}">
                 </div>`)
+            $('#building-name').val('')
         },
         error: function(response){
             $('#alert').empty()
@@ -54,7 +55,7 @@ $('#update-building').click((event) => {
     const namesToUpdate = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
         const updatedName = {
-            oldName: $(this).parent().attr('id'),
+            oldName: $(this).parent().attr('id').replace('_', ' '),
             newName: $(this).parent().children('.text').val()
         }
         namesToUpdate.push(updatedName)
@@ -84,15 +85,13 @@ $('#update-building').click((event) => {
     })
 })
 
-/* NEED TO ACCOUNT FOR SPACES IN NAME! */
-
 // Delete a building
 $('#delete-building').click((event) => {
     event.preventDefault()
 
     const namesToDelete = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        let name = $(this).parent().attr('id')
+        let name = $(this).parent().attr('id').replace('_', ' ')
         namesToDelete.push(name)
     })
 
@@ -108,7 +107,7 @@ $('#delete-building').click((event) => {
         },
         success: function(response){
             response.namesToDelete.forEach((name) => {
-                $('#' + name).remove()
+                $('#' + name.replace(' ', '_')).remove()
             })
         },
         error: function(response){

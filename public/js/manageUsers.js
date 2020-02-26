@@ -14,8 +14,8 @@ $.ajax({
                         <option value="0" ${(user.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(user.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
-                    <td><button class="btn btn-primary">Update</button></td>
-                    <td><button class="btn btn-primary">Delete</button></td>
+                    <td><button class="update-user btn btn-secondary">Update</button></td>
+                    <td><button class="delete-user btn btn-secondary">Delete</button></td>
                 </tr>`)
         })
     },
@@ -69,7 +69,7 @@ $('#create-user').click((event) => {
 })
 
 // Update a user
-$('#update-user').click((event) => {
+$('.update-user').click((event) => {
     event.preventDefault()
 
     const users = []
@@ -108,7 +108,7 @@ $('#update-user').click((event) => {
 /* NEED TO ACCOUNT FOR SPACES IN NAME! */
 
 // Delete a building
-$('#delete-user').click((event) => {
+$('.delete-user').click((event) => {
     event.preventDefault()
 
     const usernames = []
