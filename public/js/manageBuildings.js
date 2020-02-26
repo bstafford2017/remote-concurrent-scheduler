@@ -60,7 +60,7 @@ $('#update-building').click((event) => {
         }
         namesToUpdate.push(updatedName)
     })
-    
+    updatedName.newName.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '')
     if(namesToUpdate.length === 0) {
         $('#manage-alert').show()
         $('#manage-alert-text').empty()
