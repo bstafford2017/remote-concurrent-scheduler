@@ -24,8 +24,8 @@ $('#create-building').click((event) => {
     event.preventDefault()
     const name = $('#building-name').val()
     if(!name) {
-        $('#alert').empty()
-        $('#alert').append("Invalid name")
+        $('#create-alert').empty()
+        $('#create-alert').append("Invalid name")
     }
     $.ajax({
         type: 'post',
@@ -42,8 +42,8 @@ $('#create-building').click((event) => {
             $('#building-name').val('')
         },
         error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
+            $('#create-alert').empty()
+            $('#create-alert').append(response)
         }
     })
 })
@@ -60,29 +60,34 @@ $('#update-building').click((event) => {
         }
         namesToUpdate.push(updatedName)
     })
-
-    const name = $('#building-name').val()
-    if(!name) {
-        $('#alert').empty()
-        $('#alert').append("Invalid name")
+    
+    if(namesToUpdate.length === 0) {
+        $('#manage-alert').show()
+        $('#manage-alert-text').empty()
+        $('#manage-alert-text').append("Please select a name(s) to delete")
+    } else if(namesToUpdate.some(x => x.newName.replace(/\s/g, '') === '')) {
+        $('#manage-alert').show()
+        $('#manage-alert-text').empty()
+        $('#manage-alert-text').append("Please enter a valid a name(s)")
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '/api/building/update',
+            data: {
+                names: namesToUpdate
+            },
+            success: function(response) {
+                response.listOfNames.forEach((name) => {
+                    $('#' + response.name).html(`<input id="${response.name}-check" type="checkbox" class="checkbox">
+                    <input id="${response.name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">`)
+                })
+            },
+            error: function(response) {
+                $('#create-alert').empty()
+                $('#create-alert').append(response)
+            }
+        })
     }
-    $.ajax({
-        type: 'post',
-        url: '/api/building/update',
-        data: {
-            names: namesToUpdate
-        },
-        success: function(response) {
-            response.listOfNames.forEach((name) => {
-                $('#' + response.name).html(`<input id="${response.name}-check" type="checkbox" class="checkbox">
-                <input id="${response.name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">`)
-            })
-        },
-        error: function(response) {
-            $('#alert').empty()
-            $('#alert').append(response)
-        }
-    })
 })
 
 // Delete a building
@@ -96,23 +101,25 @@ $('#delete-building').click((event) => {
     })
 
     if(namesToDelete.length === 0) {
-        $('#alert').empty()
-        $('#alert').append("Please select a name(s) to delete")
+        $('#manage-alert').show()
+        $('#manage-alert-text').empty()
+        $('#manage-alert-text').append("Please select a name(s) to delete")
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '/api/building/delete',
+            data: {
+                names: namesToDelete
+            },
+            success: function(response){
+                response.namesToDelete.forEach((name) => {
+                    $('#' + name.replace(' ', '_')).remove()
+                })
+            },
+            error: function(response){
+                $('#manage-alert').empty()
+                $('#manage-alert').append(response)
+            }
+        })
     }
-    $.ajax({
-        type: 'post',
-        url: '/api/building/delete',
-        data: {
-            names: namesToDelete
-        },
-        success: function(response){
-            response.namesToDelete.forEach((name) => {
-                $('#' + name.replace(' ', '_')).remove()
-            })
-        },
-        error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
-        }
-    })
 })
