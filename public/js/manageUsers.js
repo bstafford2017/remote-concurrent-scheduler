@@ -1,3 +1,15 @@
+function alert(selector, text){
+    $(selector).show()
+    $(selector + '-text').empty()
+    $(selector + '-text').append(text)
+}
+
+function filter(object){
+    return Object.values(object).some(field => {
+        field.replace(' ', '').replace === ''
+    })
+}
+
 // Get all users
 $.ajax({
     type: 'get',
@@ -5,7 +17,7 @@ $.ajax({
     success: function(response) {
         response.forEach(user => {
             $('#user-list').append(
-                `<tr class="user" id="${user.username}"></td>
+                `<tr class="user" id="${user.username.replace(' ', '_')}"></td>
                     <td><input type="text" class="form-control" value="${user.username}"></td>
                     <td><input type="password" class="form-control" value="${user.password}"></td>
                     <td><input type="text" class="form-control" value="${user.f_name}"></td>
@@ -28,28 +40,30 @@ $.ajax({
 // Create a user
 $('#create-user').click((event) => {
     event.preventDefault()
-    const username = $('#user-username').val()
-    const password = $('#user-password').val()
-    const fname = $('#user-fname').val()
-    const lname = $('#user-lname').val()
-    const admin = $('#user-admin').val()
-    if(!username || !password || !fname || !lname || !admin) {
-        $('#alert').empty()
-        $('#alert').append("Invalid entry")
+    const user = {
+        username: $('#user-username').val(),
+        password: $('#user-password').val(),
+        fname: $('#user-fname').val(),
+        lname: $('#user-lname').val(),
+        admin: $('#user-admin').val()
+    }
+
+    if(Object.values(user).some(field => field.replace('_', ' ') === '')) {
+        alert('#create-alert', 'Please enter a valid value')
     }
     $.ajax({
         type: 'post',
         url: '/api/user/create',
         data: {
-            username,
-            password,
-            fname,
-            lname,
-            admin
+            username: user.username,
+            password: user.password,
+            fname: user.fname,
+            lname: user.lname,
+            admin: user.admin
         },
         success: function(response){
             $('#building-list').append(
-                `<div class="user" id="${response.username}">
+                `<div class="user" id="${response.username.replace(' ', '_')}">
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-5 d-inline" value="${response.username}">
                     <input type="password" class="text form-control col-5 d-inline" value="${user.password}">
@@ -62,8 +76,7 @@ $('#create-user').click((event) => {
                 </div>`)
         },
         error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
+            alert('#create-alert', response)
         }
     })
 })
@@ -83,8 +96,7 @@ $('.update-user').click((event) => {
 
     const name = $('#building-name').val()
     if(!name) {
-        $('#alert').empty()
-        $('#alert').append("Invalid name")
+        alert('#manage-alert', 'Please enter a valid name')
     }
     $.ajax({
         type: 'post',
@@ -99,8 +111,7 @@ $('.update-user').click((event) => {
             })
         },
         error: function(response) {
-            $('#alert').empty()
-            $('#alert').append(response)
+            alert('#manage-alert', response)
         }
     })
 })
@@ -113,7 +124,7 @@ $('.delete-user').click((event) => {
 
     const usernames = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        let name = $(this).parent().attr('id')
+        let name = $(this).parent().attr('id').replace('_', ' ')
         usernames.push(name)
     })
 
@@ -129,12 +140,11 @@ $('.delete-user').click((event) => {
         },
         success: function(response){
             response.usernames.forEach((name) => {
-                $('#' + name).remove()
+                $('#' + name.replace(' ', '_')).remove()
             })
         },
         error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
+            alert('#manage-alert', response)
         }
     })
 })
