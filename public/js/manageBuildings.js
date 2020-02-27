@@ -4,11 +4,10 @@ function alert(selector, text){
     $(selector + '-text').append(text)
 }
 
-function filter(object){
-    return Object.values(object).some(field => {
-        field.replace(' ', '').replace === ''
-    })
+function filter(str){
+    return str.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '').replace(/\s/g, '')
 }
+
 // Get all buildings
 $.ajax({
     type: 'get',
@@ -34,7 +33,7 @@ $.ajax({
 $('#create-building').click((event) => {
     event.preventDefault()
     const name = $('#building-name').val()
-    if(name.replace(' ', '') === '') {
+    if(filter(name) === '') {
         alert('#create-alert', 'Invalid building name')
     }
     $.ajax({
@@ -69,11 +68,10 @@ $('#update-building').click((event) => {
         }
         namesToUpdate.push(updatedName)
     })
-    updatedName.newName.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '')
     if(namesToUpdate.length === 0) {
         alert('#manage-alert', 'Please select a name(s) to delete')
-    } else if(namesToUpdate.some(x => x.newName.replace(/\s/g, '') === '')) {
-        alert('#manage-alert', 'Please select a name(s) to delete')
+    } else if(namesToUpdate.some(x => filter(x.newName) === '')) {
+        alert('#manage-alert', 'Please enter valid names')
     } else {
         $.ajax({
             type: 'post',
@@ -82,9 +80,8 @@ $('#update-building').click((event) => {
                 names: namesToUpdate
             },
             success: function(response) {
-                response.listOfNames.forEach((name) => {
-                    $('#' + response.name).html(`<input id="${response.name}-check" type="checkbox" class="checkbox">
-                    <input id="${response.name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">`)
+                $('#manage-card').find('input:checkbox:checked').each(function() {
+                    $(this).prop('checked', false)
                 })
             },
             error: function(response) {
