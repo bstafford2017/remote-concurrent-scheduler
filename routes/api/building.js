@@ -38,10 +38,14 @@ router.post('/update', (req, res) => {
             const sql = `UPDATE buildings SET name = '${name.newName}' WHERE name = '${name.oldName}'`
             listOfNewNames.push(name.newName)
             connection.query(sql, (err, result) => {
+                // Need return because of the forEach repeats
                 if(err)
-                    res.status(400).json({ msg: err })
+                    return res.status(400).json({ msg: err })
+
+                // Means all items have been looped through
+                if(listOfNewNames.length === namesToUpdate.length)
+                    res.json({ listOfNewNames })
             })
-            res.json({ listOfNewNames })
         })
     } else {
         res.status(400).json({ msg: "No name(s) selected to update" })

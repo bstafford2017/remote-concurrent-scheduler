@@ -20,8 +20,7 @@ $.ajax({
         })
     },
     error: function(response) {
-        $('#alert').empty()
-        $('#alert').append(response)
+        alert('#alert', response.responseJSON.msg.sqlMessage)
     }
 })
 
@@ -44,7 +43,7 @@ $('#create-building').click((event) => {
             $('#building-name').val('')
         },
         error: function(response){
-            alert('#create-alert', response.responseJSON.msg)
+            alert('#create-alert', response.responseJSON.msg.sqlMessage)
         }
     })
 })
@@ -76,7 +75,7 @@ $('#update-building').click((event) => {
                 })
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#manage-alert', response.responseJSON.msg.sqlMessage)
             }
         })
     }
@@ -107,7 +106,7 @@ $('#delete-building').click((event) => {
                 })
             },
             error: function(response){
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#manage-alert', response.responseJSON.msg.sqlMessage)
             }
         })
     }
