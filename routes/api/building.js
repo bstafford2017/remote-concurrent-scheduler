@@ -1,6 +1,7 @@
 const express = require('express')
 const connection = require('../../utils/database')
 const sendJSONResultBack = require('../../utils/query')
+const filter = require('../../utils/filter')
 const router = express.Router()
 
 // Get all buildings
@@ -11,16 +12,17 @@ router.get('/', (req, res) => {
 
 // Create a building
 router.post('/create', (req, res) => {
-    const name = req.body.name.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
-    if(typeof name !== 'undefined'){
-        const createBuilding = `INSERT INTO buildings VALUES ('${name}')`
-        connection.query(createBuilding, (err, result) => {
+    const name = filter(req.body.name)
+    if(name){
+        const sql = `INSERT INTO buildings VALUES ('${name}')`
+        connection.query(sql, (err, result) => {
             if(err)
-                throw err
-            res.json({ name })
+                res.status(400).json({ msg: err })
+            else 
+                res.json({ name })
         })
     } else {
-        res.sendStatus(400)
+        res.status(400).json({ msg: "Please enter a valid name" })
     }
 })
 
@@ -28,36 +30,44 @@ router.post('/create', (req, res) => {
 router.post('/update', (req, res) => {
     const listOfNewNames = []
     const namesToUpdate = req.body.names
-    if(typeof namesToUpdate !== 'undefined'){
+    if(namesToUpdate && !namesToUpdate.some(x => filter(x.newName) === '')){
         namesToUpdate.forEach(name => {
-            const filteredNewName = name.newName.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
-            const updateName = `UPDATE buildings SET name = '${filteredNewName}' WHERE name = '${name.oldName}'`
-            listOfNewNames.push(filteredNewName)
-            connection.query(updateName, (err, result) => {
+            name.newName = filter(name.newName)
+            if(name.newName === '')
+                res.status(400).json({ msg: "Please enter valid name(s)" })
+            const sql = `UPDATE buildings SET name = '${name.newName}' WHERE name = '${name.oldName}'`
+            listOfNewNames.push(name.newName)
+            connection.query(sql, (err, result) => {
                 if(err)
-                    throw err
+                    res.status(400).json({ msg: err })
             })
+            res.json({ listOfNewNames })
         })
-        res.json({ listOfNewNames })
     } else {
-        res.sendStatus(400)
+        res.status(400).json({ msg: "No name(s) selected to update" })
     }
 })
 
 // Delete a building
 router.post('/delete', (req, res) => {
     const namesToDelete = req.body.names
-    if(typeof namesToDelete !== 'undefined'){
-        namesToDelete.forEach(name => {
-            const deleteBuilding = `DELETE FROM buildings WHERE name = '${name}'`
-            connection.query(deleteBuilding, (err, result) => {
-                if(err)
-                    throw err
-            })
+    if(namesToDelete && !namesToDelete.some(x => filter(x) === '')){
+        let sql = `DELETE FROM buildings WHERE `
+        for(let i = 0; i < namesToDelete.length; i++){
+            if(i === namesToDelete.length - 1){
+                sql += `name = '${namesToDelete[i]}'`
+            } else {
+                sql += `name = '${namesToDelete[i]}' OR `
+            }
+        }
+        connection.query(sql, (err, result) => {
+            if(err)
+                res.status(400).json({ msg: err })
+            else 
+                res.json({ namesToDelete })
         })
-        res.json({ namesToDelete })
     } else {
-        res.sendStatus(400)
+        res.status(400).json({ msg: "No name(s) selected to delete" })
     }
 })
 

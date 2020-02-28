@@ -4,10 +4,6 @@ function alert(selector, text){
     $(selector + '-text').append(text)
 }
 
-function filter(str){
-    return str.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '').replace(/\s/g, '')
-}
-
 // Get all buildings
 $.ajax({
     type: 'get',
@@ -33,9 +29,6 @@ $.ajax({
 $('#create-building').click((event) => {
     event.preventDefault()
     const name = $('#building-name').val()
-    if(filter(name) === '') {
-        alert('#create-alert', 'Invalid building name')
-    }
     $.ajax({
         type: 'post',
         url: '/api/building/create',
@@ -51,7 +44,7 @@ $('#create-building').click((event) => {
             $('#building-name').val('')
         },
         error: function(response){
-            alert('#create-alert', response)
+            alert('#create-alert', response.responseJSON.msg)
         }
     })
 })
@@ -70,8 +63,6 @@ $('#update-building').click((event) => {
     })
     if(namesToUpdate.length === 0) {
         alert('#manage-alert', 'Please select a name(s) to delete')
-    } else if(namesToUpdate.some(x => filter(x.newName) === '')) {
-        alert('#manage-alert', 'Please enter valid names')
     } else {
         $.ajax({
             type: 'post',
@@ -85,7 +76,7 @@ $('#update-building').click((event) => {
                 })
             },
             error: function(response) {
-                alert('#manage-alert', response)
+                alert('#manage-alert', response.responseJSON.msg)
             }
         })
     }
@@ -116,7 +107,7 @@ $('#delete-building').click((event) => {
                 })
             },
             error: function(response){
-                alert('#manage-alert', response)
+                alert('#manage-alert', response.responseJSON.msg)
             }
         })
     }

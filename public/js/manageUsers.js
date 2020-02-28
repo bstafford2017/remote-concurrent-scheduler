@@ -4,12 +4,6 @@ function alert(selector, text){
     $(selector + '-text').append(text)
 }
 
-function filter(object){
-    return Object.values(object).some(field => {
-        field.replace(' ', '').replace === ''
-    })
-}
-
 // Get all users
 $.ajax({
     type: 'get',
@@ -40,26 +34,22 @@ $.ajax({
 // Create a user
 $('#create-user').click((event) => {
     event.preventDefault()
-    const user = {
-        username: $('#user-username').val(),
-        password: $('#user-password').val(),
-        fname: $('#user-fname').val(),
-        lname: $('#user-lname').val(),
-        admin: $('#user-admin').val()
-    }
 
-    if(Object.values(user).some(field => field.replace('_', ' ') === '')) {
-        alert('#create-alert', 'Please enter a valid value')
-    }
+    const username = $('#user-username').val()
+    const password = $('#user-password').val()
+    const fname = $('#user-fname').val()
+    const lname = $('#user-lname').val()
+    const admin = $('#user-admin').val()
+
     $.ajax({
         type: 'post',
         url: '/api/user/create',
         data: {
-            username: user.username,
-            password: user.password,
-            fname: user.fname,
-            lname: user.lname,
-            admin: user.admin
+            username,
+            password,
+            fname,
+            lname,
+            admin
         },
         success: function(response){
             $('#building-list').append(
@@ -88,16 +78,12 @@ $('.update-user').click((event) => {
     const users = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
         const updatedUser = {
-            username: $(this).parent().attr('id'),
+            username: $(this).parent().attr('id').replace('_', ' '),
             password: $(this).parent().children('.text').val()
         }
         namesToUpdate.push(updatedName)
     })
 
-    const name = $('#building-name').val()
-    if(!name) {
-        alert('#manage-alert', 'Please enter a valid name')
-    }
     $.ajax({
         type: 'post',
         url: '/api/user/update',
@@ -116,8 +102,6 @@ $('.update-user').click((event) => {
     })
 })
 
-/* NEED TO ACCOUNT FOR SPACES IN NAME! */
-
 // Delete a building
 $('.delete-user').click((event) => {
     event.preventDefault()
@@ -131,20 +115,21 @@ $('.delete-user').click((event) => {
     if(usernames.length === 0) {
         $('#alert').empty()
         $('#alert').append("Please select a name(s) to delete")
-    }
-    $.ajax({
-        type: 'post',
-        url: '/api/user/delete',
-        data: {
-            usernames
-        },
-        success: function(response){
-            response.usernames.forEach((name) => {
-                $('#' + name.replace(' ', '_')).remove()
-            })
-        },
-        error: function(response){
-            alert('#manage-alert', response)
-        }
-    })
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '/api/user/delete',
+            data: {
+                usernames
+            },
+            success: function(response){
+                response.usernames.forEach((name) => {
+                    $('#' + name.replace(' ', '_')).remove()
+                })
+            },
+            error: function(response){
+                alert('#manage-alert', response)
+            }
+        })
+    } 
 })
