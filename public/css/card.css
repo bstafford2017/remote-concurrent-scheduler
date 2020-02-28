@@ -10,6 +10,10 @@
     background-color: #eee;
 }
 
+.card-body {
+    padding: 0;
+}
+
 .card-footer {
     background-color: #eee;
 }

@@ -16,7 +16,7 @@ $.ajax({
                     <td><input type="password" class="form-control" value="${user.password}"></td>
                     <td><input type="text" class="form-control" value="${user.f_name}"></td>
                     <td><input type="text" class="form-control" value="${user.l_name}"></td>
-                    <td><select class="form-control">
+                    <td><select class="form-control user-cell">
                         <option value="0" ${(user.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(user.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>

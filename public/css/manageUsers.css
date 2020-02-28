@@ -6,6 +6,15 @@
     height: 500px;
 }
 
+.table td {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.user-cell {
+    padding: 0.375rem;
+}
+
 .row {
     margin: 0;
 }
