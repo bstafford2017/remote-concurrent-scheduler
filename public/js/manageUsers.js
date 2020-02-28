@@ -27,7 +27,7 @@ $.ajax({
     },
     error: function(response) {
         $('#alert').empty()
-        $('#alert').append(response)
+        $('#alert').append(response.responseJSON.msg)
     }
 })
 
@@ -66,44 +66,46 @@ $('#create-user').click((event) => {
                 </div>`)
         },
         error: function(response){
-            alert('#create-alert', response)
+            alert('#create-alert', response.responseJSON.msg)
         }
     })
 })
 
 // Update a user
-$('.update-user').click((event) => {
+// NOTE: Need event delegation since button is placed onload
+$(document).on('click', '.update-user', (event) => {
     event.preventDefault()
 
-    const users = []
+    const names = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        const updatedUser = {
+        const user = {
             username: $(this).parent().attr('id').replace('_', ' '),
             password: $(this).parent().children('.text').val()
         }
-        namesToUpdate.push(updatedName)
+        names.push(user)
     })
 
     $.ajax({
         type: 'post',
         url: '/api/user/update',
         data: {
-            names: namesToUpdate
+            names
         },
         success: function(response) {
             response.listOfNames.forEach((name) => {
-                $('#' + response.name).html(`<input id="${response.name}-check" type="checkbox" class="checkbox">
-                <input id="${response.name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${response.name}">`)
+                $('#' + name).html(`<input id="${name}-check" type="checkbox" class="checkbox">
+                <input id="${name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${name}">`)
             })
         },
         error: function(response) {
-            alert('#manage-alert', response)
+            alert('#manage-alert', response.responseJSON.msg)
         }
     })
 })
 
 // Delete a building
-$('.delete-user').click((event) => {
+// NOTE: Need event delegation since button is placed onload
+$(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
 
     const usernames = []
@@ -113,8 +115,7 @@ $('.delete-user').click((event) => {
     })
 
     if(usernames.length === 0) {
-        $('#alert').empty()
-        $('#alert').append("Please select a name(s) to delete")
+        alert('#manage-alert', 'Please select a name(s) to delete')
     } else {
         $.ajax({
             type: 'post',
@@ -128,7 +129,7 @@ $('.delete-user').click((event) => {
                 })
             },
             error: function(response){
-                alert('#manage-alert', response)
+                alert('#manage-alert', response.responseJSON.msg)
             }
         })
     } 
