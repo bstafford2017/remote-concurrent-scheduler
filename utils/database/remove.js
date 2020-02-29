@@ -21,7 +21,6 @@ function remove(array, table_name, primary_key) {
                     sql += `${primary_key} = ${val} OR `
             }
         })
-        console.log(sql)
         connection.query(sql, (err, results) => {
             if(err)
                 reject(err.sqlMessage)
