@@ -8,7 +8,7 @@ const router = express.Router()
 
 // Get all buildings
 router.get('/', (req, res) => {
-    select(0, 'buildings', 0).then((results) => {
+    select('buildings').then((results) => {
         res.json({ results })
     }).catch((err) => {
         res.status(400).json({ msg: err })

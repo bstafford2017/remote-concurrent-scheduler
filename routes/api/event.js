@@ -1,5 +1,4 @@
 const express = require('express')
-const query = require('../../utils/query')
 const router = express.Router()
 
 // Get all events
