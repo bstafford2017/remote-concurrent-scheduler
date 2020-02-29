@@ -4,11 +4,11 @@ const filter = require('../filter')
 // NOTE: Assumes old... and new... elements are included
 function update(obj_array, table_name, table_columns, table_pk){
     return new Promise((resolve, reject) => {
-        let topHalf = `UPDATE ${table_name} SET `
-        let bottomHalf = ``
-        let hasOldFieldBeenHit = false
-
         obj_array.forEach(obj => {
+            let topHalf = `UPDATE ${table_name} SET `
+            let bottomHalf = ``
+            let hasOldFieldBeenHit = false
+
             Object.keys(obj).forEach((key, index, arr) => {
                 let val = obj[key]
 
@@ -42,12 +42,13 @@ function update(obj_array, table_name, table_columns, table_pk){
                     }
                 }
             })
-        })
-        connection.query(topHalf + bottomHalf, (err, results) => {
-            if(err)
-                reject(err.sqlMessage)
-            else
-                resolve(obj_array)
+            connection.query(topHalf + bottomHalf, (err, results) => {
+                if(err)
+                    reject(err.sqlMessage)
+                else
+                    resolve(obj_array)
+            })
+            
         })
     })
 }
