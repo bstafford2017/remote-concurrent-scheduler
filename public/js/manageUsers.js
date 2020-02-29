@@ -11,12 +11,12 @@ $.ajax({
     success: function(response) {
         response.forEach(user => {
             $('#user-list').append(
-                `<tr class="user" id="${user.username.replace(' ', '_')}"></td>
-                    <td><input type="text" class="form-control" value="${user.username}"></td>
-                    <td><input type="password" class="form-control" value="${user.password}"></td>
-                    <td><input type="text" class="form-control" value="${user.f_name}"></td>
-                    <td><input type="text" class="form-control" value="${user.l_name}"></td>
-                    <td><select class="form-control user-cell">
+                `<tr class="user" id="${user.username}"></td>
+                    <td><input type="text" class="username form-control" value="${user.username}"></td>
+                    <td><input type="password" class="password form-control" value="${user.password}"></td>
+                    <td><input type="text" class="fname form-control" value="${user.f_name}"></td>
+                    <td><input type="text" class="lname form-control" value="${user.l_name}"></td>
+                    <td><select class="admin user-cell" id="manage-admin">
                         <option value="0" ${(user.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(user.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
@@ -53,7 +53,7 @@ $('#create-user').click((event) => {
         },
         success: function(response){
             $('#building-list').append(
-                `<div class="user" id="${response.username.replace(' ', '_')}">
+                `<div class="user" id="${response.username}">
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-5 d-inline" value="${response.username}">
                     <input type="password" class="text form-control col-5 d-inline" value="${user.password}">
@@ -76,26 +76,33 @@ $('#create-user').click((event) => {
 $(document).on('click', '.update-user', (event) => {
     event.preventDefault()
 
-    const names = []
-    $('#manage-card').find('input:checkbox:checked').each(function() {
-        const user = {
-            username: $(this).parent().attr('id').replace('_', ' '),
-            password: $(this).parent().children('.text').val()
-        }
-        names.push(user)
-    })
+    // Add more complex modal
+    if(!window.confirm('Are you sure you want to update user(s)?')){
+        return
+    }
+
+    const oldUsername = $(this).parent().parent().attr('id')
+    const newUsername = $(this).parent().parent().find('.username').val()
+    const password = $(this).parent().parent().find('.pasword').val()
+    const fname = $(this).parent().parent().find('.fname').val()
+    const lname = $(this).parent().parent().find('.lname').val()
+    const admin = $(this).parent().parent().find('.admin').val()
+
+    console.log(oldUsername + newUsername + password + fname + lname + admin)
 
     $.ajax({
         type: 'post',
         url: '/api/user/update',
         data: {
-            names
+            oldUsername,
+            newUsername,
+            password,
+            fname,
+            lname,
+            admin
         },
         success: function(response) {
-            response.listOfNames.forEach((name) => {
-                $('#' + name).html(`<input id="${name}-check" type="checkbox" class="checkbox">
-                <input id="${name}-text" type="text" class="form-control col-sm-10 offset-sm-1 d-inline" value="${name}">`)
-            })
+            $('#' + oldUsername).remove()
         },
         error: function(response) {
             alert('#manage-alert', response.responseJSON.msg)
@@ -108,29 +115,28 @@ $(document).on('click', '.update-user', (event) => {
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
 
-    const usernames = []
-    $('#manage-card').find('input:checkbox:checked').each(function() {
-        let name = $(this).parent().attr('id').replace('_', ' ')
-        usernames.push(name)
-    })
+    // Add more complex modal
+    if(!window.confirm('Are you sure you want to delete user(s)?')){
+        return
+    }
 
-    if(usernames.length === 0) {
-        alert('#manage-alert', 'Please select a name(s) to delete')
-    } else {
-        $.ajax({
-            type: 'post',
-            url: '/api/user/delete',
-            data: {
-                usernames
-            },
-            success: function(response){
-                response.usernames.forEach((name) => {
-                    $('#' + name.replace(' ', '_')).remove()
-                })
-            },
-            error: function(response){
-                alert('#manage-alert', response.responseJSON.msg)
-            }
-        })
-    } 
+    const username = $(this).parent().attr('id').replace('_', ' ')
+
+    console.log(username)
+
+    $.ajax({
+        type: 'post',
+        url: '/api/user/delete',
+        data: {
+            username
+        },
+        success: function(response){
+            response.usernamesToDelete.forEach((username) => {
+                $('#' + username.replace(' ', '_')).remove()
+            })
+        },
+        error: function(response){
+            alert('#manage-alert', response.responseJSON.msg)
+        }
+    })
 })

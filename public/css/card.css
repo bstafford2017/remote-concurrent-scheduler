@@ -27,3 +27,7 @@
     background-color: #f36f21;
     opacity: 0.7;
 }
+
+.btn:focus {
+    background-color: #f36f21;
+}
