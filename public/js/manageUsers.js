@@ -52,18 +52,19 @@ $('#create-user').click((event) => {
             admin
         },
         success: function(response){
-            $('#building-list').append(
-                `<div class="user" id="${response.username}">
-                    <input type="checkbox" class="checkbox col-1">
-                    <input type="text" class="text form-control col-5 d-inline" value="${response.username}">
-                    <input type="password" class="text form-control col-5 d-inline" value="${user.password}">
-                    <input type="text" class="text form-control col-5 d-inline" value="${response.fname}">
-                    <input type="text" class="text form-control col-5 d-inline" value="${response.lname}">
-                    <select class="form-control col-2 d-inline">
-                        <option value="0" ${(response.admin === 0) ? 'selected' : ''}>False</option>
-                        <option value="1" ${(response.admin === 1) ? 'selected' : ''}>True</option>
-                    </select>
-                </div>`)
+            $('#user-list').append(
+                `<tr class="user" id="${response.results.username}"></td>
+                    <td><input type="text" class="username form-control" value="${response.results.username}"></td>
+                    <td><input type="password" class="password form-control" value="${response.results.password}"></td>
+                    <td><input type="text" class="fname form-control" value="${response.results.f_name}"></td>
+                    <td><input type="text" class="lname form-control" value="${response.results.l_name}"></td>
+                    <td><select class="admin user-cell" id="manage-admin">
+                        <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
+                        <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
+                    </select></td>
+                    <td><button class="update-user btn btn-secondary">Update</button></td>
+                    <td><button class="delete-user btn btn-secondary">Delete</button></td>
+                </tr>`)
         },
         error: function(response){
             alert('#create-alert', response.responseJSON.msg)

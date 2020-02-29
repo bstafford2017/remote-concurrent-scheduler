@@ -11,7 +11,7 @@ $.ajax({
     success: function(response) {
         $('#building-list').append(`<div class="col-2 d-inline" style="padding: 0px">Select</div>
                                     <div class="col-10 d-inline">Edit Building Name</div>`)
-        response.forEach(building => {
+        response.results.forEach(building => {
             $('#building-list').append(
                 `<div class="building" id="${building.name.replace(' ', '_')}">
                     <input type="checkbox" class="checkbox col-1">
@@ -36,9 +36,9 @@ $('#create-building').click((event) => {
         },
         success: function(response){
             $('#building-list').append(
-                `<div class="building" id="${response.name.replace(' ', '_')}">
+                `<div class="building" id="${response.results.name.replace(' ', '_')}">
                     <input type="checkbox" class="checkbox col-1">
-                    <input type="text" class="text form-control col-10 d-inline" value="${response.name}">
+                    <input type="text" class="text form-control col-10 d-inline" value="${response.results.name}">
                 </div>`)
             $('#building-name').val('')
         },
@@ -101,7 +101,7 @@ $('#delete-building').click((event) => {
                 names: namesToDelete
             },
             success: function(response){
-                response.namesToDelete.forEach((name) => {
+                response.results.forEach((name) => {
                     $('#' + name.replace(' ', '_')).remove()
                 })
             },

@@ -1,29 +1,30 @@
 const express = require('express')
 const connection = require('../../utils/database')
-const sendJSONResultBack = require('../../utils/query')
 const filter = require('../../utils/filter')
+const insert = require('../../utils/database/insert')
+const remove = require('../../utils/database/remove')
+const select = require('../../utils/database/select')
 const router = express.Router()
 
 // Get all buildings
 router.get('/', (req, res) => {
-    const getAllBuildings = `SELECT * FROM buildings`
-    sendJSONResultBack(getAllBuildings, res)
+    select(0, 'buildings', 0).then((results) => {
+        res.json({ results })
+    }).catch((err) => {
+        res.status(400).json({ msg: err })
+    })
 })
 
 // Create a building
 router.post('/create', (req, res) => {
-    const name = filter(req.body.name)
-    if(name){
-        const sql = `INSERT INTO buildings VALUES ('${name}')`
-        connection.query(sql, (err, result) => {
-            if(err)
-                res.status(400).json({ msg: err })
-            else 
-                res.json({ name })
-        })
-    } else {
-        res.status(400).json({ msg: "Please enter a valid name" })
+    const building = {
+        name: req.body.name
     }
+    insert(building, 'buildings').then((results) => {
+        res.json({ results })
+    }).catch((err) => {
+        res.status(400).json({ msg: err })
+    })
 })
 
 // Update a building
@@ -54,25 +55,11 @@ router.post('/update', (req, res) => {
 
 // Delete a building
 router.post('/delete', (req, res) => {
-    const namesToDelete = req.body.names
-    if(namesToDelete && !namesToDelete.some(x => filter(x) === '')){
-        let sql = `DELETE FROM buildings WHERE `
-        for(let i = 0; i < namesToDelete.length; i++){
-            if(i === namesToDelete.length - 1){
-                sql += `name = '${namesToDelete[i]}'`
-            } else {
-                sql += `name = '${namesToDelete[i]}' OR `
-            }
-        }
-        connection.query(sql, (err, result) => {
-            if(err)
-                res.status(400).json({ msg: err })
-            else 
-                res.json({ namesToDelete })
-        })
-    } else {
-        res.status(400).json({ msg: "No name(s) selected to delete" })
-    }
+    remove(req.body.names, 'buildings', 'name').then((results) => {
+        res.json({ results })
+    }).catch((err) => {
+        res.status(400).json({ msg: err })
+    })
 })
 
 module.exports = router

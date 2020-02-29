@@ -1,13 +1,14 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const query = require('../../utils/query')
+const sendJSONResultBack = require('../../utils/query')
 const con = require('../../utils/database')
+const filter = require('../../utils/filter')
 const router = express.Router()
 
 // Get all users
 router.get('/', (req, res) => {
   const sql = 'SELECT * FROM users'
-  query(sql, res)
+  sendJSONResultBack(sql, res)
 })
 
 // Check if user is admin
@@ -17,17 +18,17 @@ router.get('/admin', (req, res) => {
     jwt.verify(token, 'secret-key', (err, authData) => {
         if(err) {
             console.log(err) 
-            res.redirect('login.html')
+            return res.redirect('login.html')
         }
 
         const sql = `SELECT * FROM users WHERE username = '${authData.username}';`
 
         con.query(sql, (err, result) => {
             if(err)
-                throw err
+                res.status(400).json({ msg: err })
 
             if(result.length === 0)
-                return res.sendStatus(400)
+                return res.redirect('login.html')
             
             if(result[0].admin === 1) {
                 res.json({ admin: 'true'})
@@ -40,26 +41,27 @@ router.get('/admin', (req, res) => {
 
 // Get particular user
 router.post('/login', (req, res) => {
-    const username = req.body.username.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
+    const username = filter(req.body.username)
     const password = req.body.password
 
     const sql = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}';`
 
     con.query(sql, (err, result) => {
         if(err)
-            throw err
+            return res.status(400).json({ msg: err })
 
         if(result.length === 0)
-            return res.sendStatus(400)
+            return res.redirect('login.html')
 
         if(result[0].username === req.body.username && result[0].password === req.body.password) {
             jwt.sign({username: req.body.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
                 if(err) 
-                    throw err
+                    return res.status(400).json({ msg: err })
+
                 res.json({ token })
             })
         } else {
-            return res.sendStatus(400)
+            return res.status(400).json({ msg: 'Invalid username/password' })
         }
     })
 })
@@ -73,31 +75,45 @@ router.post('/create', (req, res) => {
         lname: req.body.lname,
         admin: parseInt(req.body.admin)
     }
-    if(!user.username || !user.password || !user.fname || !user.lname || typeof user.admin === 'undefined')
-        return res.sendStatus(400)
+
+    if(Object.values(user).some(field => (Number.isInteger(field)) ? false : !filter(field)))
+        return res.status(400).json({ msg: 'Invalid create value(s)' })
+        
     const sql = `INSERT INTO users VALUES ('${user.username}', '${user.password}', 
         ${user.admin}, '${user.fname}', '${user.lname}')`
     con.query(sql, (err, result) => {
         if(err)
-            throw err
+            return res.status(400).json({ msg: err })
     })
 })
 
 // Update a user
 router.post('/update', (req, res) => {
     const user = {
-        username: req.body.username,
+        oldUsername: req.body.oldUsername,
+        newUsername: req.body.newUsername,
         password: req.body.password,
         fname: req.body.fname,
         lname: req.body.lname,
         admin: parseInt(req.body.admin)
     }
-    if(!user.username || !user.password || !user.fname || !user.lname || typeof user.admin === 'undefined')
-        return res.sendStatus(400)
-    const sql = `UPDATE users SET password = '${user.password}', admin = ${user.admin}, f_name = '${user.fname}', l_name = '${user.lname}' WHERE username = '${user.username}'`
+
+    if(Object.values(user).some(field => (Number.isInteger(field)) ? !admin : !filter(field)))
+        return res.status(400).json({ msg: 'Invalid update value(s)' })
+    
+    // Delete old username since it was the primary key
+    const sql = `DELETE FROM users WHERE username = '${user.oldUsername}'`
     con.query(sql, (err, result) => {
         if(err)
-            throw err
+            res.status(400).json({ msg: err })    
+    })
+    sql = `INSERT INTO users VALUES ('${user.newUsername}', '${user.password}', 
+            ${user.admin}, '${user.fname}', '${user.lname}')`
+    con.query(sql, (err, result) => {
+        if(err)
+            res.status(400).json({ msg: err })
+        else 
+            res.json({ username, password, admin, fname, lname })
     })
 })
 
