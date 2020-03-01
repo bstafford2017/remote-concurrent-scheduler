@@ -62,8 +62,8 @@ $('#create-user').click((event) => {
                         <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
-                    <td><button class="update-user btn btn-secondary">Update</button></td>
-                    <td><button class="delete-user btn btn-secondary">Delete</button></td>
+                    <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
+                    <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
                 </tr>`)
         },
         error: function(response){
@@ -115,16 +115,14 @@ $(document).on('click', '.update-user', (event) => {
 // NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
+    const username = $(event.target).parents('tr').attr('id')
+    $('.modal .btn-primary').attr('id', username.replace('_', ' '))
+    $("#myModal").modal('show')
+})
 
-    // Add more complex modal
-    /*if(!window.confirm('Are you sure you want to delete user(s)?')){
-        return
-    }*/
-
-    const username = $(this).parent().parent().attr('id')
-
-    console.log($(this).parent().parent())
-
+$('.modal .btn-primary').click((event) => {
+    $("#myModal").modal('hide')
+    const username = $(event.target).attr('id')
     $.ajax({
         type: 'post',
         url: '/api/user/delete',
@@ -132,7 +130,7 @@ $(document).on('click', '.delete-user', (event) => {
             username
         },
         success: function(response){
-            response.usernamesToDelete.forEach((username) => {
+            response.results.forEach((username) => {
                 $('#' + username.replace(' ', '_')).remove()
             })
         },
