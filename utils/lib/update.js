@@ -42,6 +42,7 @@ function update(obj_array, table_name, table_columns, table_pk){
                     }
                 }
             })
+            console.log(topHalf + bottomHalf)
             connection.query(topHalf + bottomHalf, (err, results) => {
                 if(err)
                     reject(err.sqlMessage)

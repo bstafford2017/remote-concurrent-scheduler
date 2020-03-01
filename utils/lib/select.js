@@ -23,7 +23,7 @@ function select(table_name, key_array, value_array){
                 }
             })
         }
-
+        console.log(sql)
         connection.query(sql, (err, results) => {
             if(err)
                 reject(err.sqlMessage)

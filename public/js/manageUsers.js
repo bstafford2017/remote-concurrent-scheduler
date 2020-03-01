@@ -118,7 +118,7 @@ $(document).on('click', '.delete-user', (event) => {
     const username = $(event.target).parents('tr').attr('id')
     $('.modal .btn-secondary').attr('id', username.replace('_', ' '))
     $('.modal-title').append(`Delete '${username}'?`)
-    $('.modal-text').append(`Are you sure you want to delete username <b>'${username}'</b>?`)
+    $('.modal-text').append(`Are you sure you want to delete username '<b>${username}</b>'?`)
     $("#myModal").modal('show')
 })
 
