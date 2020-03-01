@@ -116,11 +116,13 @@ $(document).on('click', '.update-user', (event) => {
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
     const username = $(event.target).parents('tr').attr('id')
-    $('.modal .btn-primary').attr('id', username.replace('_', ' '))
+    $('.modal .btn-secondary').attr('id', username.replace('_', ' '))
+    $('.modal-title').append(`Delete '${username}'?`)
+    $('.modal-text').append(`Are you sure you want to delete username <b>'${username}'</b>?`)
     $("#myModal").modal('show')
 })
 
-$('.modal .btn-primary').click((event) => {
+$('.modal .btn-secondary').click((event) => {
     $("#myModal").modal('hide')
     const username = $(event.target).attr('id')
     $.ajax({

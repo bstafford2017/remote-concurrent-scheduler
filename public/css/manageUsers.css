@@ -18,3 +18,15 @@
 .row {
     margin: 0;
 }
+
+.btn-primary {
+    background-color: #aaa;
+}
+
+.btn-primary:hover {
+    background-color: #aaa;
+}
+
+.btn-primary:selected {
+    background-color: #aaa;
+}
