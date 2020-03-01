@@ -89,16 +89,20 @@ router.post('/create', (req, res) => {
 
 // Update a user
 router.post('/update', (req, res) => {
-    const user = [{
-        oldUsername: req.body.oldUsername,
-        newUsername: req.body.newUsername,
+    const removeUser = [req.body.oldUsername]
+    const insertUser = {
+        username: req.body.newUsername,
         password: req.body.password,
+        admin: parseInt(req.body.admin),
         fname: req.body.fname,
-        lname: req.body.lname,
-        admin: parseInt(req.body.admin)
-    }]
-    remove(user, 'users', 'username').then(results => {
-        res.json({ results })
+        lname: req.body.lname
+    }
+    remove(removeUser, 'users', 'username').then(results => {
+        insert(insertUser, 'users').then(results => {
+            res.json({ results })
+        }).catch(err => {
+            res.status(400).json({ msg: err })
+        })
     }).catch(err => {
         res.status(400).json({ msg: err })
     })

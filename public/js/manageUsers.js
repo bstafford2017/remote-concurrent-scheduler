@@ -82,7 +82,7 @@ $(document).on('click', '.update-user', (event) => {
     event.preventDefault()
     updateUser.oldUsername = $(event.target).parents('tr').attr('id')
     updateUser.newUsername = $(event.target).parents('tr').find('.username').val()
-    updateUser.password = $(event.target).parents('tr').find('.pasword').val()
+    updateUser.password = $(event.target).parents('tr').find('.password').val()
     updateUser.fname = $(event.target).parents('tr').find('.fname').val()
     updateUser.lname = $(event.target).parents('tr').find('.lname').val()
     updateUser.admin = $(event.target).parents('tr').find('.admin').val()
@@ -124,12 +124,12 @@ $('.modal .btn-secondary').click((event) => {
             }
         })
     } else {
-        const oldUsername = deleteUser.oldUsername
-        const newUsername = deleteUser.newUsername
-        const password = deleteUser.password
-        const fname = deleteUser.fname
-        const lname = deleteUser.lname
-        const admin = deleteUser.admin
+        const oldUsername = updateUser.oldUsername
+        const newUsername = updateUser.newUsername
+        const password = updateUser.password
+        const fname = updateUser.fname
+        const lname = updateUser.lname
+        const admin = updateUser.admin
         $.ajax({
             type: 'post',
             url: '/api/user/update',
@@ -143,6 +143,19 @@ $('.modal .btn-secondary').click((event) => {
             },
             success: function(response) {
                 $('#' + oldUsername).remove()
+                $('#user-list').append(
+                    `<tr class="user" id="${response.results.username}"></td>
+                        <td><input type="text" class="username form-control" value="${response.results.username}"></td>
+                        <td><input type="password" class="password form-control" value="${response.results.password}"></td>
+                        <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
+                        <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
+                        <td><select class="admin user-cell" id="manage-admin">
+                            <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
+                            <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
+                        </select></td>
+                        <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
+                        <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
+                    </tr>`)
             },
             error: function(response) {
                 alert('#manage-alert', response.responseJSON.msg)
