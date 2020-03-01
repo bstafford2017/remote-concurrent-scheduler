@@ -10,7 +10,9 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/card.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
+        <link rel="stylesheet" type="text/css" href="css/manageRooms.css">
 
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
@@ -48,9 +50,46 @@
             </div>
         </nav>
 
-        <h2>Manage Rooms</h2>
-
-        <div class="content"></div>
+        <div class="content">
+            <div class="card col-lg-8 offset-lg-2 shadow p-3 mb-5 rounded" id="create-card">
+                <div>
+                    <h2 style="text-align: center;">Create Room</h2>
+                </div>
+                <div class="card-body">
+                    <div id="create-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div id="create-alert-text"></div>
+                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form class="form row offset-1">
+                        <div class="form-group col-2">
+                            <label for="building">Building</label>
+                            <select class="form-control" id="building">
+                                <option selected="" disabled="" hidden="">Select</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="name">Room Name</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="seats">Seats</label>
+                            <input type="text" class="form-control" id="seats">
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="projector">Projector</label>
+                            <select class="form-control" id="projector">
+                                <option selected="" disabled="" hidden="">Select</option>
+                                <option value="0">False</option>
+                                <option value="1">True</option>
+                            </select>
+                        </div>
+                        <button id="create-room" class="form-control btn btn-secondary col-2">Create</button>
+                    </form>
+                </div> 
+            </div>
+        </div>
 
         <footer class="footer">
             <p>Remote Concurrent Scheduler 2020</p>
