@@ -4,6 +4,10 @@ function alert(selector, text){
     $(selector + '-text').append(text)
 }
 
+// Global variable
+let updateUser = {}
+let deleteUser = ''
+
 // Get all users
 $.ajax({
     type: 'get',
@@ -76,68 +80,73 @@ $('#create-user').click((event) => {
 // NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.update-user', (event) => {
     event.preventDefault()
+    updateUser.oldUsername = $(event.target).parents('tr').attr('id')
+    updateUser.newUsername = $(event.target).parents('tr').find('.username').val()
+    updateUser.password = $(event.target).parents('tr').find('.pasword').val()
+    updateUser.fname = $(event.target).parents('tr').find('.fname').val()
+    updateUser.lname = $(event.target).parents('tr').find('.lname').val()
+    updateUser.admin = $(event.target).parents('tr').find('.admin').val()
 
-    // Add more complex modal
-    if(!window.confirm('Are you sure you want to update user(s)?')){
-        return
-    }
-
-    const oldUsername = $(this).parent().parent().attr('id')
-    const newUsername = $(this).parent().parent().find('.username').val()
-    const password = $(this).parent().parent().find('.pasword').val()
-    const fname = $(this).parent().parent().find('.fname').val()
-    const lname = $(this).parent().parent().find('.lname').val()
-    const admin = $(this).parent().parent().find('.admin').val()
-
-    console.log(oldUsername + newUsername + password + fname + lname + admin)
-
-    $.ajax({
-        type: 'post',
-        url: '/api/user/update',
-        data: {
-            oldUsername,
-            newUsername,
-            password,
-            fname,
-            lname,
-            admin
-        },
-        success: function(response) {
-            $('#' + oldUsername).remove()
-        },
-        error: function(response) {
-            alert('#manage-alert', response.responseJSON.msg)
-        }
-    })
+    $('.modal .btn-secondary').attr('id', 'update')
+    $('.modal-title').append(`Update '${updateUser.oldUsername}'?`)
+    $('.modal-text').append(`Are you sure you want to update username '<b>${updateUser.oldUsername}</b>'?`)
+    $("#myModal").modal('show')
 })
 
 // Delete a building
 // NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
-    const username = $(event.target).parents('tr').attr('id')
-    $('.modal .btn-secondary').attr('id', username.replace('_', ' '))
-    $('.modal-title').append(`Delete '${username}'?`)
-    $('.modal-text').append(`Are you sure you want to delete username '<b>${username}</b>'?`)
+    deleteUser = $(event.target).parents('tr').attr('id')
+    $('.modal .btn-secondary').attr('id', 'delete')
+    $('.modal-title').append(`Delete '${deleteUser}'?`)
+    $('.modal-text').append(`Are you sure you want to delete username '<b>${deleteUser}</b>'?`)
     $("#myModal").modal('show')
 })
 
 $('.modal .btn-secondary').click((event) => {
     $("#myModal").modal('hide')
-    const username = $(event.target).attr('id')
-    $.ajax({
-        type: 'post',
-        url: '/api/user/delete',
-        data: {
-            username
-        },
-        success: function(response){
-            response.results.forEach((username) => {
-                $('#' + username.replace(' ', '_')).remove()
-            })
-        },
-        error: function(response){
-            alert('#manage-alert', response.responseJSON.msg)
-        }
-    })
+    const operation = $(event.target).attr('id')
+    if(operation === 'delete'){
+        $.ajax({
+            type: 'post',
+            url: '/api/user/delete',
+            data: {
+                username: deleteUser
+            },
+            success: function(response){
+                response.results.forEach((username) => {
+                    $('#' + username.replace(' ', '_')).remove()
+                })
+            },
+            error: function(response){
+                alert('#manage-alert', response.responseJSON.msg)
+            }
+        })
+    } else {
+        const oldUsername = deleteUser.oldUsername
+        const newUsername = deleteUser.newUsername
+        const password = deleteUser.password
+        const fname = deleteUser.fname
+        const lname = deleteUser.lname
+        const admin = deleteUser.admin
+        $.ajax({
+            type: 'post',
+            url: '/api/user/update',
+            data: {
+                oldUsername,
+                newUsername,
+                password,
+                fname,
+                lname,
+                admin
+            },
+            success: function(response) {
+                $('#' + oldUsername).remove()
+            },
+            error: function(response) {
+                alert('#manage-alert', response.responseJSON.msg)
+            }
+        })
+    }
 })
