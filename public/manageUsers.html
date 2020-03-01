@@ -56,8 +56,8 @@
                     <h2 style="text-align: center;">Create User</h2>
                 </div>
                 <div class="card-body">
-                    <div id="manage-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <div id="manage-alert-text"></div>
+                    <div id="create-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div id="create-alert-text"></div>
                         <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -96,6 +96,12 @@
             <div class="card col-lg-6 offset-lg-1 shadow p-3 mb-5 rounded" id="manage-card">
                 <div class="card-body table-responsive">
                     <h2 style="text-align: center;">Manage Users</h2>
+                    <div id="manage-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div id="manage-alert-text"></div>
+                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>

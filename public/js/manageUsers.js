@@ -9,7 +9,7 @@ $.ajax({
     type: 'get',
     url: 'api/user',
     success: function(response) {
-        response.forEach(user => {
+        response.results.forEach(user => {
             $('#user-list').append(
                 `<tr class="user" id="${user.username}"></td>
                     <td><input type="text" class="username form-control" value="${user.username}"></td>
@@ -56,8 +56,8 @@ $('#create-user').click((event) => {
                 `<tr class="user" id="${response.results.username}"></td>
                     <td><input type="text" class="username form-control" value="${response.results.username}"></td>
                     <td><input type="password" class="password form-control" value="${response.results.password}"></td>
-                    <td><input type="text" class="fname form-control" value="${response.results.f_name}"></td>
-                    <td><input type="text" class="lname form-control" value="${response.results.l_name}"></td>
+                    <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
+                    <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
                     <td><select class="admin user-cell" id="manage-admin">
                         <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
@@ -117,13 +117,13 @@ $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
 
     // Add more complex modal
-    if(!window.confirm('Are you sure you want to delete user(s)?')){
+    /*if(!window.confirm('Are you sure you want to delete user(s)?')){
         return
-    }
+    }*/
 
-    const username = $(this).parent().attr('id').replace('_', ' ')
+    const username = $(this).parent().parent().attr('id')
 
-    console.log(username)
+    console.log($(this).parent().parent())
 
     $.ajax({
         type: 'post',

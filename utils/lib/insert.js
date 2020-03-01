@@ -5,22 +5,26 @@ function insert(obj, table_name) {
     return new Promise((resolve, reject) => {
         let sql = `INSERT INTO ${table_name} VALUES (`
         Object.values(obj).forEach((val, index, arr) => {
-            if(filter(val) === '')
-                reject('Invalid input entries')
-
             if(typeof val === 'string'){
-                val = filter(val)
+                // Escape string
+                if((val = filter(val)) === '' || typeof val === 'undefined')
+                    reject('Invalid input entries')
+
                 if(arr.length - 1 === index)
                     sql += `'${val}')`
                 else
                     sql += `'${val}', `
-            } else { 
+            } else {
+                if(typeof val === 'undefined')
+                    reject('Invalid input entries')
+
                 if(arr.length - 1 === index)
                     sql += `${val})`
                 else
                     sql += `${val}, `
             }
         })
+        console.log(sql)
         connection.query(sql, (err, results) => {
             if(err)
                 reject(err.sqlMessage)
