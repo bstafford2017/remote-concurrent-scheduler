@@ -74,11 +74,12 @@ router.post('/login', (req, res) => {
 // Create a user
 router.post('/create', (req, res) => {
     const user = {
+        id: null,
         username: req.body.username,
         password: req.body.password,
-        admin: parseInt(req.body.admin),
         fname: req.body.fname,
-        lname: req.body.lname
+        lname: req.body.lname,
+        admin: parseInt(req.body.admin),
     }
     insert(user, 'users').then(results => {
         res.json({ results })
@@ -88,16 +89,18 @@ router.post('/create', (req, res) => {
 })
 
 // Update a user
+// ** change to update function
 router.post('/update', (req, res) => {
-    const removeUser = [req.body.oldUsername]
+    const removeUser = [req.body.id]
     const insertUser = {
-        username: req.body.newUsername,
+        id: req.body.id,
+        username: req.body.username,
         password: req.body.password,
-        admin: parseInt(req.body.admin),
         fname: req.body.fname,
-        lname: req.body.lname
+        lname: req.body.lname,
+        admin: parseInt(req.body.admin),
     }
-    remove(removeUser, 'users', 'username').then(results => {
+    remove(removeUser, 'users', 'id').then(results => {
         insert(insertUser, 'users').then(results => {
             res.json({ results })
         }).catch(err => {
@@ -110,12 +113,23 @@ router.post('/update', (req, res) => {
 
 // Delete a user
 router.post('/delete', (req, res) => {
-    const usernames = [req.body.username]
-    remove(usernames, 'users', 'username').then(results => {
+    const id = [req.body.id]
+    remove(id, 'users', 'id').then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })
     })
 })
+
+/*
+create table users (
+    id int not null auto_increment,
+    username varchar(55) not null unique,
+    password varchar(55) not null,
+    fname varchar(55) not null,
+    lname varchar(55) not null,
+    admin boolean not null,
+    primary key(id));
+*/
 
 module.exports = router

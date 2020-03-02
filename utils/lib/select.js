@@ -10,11 +10,11 @@ function isStr(obj){
 //     ...
 // }
 // NOTE: Assumes no ambigious names
-function select(table_name, table_columns, join_obj, where_obj){
+function select(table_name, where_obj, where_connective, table_columns, join_obj){
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM ${table_name} `
         
-        if(join_obj){
+        if(join_obj && table_columns){
             Object.keys(join_obj).forEach((key, index) => {
                 const val = join_obj[key]
                 if(index % 2 === 0){
@@ -24,14 +24,14 @@ function select(table_name, table_columns, join_obj, where_obj){
                 }
             })
         }
-        if(where_obj){
+        if(where_obj && where_connective){
             sql += `WHERE `
             Object.keys(where_obj).forEach((key, index, arr) => {
                 const val = where_obj[key]
                 if(arr.length - 1 === index)
                     sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`}`
                 else 
-                    sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`} OR`
+                    sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`} ${where_connective} `
             })
         }
         console.log(sql)

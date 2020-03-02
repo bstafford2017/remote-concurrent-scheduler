@@ -1,4 +1,5 @@
 const connection = require('../database')
+const select = require('../../utils/lib/select')
 const filter = require('../filter')
 
 function isStr(obj){
@@ -23,10 +24,17 @@ function insert(obj, table_name) {
         })
         console.log(sql)
         connection.query(sql, (err, results) => {
-            if(err)
+            if(err){
                 reject(err.sqlMessage)
-            else
-                resolve(obj)
+            } else {
+                if(Object.keys(obj).some(key => key === 'id'))
+                    delete obj.id
+                select('users', obj, 'AND').then(results => {
+                    resolve(results)
+                }).catch(err => {
+                    reject(err)
+                })
+            }
         })
     })
 }

@@ -15,12 +15,12 @@ $.ajax({
     success: function(response) {
         response.results.forEach(user => {
             $('#user-list').append(
-                `<tr class="user" id="${user.username}"></td>
+                `<tr class="user" id="${user.id}"></td>
                     <td><input type="text" class="username form-control" value="${user.username}"></td>
                     <td><input type="password" class="password form-control" value="${user.password}"></td>
-                    <td><input type="text" class="fname form-control" value="${user.f_name}"></td>
-                    <td><input type="text" class="lname form-control" value="${user.l_name}"></td>
-                    <td><select class="admin user-cell" id="manage-admin">
+                    <td><input type="text" class="fname form-control" value="${user.fname}"></td>
+                    <td><input type="text" class="lname form-control" value="${user.lname}"></td>
+                    <td><select class="admin user-cell form-control" id="manage-admin">
                         <option value="0" ${(user.admin === 0) ? 'selected' : ''}>False</option>
                         <option value="1" ${(user.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
@@ -38,7 +38,6 @@ $.ajax({
 // Create a user
 $('#create-user').click((event) => {
     event.preventDefault()
-
     const username = $('#user-username').val()
     const password = $('#user-password').val()
     const fname = $('#user-fname').val()
@@ -57,14 +56,14 @@ $('#create-user').click((event) => {
         },
         success: function(response){
             $('#user-list').append(
-                `<tr class="user" id="${response.results.username}"></td>
-                    <td><input type="text" class="username form-control" value="${response.results.username}"></td>
-                    <td><input type="password" class="password form-control" value="${response.results.password}"></td>
-                    <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
-                    <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
-                    <td><select class="admin user-cell" id="manage-admin">
-                        <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
-                        <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
+                `<tr class="user" id="${response.results[0].id}"></td>
+                    <td><input type="text" class="username form-control" value="${response.results[0].username}"></td>
+                    <td><input type="password" class="password form-control" value="${response.results[0].password}"></td>
+                    <td><input type="text" class="fname form-control" value="${response.results[0].fname}"></td>
+                    <td><input type="text" class="lname form-control" value="${response.results[0].lname}"></td>
+                    <td><select class="admin user-cell form-control" id="manage-admin">
+                        <option value="0" ${(response.results[0].admin === 0) ? 'selected' : ''}>False</option>
+                        <option value="1" ${(response.results[0].admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
                     <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
                     <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
@@ -80,8 +79,8 @@ $('#create-user').click((event) => {
 // NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.update-user', (event) => {
     event.preventDefault()
-    updateUser.oldUsername = $(event.target).parents('tr').attr('id')
-    updateUser.newUsername = $(event.target).parents('tr').find('.username').val()
+    updateUser.id = $(event.target).parents('tr').attr('id')
+    updateUser.username = $(event.target).parents('tr').find('.username').val()
     updateUser.password = $(event.target).parents('tr').find('.password').val()
     updateUser.fname = $(event.target).parents('tr').find('.fname').val()
     updateUser.lname = $(event.target).parents('tr').find('.lname').val()
@@ -89,9 +88,9 @@ $(document).on('click', '.update-user', (event) => {
 
     $('.modal .btn-secondary').attr('id', 'update')
     $('.modal-title').empty()
-    $('.modal-title').append(`Update '${updateUser.oldUsername}'?`)
+    $('.modal-title').append(`Update '${updateUser.username}'?`)
     $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to update username '<b>${updateUser.oldUsername}</b>'?`)
+    $('.modal-text').append(`Are you sure you want to update username '<b>${updateUser.username}</b>'?`)
     $("#myModal").modal('show')
 })
 
@@ -100,11 +99,12 @@ $(document).on('click', '.update-user', (event) => {
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
     deleteUser = $(event.target).parents('tr').attr('id')
+    const username = $(event.target).parents('tr').find('.username').val()
     $('.modal .btn-secondary').attr('id', 'delete')
     $('.modal-title').empty()
-    $('.modal-title').append(`Delete '${deleteUser}'?`)
+    $('.modal-title').append(`Delete '${username}'?`)
     $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to delete username '<b>${deleteUser}</b>'?`)
+    $('.modal-text').append(`Are you sure you want to delete username '<b>${username}</b>'?`)
     $("#myModal").modal('show')
 })
 
@@ -116,11 +116,11 @@ $('.modal .btn-secondary').click((event) => {
             type: 'post',
             url: '/api/user/delete',
             data: {
-                username: deleteUser
+                id: deleteUser
             },
             success: function(response){
-                response.results.forEach((username) => {
-                    $('#' + username.replace(' ', '_')).remove()
+                response.results.forEach(id => {
+                    $('#' + id).remove()
                 })
             },
             error: function(response){
@@ -128,8 +128,8 @@ $('.modal .btn-secondary').click((event) => {
             }
         })
     } else {
-        const oldUsername = updateUser.oldUsername
-        const newUsername = updateUser.newUsername
+        const id = updateUser.id
+        const username = updateUser.username
         const password = updateUser.password
         const fname = updateUser.fname
         const lname = updateUser.lname
@@ -138,28 +138,15 @@ $('.modal .btn-secondary').click((event) => {
             type: 'post',
             url: '/api/user/update',
             data: {
-                oldUsername,
-                newUsername,
+                id,
+                username,
                 password,
                 fname,
                 lname,
                 admin
             },
             success: function(response) {
-                $('#' + oldUsername).remove()
-                $('#user-list').append(
-                    `<tr class="user" id="${response.results.username}"></td>
-                        <td><input type="text" class="username form-control" value="${response.results.username}"></td>
-                        <td><input type="password" class="password form-control" value="${response.results.password}"></td>
-                        <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
-                        <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
-                        <td><select class="admin user-cell" id="manage-admin">
-                            <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
-                            <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
-                        </select></td>
-                        <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
-                        <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
-                    </tr>`)
+                
             },
             error: function(response) {
                 alert('#manage-alert', response.responseJSON.msg)

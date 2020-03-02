@@ -10,7 +10,6 @@ function remove(array, table_name, primary_key) {
     return new Promise((resolve, reject) => {
         let sql = `DELETE FROM ${table_name} WHERE `
         array.forEach((val, index, arr) => {
-            console.log(val)
             if(filter(val) === '')
                 reject('Invalid input entries')
 

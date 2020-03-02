@@ -15,7 +15,7 @@ router.get('/:building', (req, res) => {
     const where = {
         name: req.params.building
     }
-    select('rooms', columns, join, where).then(results => {
+    select('rooms', where, columns, join, 'OR').then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })
