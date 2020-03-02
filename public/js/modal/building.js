@@ -31,10 +31,16 @@ $('#building').change(event => {
     })
 })
 
-$('#start-time').click(event => {
+$('#start-time').change(event => {
     const start = $(event.target).val()
+    let hitStart = false
     $("#end-time > option").each(function() {
-        //if(start )
-        $(this).hide()
+        if(start === $(this).val()){
+            hitStart = true
+            $(this).hide()
+        }
+        
+        if(!hitStart)
+            $(this).hide()
     })
 })
