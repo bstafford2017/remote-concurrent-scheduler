@@ -1,6 +1,6 @@
 <html lang="en">
     <head>
-        <title>Settings</title>
+        <title>Manage Buildings</title>
         <link rel="icon" type="image/png" href="../images/logo-circle.png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="HandheldFriendly" content="true">
@@ -10,8 +10,10 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/card.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
-
+        <link rel="stylesheet" type="text/css" href="css/settings.css">
+        
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
         <!--<script src="../popper/popper.min.js"></script>-->
@@ -45,9 +47,74 @@
             </div>
         </nav>
 
-        <h2>Settings</h2>
+        <div class="content">
+            <div class="card col-lg-4 offset-lg-4 shadow p-3 mb-5 rounded" id="create-card">
+                <div>
+                    <h2 style="text-align: center;">User Settings</h2>
+                </div>
+                <div class="card-body">
+                    <div id="manage-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div id="manage-alert-text"></div>
+                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username">
+                            <small class="form-text text-muted">Note: Special characters will be removed</small>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="password">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="text" class="form-control" id="confirm-password">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="fname">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" id="lname">
+                            </div>
+                        </div>
+                        <div class="form-group col-6 offset-3 text-center">
+                            <p id="admin">Admininstrator: </p>
+                        </div>
+                        <button id="manage-user" class="btn btn-secondary col-4 offset-4">Update</button>
+                    </form>
+                </div> 
+            </div>
+        </div>
 
-        <div class="content"></div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-text"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <footer class="footer">
             <p>Remote Concurrent Scheduler 2020</p>
@@ -57,5 +124,6 @@
         </footer>
 
         <script type="text/javascript" src="js/signout.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
     </body>
 </html>

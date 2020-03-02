@@ -24,7 +24,7 @@ function select(table_name, where_obj, where_connective, table_columns, join_obj
                 }
             })
         }
-        if(where_obj && where_connective){
+        if(where_obj){
             sql += `WHERE `
             Object.keys(where_obj).forEach((key, index, arr) => {
                 const val = where_obj[key]

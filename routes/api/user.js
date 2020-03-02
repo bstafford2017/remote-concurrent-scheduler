@@ -8,6 +8,26 @@ const remove = require('../../utils/lib/remove')
 const update = require('../../utils/lib/update')
 const router = express.Router()
 
+// Get particular user
+router.post('/', (req, res) => {
+    const token = req.cookies.token
+    jwt.verify(token, 'secret-key', (err, authData) => {
+        if(err) {
+            console.log(err) 
+            res.redirect('login.html')
+        }
+        const where = {
+            username: authData.username
+        }
+        select('users', where).then(results => {
+            res.json({ results: results[0] })
+        }).catch(err => {
+            res.status(400).json({ msg: err })
+        })
+    })
+})
+
+
 // Get all users
 router.get('/', (req, res) => {
     select('users').then(results => {
