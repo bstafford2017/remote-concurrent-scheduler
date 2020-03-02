@@ -271,3 +271,11 @@ function showMonthCalendar() {
         }
     }
 }
+
+$('.valid').click((event) => {
+    let day = ("0" + currentDate).slice(-2);
+    let month = ("0" + currentMonth).slice(-2);
+    console.log(currentYear + '-' + month + '-' + day)
+    $('#date').val(currentYear + '-' + month + '-' + day)
+    $('#myModal').modal('show')
+})
