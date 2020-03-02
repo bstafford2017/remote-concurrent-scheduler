@@ -1,5 +1,5 @@
 .week-by-week .valid {
-  height: 750px;
+  height: 750px !important;
   font-size: 20px;
 }
 
