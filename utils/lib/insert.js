@@ -29,8 +29,8 @@ function insert(obj, table_name) {
             } else {
                 if(Object.keys(obj).some(key => key === 'id'))
                     delete obj.id
-                select('users', obj, 'AND').then(results => {
-                    resolve(results)
+                select(table_name, obj, 'AND').then(results => {
+                    resolve(results[0])
                 }).catch(err => {
                     reject(err)
                 })

@@ -15,9 +15,9 @@ $.ajax({
     success: function(response) {
         response.results.forEach(building => {
             $('#building').append(
-                `<option value="${building.name.replace(' ', '_')}">${building.name}</option>`)
+                `<option>${building.name}</option>`)
             $('#selected-building').append(
-                `<option value="${building.name.replace(' ', '_')}">${building.name}</option>`)
+                `<option>${building.name}</option>`)
         })
     },
     error: function(response) {
@@ -28,7 +28,7 @@ $.ajax({
 
 // Get rooms for building change
 $('#selected-building').change(event => {
-    const building = $('#selected-building').val().replace('_', ' ')
+    const building = $('#selected-building').val()
 
     $.ajax({
         type: 'get',
@@ -71,7 +71,7 @@ $('#create-room').click((event) => {
     const number = $('#number').val()
     const seats = $('#seats').val()
     const projector = $('#projector').val()
-    const building = $('#building').val().replace('_', ' ')
+    const building = $('#building').val()
 
     $.ajax({
         type: 'post',
@@ -159,7 +159,7 @@ $('.modal .btn-secondary').click((event) => {
         const number = updateRoom.number
         const seats = updateRoom.seats
         const projector = updateRoom.projector
-        const building = $('#selected-building').val().replace('_', ' ')
+        const building = $('#selected-building').val()
         $.ajax({
             type: 'post',
             url: '/api/room/update',

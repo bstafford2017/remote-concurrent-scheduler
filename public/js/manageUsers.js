@@ -56,14 +56,14 @@ $('#create-user').click((event) => {
         },
         success: function(response){
             $('#user-list').append(
-                `<tr class="user" id="${response.results[0].id}"></td>
-                    <td><input type="text" class="username form-control" value="${response.results[0].username}"></td>
-                    <td><input type="password" class="password form-control" value="${response.results[0].password}"></td>
-                    <td><input type="text" class="fname form-control" value="${response.results[0].fname}"></td>
-                    <td><input type="text" class="lname form-control" value="${response.results[0].lname}"></td>
+                `<tr class="user" id="${response.results.id}"></td>
+                    <td><input type="text" class="username form-control" value="${response.results.username}"></td>
+                    <td><input type="password" class="password form-control" value="${response.results.password}"></td>
+                    <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
+                    <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
                     <td><select class="admin user-cell form-control" id="manage-admin">
-                        <option value="0" ${(response.results[0].admin === 0) ? 'selected' : ''}>False</option>
-                        <option value="1" ${(response.results[0].admin === 1) ? 'selected' : ''}>True</option>
+                        <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
+                        <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
                     </select></td>
                     <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
                     <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
