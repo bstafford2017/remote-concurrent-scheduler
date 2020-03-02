@@ -30,7 +30,7 @@ router.post('/create', (req, res) => {
 
 // Update a building
 router.post('/update', (req, res) => {
-    update(req.body.names, 'buildings', ['name'], 'name').then(results => {
+    update(req.body.names, 'buildings').then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })

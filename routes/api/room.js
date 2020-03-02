@@ -39,14 +39,13 @@ router.post('/create', (req, res) => {
 
 router.post('/update', (req, res) => {
     const room = [{
-        oldId: req.body.id,
+        id: req.body.id,
         number: req.body.number,
         seats: req.body.seats,
         projector: req.body.projector,
         building: req.body.building
     }]
-    const cols = ['id', 'number', 'seats', 'projector', 'building']
-    update(room, 'rooms', cols, 'id').then(results => {
+    update(room, 'rooms').then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })

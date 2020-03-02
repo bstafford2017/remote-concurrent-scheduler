@@ -5,6 +5,7 @@ const con = require('../../utils/database')
 const select = require('../../utils/lib/select')
 const insert = require('../../utils/lib/insert')
 const remove = require('../../utils/lib/remove')
+const update = require('../../utils/lib/update')
 const router = express.Router()
 
 // Get all users
@@ -91,21 +92,16 @@ router.post('/create', (req, res) => {
 // Update a user
 // ** change to update function
 router.post('/update', (req, res) => {
-    const removeUser = [req.body.id]
-    const insertUser = {
+    const user = [{
         id: req.body.id,
         username: req.body.username,
         password: req.body.password,
         fname: req.body.fname,
         lname: req.body.lname,
         admin: parseInt(req.body.admin),
-    }
-    remove(removeUser, 'users', 'id').then(results => {
-        insert(insertUser, 'users').then(results => {
-            res.json({ results })
-        }).catch(err => {
-            res.status(400).json({ msg: err })
-        })
+    }]
+    update(user, 'users').then(results => {
+        res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })
     })
