@@ -282,4 +282,4 @@ $('.valid').on('click', event => {
     $('#myModal').modal('show')
 })
 
-$(document).on('click', (event) => console.log(event))
+//$(document).on('click', (event) => console.log(event))

@@ -30,3 +30,11 @@ $('#building').change(event => {
         }
     })
 })
+
+$('#start-time').click(event => {
+    const start = $(event.target).val()
+    $("#end-time > option").each(function() {
+        //if(start )
+        $(this).hide()
+    })
+})
