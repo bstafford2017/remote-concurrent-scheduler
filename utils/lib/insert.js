@@ -1,28 +1,25 @@
 const connection = require('../database')
 const filter = require('../filter')
 
+function isStr(obj){
+    return typeof obj === 'string'
+}
+
 function insert(obj, table_name) {
     return new Promise((resolve, reject) => {
         let sql = `INSERT INTO ${table_name} VALUES (`
-        Object.values(obj).forEach((val, index, arr) => {
-            if(typeof val === 'string'){
-                // Escape string
+        Object.keys(obj).forEach((key, index, arr) => {
+            let val = obj[key]
+
+            // Escape string
+            if(isStr(val) && key !== 'id'){
                 if((val = filter(val)) === '' || typeof val === 'undefined')
                     reject('Invalid input entries')
-
-                if(arr.length - 1 === index)
-                    sql += `'${val}')`
-                else
-                    sql += `'${val}', `
-            } else {
-                if(typeof val === 'undefined')
-                    reject('Invalid input entries')
-
-                if(arr.length - 1 === index)
-                    sql += `${val})`
-                else
-                    sql += `${val}, `
             }
+            if(arr.length - 1 === index)
+                sql += (isStr(val)) ? `'${val}')` : `${val})`
+            else 
+                sql += (isStr(val)) ? `'${val}', ` : `${val}, `
         })
         console.log(sql)
         connection.query(sql, (err, results) => {

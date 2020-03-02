@@ -35,6 +35,7 @@ app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'))
 app.use('/api/event', require('./routes/api/event'))
 app.use('/api/user', require('./routes/api/user'))
 app.use('/api/building', require('./routes/api/building'))
+app.use('/api/room', require('./routes/api/room'))
 
 // Catch 404
 app.use((req, res, next) => {

@@ -89,6 +89,38 @@
                     </form>
                 </div> 
             </div>
+
+            <div class="card col-lg-6 offset-lg-3 shadow p-3 mb-5 rounded" id="manage-card">
+                <div class="card-body table-responsive">
+                    <h2 style="text-align: center;">Manage Rooms</h2>
+                    <div id="manage-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div id="manage-alert-text"></div>
+                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="manage-building" class="form-inline col-5 offset-4">
+                        <label for="selected-building">Building</label>
+                        <select class="form-control" id="selected-building">
+                            <option selected="" disabled="" hidden="">Select</option>
+                        </select>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Room Name</th>
+                                <th scope="col">Seats</th>
+                                <th scope="col">Projector</th>
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="room-list">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <footer class="footer">
@@ -99,5 +131,6 @@
         </footer>
 
         <script type="text/javascript" src="js/signout.js"></script>
+        <script type="text/javascript" src="js/manageRooms.js"></script>
     </body>
 </html>

@@ -1,26 +1,38 @@
 const connection = require('../database')
 
-function select(table_name, key_array, value_array){
+function isStr(obj){
+    return typeof obj === 'string'
+}
+
+// join_obj = {
+//     table1: table1,
+//     join_key1: join_value1,
+//     ...
+// }
+function select(table_name, table_columns, join_obj, where_obj){
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM ${table_name} `
-
-        if(arguments.length === 3 && value_array && key_array){
-            sql += `WHERE `
-            if(value_array.length == key_array.length)
-                reject('Value array and key array are not the same length')
-
-            value_array.forEach((value, index) => {
-                if(typeof val === 'string'){
-                    if(arr.length - 1 === index)
-                        sql += `${key_array[index]} = ${value}`
-                    else
-                        sql += `${key_array[index]} = ${value} AND `
-                } else { 
-                    if(arr.length - 1 === index)
-                        sql += `${key_array[index]} = ${value}`
-                    else
-                        sql += `${key_array[index]} = ${value} AND `
+        
+        let lastBuilding = ''
+        if(join_obj){
+            Object.keys(join_obj).forEach((key, index) => {
+                const val = join_obj[key]
+                if(index % 2 === 0){
+                    lastBuilding = val
+                    sql += `JOIN ${val} ON `
+                } else {
+                    sql += `${lastBuilding}.${key} = ${table_name}.${table_columns[index - 1]} `
                 }
+            })
+        }
+        if(where_obj){
+            sql += `WHERE `
+            Object.keys(where_obj).forEach((key, index, arr) => {
+                const val = where_obj[key]
+                if(arr.length - 1 === index)
+                    sql += `${lastBuilding}.${key} = ${(isStr(val)) ? `'${val}'` : `${val}`}`
+                else 
+                    sql += `${lastBuilding}.${key} = ${(isStr(val)) ? `'${val}'` : `${val}`} OR`
             })
         }
         console.log(sql)
