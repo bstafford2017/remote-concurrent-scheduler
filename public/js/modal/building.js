@@ -32,6 +32,7 @@ $('#building').change(event => {
 })
 
 $('#start-time').change(event => {
+    $('#end-time').prop('selectedIndex', 0)
     const start = $(event.target).val()
     let hitStart = false
     $("#end-time > option").each(function() {
