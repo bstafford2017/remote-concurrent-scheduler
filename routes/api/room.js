@@ -23,13 +23,21 @@ router.get('/:building', (req, res) => {
 router.post('/create', (req, res) => {
     const room = {
         id: null,
-        name: req.body.name,
+        number: req.body.number,
         seats: parseInt(req.body.seats),
         projector: parseInt(req.body.projector),
         building: req.body.building
     }
-    console.log(room)
     insert(room, 'rooms').then(results => {
+        res.json({ results })
+    }).catch(err => {
+        res.status(400).json({ msg: err })
+    })
+})
+
+router.post('/delete', (req, res) => {
+    const room = [req.body.id]
+    remove(room, 'rooms', 'id').then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })
@@ -39,7 +47,7 @@ router.post('/create', (req, res) => {
 /*
 create table rooms (
     id int not null auto_increment,
-    name varchar(55) not null unique,
+    number varchar(55) not null unique,
     seats int not null,
     projector boolean not null,
     building varchar(55) not null,

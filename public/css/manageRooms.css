@@ -10,3 +10,8 @@
 #manage-card label {
     margin-right: 15px;
 }
+
+.response-text {
+    font-size: 18px;
+    text-align: center;
+}

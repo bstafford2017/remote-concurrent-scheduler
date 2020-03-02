@@ -9,19 +9,18 @@ function isStr(obj){
 //     join_key1: join_value1,
 //     ...
 // }
+// NOTE: Assumes no ambigious names
 function select(table_name, table_columns, join_obj, where_obj){
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM ${table_name} `
         
-        let lastBuilding = ''
         if(join_obj){
             Object.keys(join_obj).forEach((key, index) => {
                 const val = join_obj[key]
                 if(index % 2 === 0){
-                    lastBuilding = val
                     sql += `JOIN ${val} ON `
                 } else {
-                    sql += `${lastBuilding}.${key} = ${table_name}.${table_columns[index - 1]} `
+                    sql += `${key} = ${table_columns[index - 1]} `
                 }
             })
         }
@@ -30,9 +29,9 @@ function select(table_name, table_columns, join_obj, where_obj){
             Object.keys(where_obj).forEach((key, index, arr) => {
                 const val = where_obj[key]
                 if(arr.length - 1 === index)
-                    sql += `${lastBuilding}.${key} = ${(isStr(val)) ? `'${val}'` : `${val}`}`
+                    sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`}`
                 else 
-                    sql += `${lastBuilding}.${key} = ${(isStr(val)) ? `'${val}'` : `${val}`} OR`
+                    sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`} OR`
             })
         }
         console.log(sql)
