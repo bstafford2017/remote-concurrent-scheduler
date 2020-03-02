@@ -22,7 +22,7 @@ $.ajax({
     },
     error: function(response) {
         $('#alert').empty()
-        $('#alert').append(response.responseJSON.msg)
+        $('#alert').append(response.responseJSON.msg.sqlMessage)
     }
 })
 
@@ -60,8 +60,7 @@ $('#selected-building').change(event => {
             }
         },
         error: function(response) {
-            $('#alert').empty()
-            $('#alert').append(response.responseJSON.msg)
+            alert('#create-alert', response.responseJSON.msg.sqlMessage)
         }
     })
 })
@@ -85,22 +84,23 @@ $('#create-room').click((event) => {
             building
         },
         success: function(response) {
-            $('#room-list').empty()
-            $('#room-list').append(
-                `<tr id="${room.id}"></td>
-                    <td><input type="text" class="number form-control" value="${room.number}"></td>
-                    <td><input type="text" class="seats form-control" value="${room.seats}"></td>
-                    <td><select class="projector form-control">
-                        <option value="0" ${(room.projector === 0) ? 'selected' : ''}>False</option>
-                        <option value="1" ${(room.projector === 1) ? 'selected' : ''}>True</option>
-                    </select></td>
-                    <td><button class="update-room btn btn-secondary">Update</button></td>
-                    <td><button class="delete-room btn btn-secondary">Delete</button></td>
-                </tr>`)
+            const building = $('#selected-building').val()
+            if(building === response.results.building){
+                $('#room-list').append(
+                    `<tr id="${response.results.id}"></td>
+                        <td><input type="text" class="number form-control" value="${response.results.number}"></td>
+                        <td><input type="text" class="seats form-control" value="${response.results.seats}"></td>
+                        <td><select class="projector form-control">
+                            <option value="0" ${(response.results.projector === 0) ? 'selected' : ''}>False</option>
+                            <option value="1" ${(response.results.projector === 1) ? 'selected' : ''}>True</option>
+                        </select></td>
+                        <td><button class="update-room btn btn-secondary">Update</button></td>
+                        <td><button class="delete-room btn btn-secondary">Delete</button></td>
+                    </tr>`)
+            }
         },
         error: function(response) {
-            $('#alert').empty()
-            $('#alert').append(response.responseJSON.msg)
+            alert('#create-alert', response.responseJSON.msg.sqlMessage)
         }
     })
 })
@@ -140,7 +140,7 @@ $('.modal .btn-secondary').click((event) => {
     $("#myModal").modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){
-        const id = $(event.target).parents('tr').attr('id')
+        const id = deleteRoom
         $.ajax({
             type: 'post',
             url: '/api/room/delete',
@@ -148,18 +148,18 @@ $('.modal .btn-secondary').click((event) => {
                 id
             },
             success: function(response) {
-                $('#' + response.results.id).remove()
+                $('#selected-building').trigger('change')
             },
             error: function(response) {
-                $('#alert').empty()
-                $('#alert').append(response.responseJSON.msg)
+                alert('#manage-alert', response.responseJSON.msg.sqlMessage)
             }
         })
     } else {
-        const id = updateUser.id
-        const number = updateUser.number
-        const seats = updateUser.seats
-        const projector = updateUser.projector
+        const id = updateRoom.id
+        const number = updateRoom.number
+        const seats = updateRoom.seats
+        const projector = updateRoom.projector
+        const building = $('#selected-building').val().replace('_', ' ')
         $.ajax({
             type: 'post',
             url: '/api/room/update',
@@ -167,23 +167,14 @@ $('.modal .btn-secondary').click((event) => {
                 id,
                 number,
                 seats,
-                projector
+                projector,
+                building
             },
             success: function(response) {
-                $('#room-list').append(
-                    `<tr id="${room.id}"></td>
-                        <td><input type="text" class="number form-control" value="${room.number}"></td>
-                        <td><input type="text" class="seats form-control" value="${room.seats}"></td>
-                        <td><select class="projector form-control">
-                            <option value="0" ${(room.projector === 0) ? 'selected' : ''}>False</option>
-                            <option value="1" ${(room.projector === 1) ? 'selected' : ''}>True</option>
-                        </select></td>
-                        <td><button class="update-room btn btn-secondary">Update</button></td>
-                        <td><button class="delete-room btn btn-secondary">Delete</button></td>
-                    </tr>`)
+                $('#selected-building').trigger('change')
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#manage-alert', response.responseJSON.msg.sqlMessage)
             }
         })
     }

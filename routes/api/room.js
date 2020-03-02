@@ -1,5 +1,7 @@
 const select = require('../../utils/lib/select')
 const insert = require('../../utils/lib/insert')
+const remove = require('../../utils/lib/remove')
+const update = require('../../utils/lib/update')
 const express = require('express')
 const router = express.Router()
 
@@ -35,6 +37,22 @@ router.post('/create', (req, res) => {
     })
 })
 
+router.post('/update', (req, res) => {
+    const room = [{
+        oldId: req.body.id,
+        number: req.body.number,
+        seats: req.body.seats,
+        projector: req.body.projector,
+        building: req.body.building
+    }]
+    const cols = ['id', 'number', 'seats', 'projector', 'building']
+    update(room, 'rooms', cols, 'id').then(results => {
+        res.json({ results })
+    }).catch(err => {
+        res.status(400).json({ msg: err })
+    })
+})
+
 router.post('/delete', (req, res) => {
     const room = [req.body.id]
     remove(room, 'rooms', 'id').then(results => {
@@ -47,7 +65,7 @@ router.post('/delete', (req, res) => {
 /*
 create table rooms (
     id int not null auto_increment,
-    number varchar(55) not null unique,
+    number varchar(55) not null,
     seats int not null,
     projector boolean not null,
     building varchar(55) not null,
