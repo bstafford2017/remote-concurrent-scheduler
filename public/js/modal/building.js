@@ -2,8 +2,8 @@ $.ajax({
     type: "get",
     url: "api/building",
     success: function(response){
-        response.forEach(element => {
-            $('#building').append("<option>" + element + "</option>")
+        response.results.forEach(building => {
+            $('#building').append("<option>" + building.name + "</option>")
         })
     },
     error: function(response){
@@ -12,19 +12,16 @@ $.ajax({
     }
 })
 
-$('#building').change(() => {
+$('#building').change(event => {
     const building = $('#building option:selected').text()
     
     $.ajax({
         type: "get",
-        url: "api/room",
-        data: {
-            building
-        },
+        url: "api/room/" + building,
         success: function(response){
-            response.forEach(element => {
+            response.results.forEach(room => {
                 $('#room').empty()
-                $('#room').append("<option>" + element + "</option>")
+                $('#room').append("<option>" + room.number + "</option>")
             })
         },
         error: function(response){

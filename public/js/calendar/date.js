@@ -9,13 +9,13 @@ $(".scale").hide()
 showMonthCalendar()
 
 // Handles click event for changing displays
-$('#by-week').click(() => {
+$('#by-week').click(event => {
     clear()
     $(".scale").show();
     showWeekCalendar()
 })
 
-$('#by-month').click(() => {
+$('#by-month').click(event => {
     clear()
     $(".scale").hide()
     showMonthCalendar()
@@ -281,3 +281,5 @@ $('.valid').on('click', event => {
     $('#date').val(currentYear + '-' + month + '-' + day)
     $('#myModal').modal('show')
 })
+
+$(document).on('click', (event) => console.log(event))
