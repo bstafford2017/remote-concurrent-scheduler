@@ -13,7 +13,7 @@ $.ajax({
                                     <div class="col-10 d-inline">Edit Building Name</div>`)
         response.results.forEach(building => {
             $('#building-list').append(
-                `<div class="building" id="${building.name.replace(' ', '_')}">
+                `<div class="building" id="${building.id}">
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-10 d-inline" value="${building.name}">
                 </div>`)
@@ -36,7 +36,7 @@ $('#create-building').click((event) => {
         },
         success: function(response){
             $('#building-list').append(
-                `<div class="building" id="${response.results.name.replace(' ', '_')}">
+                `<div class="building" id="${response.results.id}">
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-10 d-inline" value="${response.results.name}">
                 </div>`)
@@ -52,22 +52,22 @@ $('#create-building').click((event) => {
 $('#update-building').click((event) => {
     event.preventDefault()
 
-    const namesToUpdate = []
+    const names = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
         const updatedName = {
-            oldName: $(this).parent().attr('id').replace('_', ' '),
-            newName: $(this).parent().children('.text').val()
+            id: $(this).parent().attr('id'),
+            name: $(this).parent().children('.text').val()
         }
-        namesToUpdate.push(updatedName)
+        names.push(updatedName)
     })
-    if(namesToUpdate.length === 0) {
+    if(names.length === 0) {
         alert('#manage-alert', 'Please select a name(s) to delete')
     } else {
         $.ajax({
             type: 'post',
             url: '/api/building/update',
             data: {
-                names: namesToUpdate
+                names
             },
             success: function(response) {
                 $('#manage-card').find('input:checkbox:checked').each(function() {
@@ -85,24 +85,23 @@ $('#update-building').click((event) => {
 $('#delete-building').click((event) => {
     event.preventDefault()
 
-    const namesToDelete = []
+    const ids = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        let name = $(this).parent().attr('id').replace('_', ' ')
-        namesToDelete.push(name)
+        ids.push($(this).parent().attr('id'))
     })
 
-    if(namesToDelete.length === 0) {
+    if(ids.length === 0) {
         alert('#manage-alert', 'Please select a name(s) to delete')
     } else {
         $.ajax({
             type: 'post',
             url: '/api/building/delete',
             data: {
-                names: namesToDelete
+                ids
             },
             success: function(response){
-                response.results.forEach((name) => {
-                    $('#' + name.replace(' ', '_')).remove()
+                response.results.forEach((id) => {
+                    $('#' + id).remove()
                 })
             },
             error: function(response){
