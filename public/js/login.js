@@ -1,3 +1,9 @@
+function alert(selector, text){
+    $(selector).show()
+    $(selector + '-text').empty()
+    $(selector + '-text').append(text)
+}
+
 if(document.cookie){
     window.location.replace('calendar.html')
 }
@@ -21,7 +27,7 @@ $('#submit').click(function(event){
             window.location.replace('calendar.html')
         },
         error: function(response){
-            $('#alert').show()
+            alert('#alert', response.responseJSON.msg)
             $('#username').val('')
             $('#password').val('')
         }

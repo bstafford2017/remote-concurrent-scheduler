@@ -2,12 +2,13 @@ const jwt = require('jsonwebtoken')
 
 function verifyToken(req, res, next) {
     const token = req.cookies.token
-    if(!token){
+    if(token){
         jwt.verify(token, 'secret-key', (err, authData) => {
             if(err) {
                 console.log(err)
                 res.redirect('login.html')
             }
+            console.log(authData)
             next()
         })
     } else {

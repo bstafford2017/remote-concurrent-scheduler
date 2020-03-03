@@ -67,28 +67,26 @@ router.get('/admin', (req, res) => {
 
 // Get particular user
 router.post('/login', (req, res) => {
-    const username = filter(req.body.username)
-    const password = req.body.password
-
-    const sql = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}';`
-
-    con.query(sql, (err, result) => {
-        if(err)
-            return res.status(400).json({ msg: err })
-
+    const where = {
+        username: filter(req.body.username),
+        password: req.body.password
+    }
+    select('users', where, 'AND').then(results => {
         if(result.length === 0)
             return res.redirect('login.html')
 
-        if(result[0].username === req.body.username && result[0].password === req.body.password) {
-            jwt.sign({username: req.body.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
+        if(results[0].username === req.body.username && results[0].password === req.body.password) {
+            jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
                 if(err) 
-                    return res.status(400).json({ msg: err })
-
-                res.json({ token })
+                    res.status(400).json({ msg: err })
+                else
+                    res.json({ token })
             })
         } else {
             return res.status(400).json({ msg: 'Invalid username/password' })
         }
+    }).catch(err => {
+        res.status(400).json({ msg: err })
     })
 })
 
