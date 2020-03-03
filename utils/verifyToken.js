@@ -8,7 +8,6 @@ function verifyToken(req, res, next) {
                 console.log(err)
                 res.redirect('login.html')
             }
-            console.log(authData)
             next()
         })
     } else {
