@@ -6,7 +6,7 @@ const obfuscate = require('./utils/obfuscate')
 
 const app = express()
 
-// Middleware for body parsing
+// Middleware for body parsing for POST
 app.use(express.urlencoded({extended: true}));
 
 // Middleware for parsing JSON
