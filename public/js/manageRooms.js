@@ -36,6 +36,7 @@ $('#selected-building').change(event => {
         success: function(response) {
             $('#room-list').empty()
             response.results.forEach(room => {
+                console.log(room)
                 $('#room-list').append(
                     `<tr id="${room.id}"></td>
                         <td><input type="text" class="number form-control" value="${room.number}"></td>

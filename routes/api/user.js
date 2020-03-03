@@ -72,9 +72,9 @@ router.post('/login', (req, res) => {
         password: req.body.password
     }
     select('users', where, 'AND').then(results => {
-        if(result.length === 0)
+        if(results.length === 0)
             return res.redirect('login.html')
-
+console.log(results)
         if(results[0].username === req.body.username && results[0].password === req.body.password) {
             jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
                 if(err) 
