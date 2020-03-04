@@ -15,9 +15,9 @@ $.ajax({
     success: function(response) {
         response.results.forEach(building => {
             $('#building').append(
-                `<option>${building.name}</option>`)
+                `<option value="${building.id}">${building.name}</option>`)
             $('#selected-building').append(
-                `<option>${building.name}</option>`)
+                `<option value="${building.id}">${building.name}</option>`)
         })
     },
     error: function(response) {
@@ -36,7 +36,6 @@ $('#selected-building').change(event => {
         success: function(response) {
             $('#room-list').empty()
             response.results.forEach(room => {
-                console.log(room)
                 $('#room-list').append(
                     `<tr id="${room.id}"></td>
                         <td><input type="text" class="number form-control" value="${room.number}"></td>
@@ -85,8 +84,9 @@ $('#create-room').click((event) => {
             building
         },
         success: function(response) {
-            const building = $('#selected-building').val()
-            if(building === response.results.building){
+            const building = $('#selected-building option:selected').text()
+            console.log(building + response.results.name)
+            if(building === response.results.name){
                 $('#room-list').append(
                     `<tr id="${response.results.id}"></td>
                         <td><input type="text" class="number form-control" value="${response.results.number}"></td>

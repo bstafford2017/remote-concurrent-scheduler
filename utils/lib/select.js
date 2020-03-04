@@ -6,21 +6,28 @@ function isStr(obj){
 
 // join_obj = {
 //     table1: table1,
-//     join_key1: join_value1,
+//     join_main_key: join_table1_key,
 //     ...
 // }
 // NOTE: Assumes no ambigious names
 function select(table_name, where_obj, where_connective, table_columns, join_obj){
     return new Promise((resolve, reject) => {
-        let sql = `SELECT * FROM ${table_name} `
-        
-        if(join_obj && table_columns){
+        let sql = `SELECT `
+        if(table_columns){
+            table_columns.forEach((col, index, arr) => {
+                sql += (arr.length - 1 === index) ? `${col}` : `${col}, `
+            })
+        } else {
+            sql += `*`
+        }
+        sql += ` FROM ${table_name} `
+        if(join_obj){
             Object.keys(join_obj).forEach((key, index) => {
                 const val = join_obj[key]
                 if(index % 2 === 0){
                     sql += `JOIN ${val} ON `
                 } else {
-                    sql += `${key} = ${table_columns[index - 1]} `
+                    sql += `${val} = ${key} `
                 }
             })
         }
