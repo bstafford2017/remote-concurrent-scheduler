@@ -22,7 +22,7 @@ router.get('/:building', (req, res) => {
     })
 })
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     const room = {
         id: null,
         number: req.body.number,
@@ -30,25 +30,22 @@ router.post('/create', (req, res) => {
         projector: parseInt(req.body.projector),
         building: parseInt(req.body.building)
     }
-    insert(room, 'rooms').then(results => {
-        console.log(results)
+    try {
+        let insertResults = await insert(room, 'rooms')
         const columns = ['rooms.id', 'number', 'seats', 'projector', 'name']
         const join = {
             table: 'buildings',
             building: 'buildings.id'
         }
         const where = {
-            'buildings.id': results.building,
-            'rooms.id' : results.id
+            'buildings.id': insertResults.building,
+            'rooms.id' : insertResults.id
         }
-        select('rooms', where, 'AND', columns, join).then(results => {
-            res.json({ results: results[0] })
-        }).catch(err => {
-            res.status(400).json({ msg: err })
-        })
-    }).catch(err => {
+        let selectResults = await select('rooms', where, 'AND', columns, join)
+        res.json({ results: selectResults[0] })
+    } catch (err){
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 router.post('/update', (req, res) => {

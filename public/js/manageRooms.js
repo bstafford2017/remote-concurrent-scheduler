@@ -22,7 +22,7 @@ $.ajax({
     },
     error: function(response) {
         $('#alert').empty()
-        $('#alert').append(response.responseJSON.msg.sqlMessage)
+        $('#alert').append(response.responseJSON.msg)
     }
 })
 
@@ -60,7 +60,7 @@ $('#selected-building').change(event => {
             }
         },
         error: function(response) {
-            alert('#create-alert', response.responseJSON.msg.sqlMessage)
+            alert('#create-alert', response.responseJSON.msg)
         }
     })
 })
@@ -101,7 +101,7 @@ $('#create-room').click((event) => {
             }
         },
         error: function(response) {
-            alert('#create-alert', response.responseJSON.msg.sqlMessage)
+            alert('#create-alert', response.responseJSON.msg)
         }
     })
 })
@@ -152,7 +152,7 @@ $('.modal .btn-secondary').click((event) => {
                 $('#selected-building').trigger('change')
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg.sqlMessage)
+                alert('#manage-alert', response.responseJSON.msg)
             }
         })
     } else {
@@ -175,7 +175,7 @@ $('.modal .btn-secondary').click((event) => {
                 $('#selected-building').trigger('change')
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg.sqlMessage)
+                alert('#manage-alert', response.responseJSON.msg)
             }
         })
     }

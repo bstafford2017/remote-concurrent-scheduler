@@ -62,7 +62,7 @@ $('.modal .btn-secondary').click(event => {
             
         },
         error: function(response) {
-            alert('#manage-card', response.responseJSON.msg.sqlMessage)
+            alert('#manage-card', response.responseJSON.msg)
         }
     })
 })
