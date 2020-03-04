@@ -38,7 +38,6 @@ router.post('/create', async (req, res) => {
             building: 'buildings.id'
         }
         const where = {
-            'buildings.id': insertResults.building,
             'rooms.id' : insertResults.id
         }
         let selectResults = await select('rooms', where, 'AND', columns, join)
@@ -52,9 +51,9 @@ router.post('/update', (req, res) => {
     const room = [{
         id: req.body.id,
         number: req.body.number,
-        seats: req.body.seats,
-        projector: req.body.projector,
-        building: req.body.building
+        seats: parseInt(req.body.seats),
+        projector: parseInt(req.body.projector),
+        building: parseInt(req.body.building)
     }]
     update(room, 'rooms').then(results => {
         res.json({ results })
