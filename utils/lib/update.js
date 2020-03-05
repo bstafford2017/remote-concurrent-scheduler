@@ -1,9 +1,6 @@
 const connection = require('../database')
 const filter = require('../filter')
-
-function isStr(obj){
-    return typeof obj === 'string'
-}
+const isStr = require('../isStr')
 
 // NOTE: Assumes first element is primary key
 function update(obj_array, table_name){

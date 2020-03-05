@@ -1,6 +1,7 @@
 const connection = require('../database')
 const select = require('../../utils/lib/select')
 const filter = require('../filter')
+const isStr = require('../isStr')
 
 function isStr(obj){
     return typeof obj === 'string'

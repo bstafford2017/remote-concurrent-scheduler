@@ -1,14 +1,6 @@
 const connection = require('../database')
+const isStr = require('../isStr')
 
-function isStr(obj){
-    return typeof obj === 'string'
-}
-
-// join_obj = {
-//     table1: table1,
-//     join_main_key: join_table1_key,
-//     ...
-// }
 // NOTE: Assumes no ambigious names
 function select(table_name, where_obj, where_connective, table_columns, join_obj){
     return new Promise((resolve, reject) => {

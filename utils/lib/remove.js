@@ -1,9 +1,6 @@
 const connection = require('../database')
 const filter = require('../filter')
-
-function isStr(obj){
-    return typeof obj === 'string'
-}
+const isStr = require('../isStr')
 
 // change arrray to obj which will hold primary key and primary key value
 function remove(array, table_name, primary_key) {
