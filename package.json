@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "obfuscate": "javascript-obfuscator ./public/js --output ./utils/obfuscate && mv ./utils/obfuscate/public/js/* ./utils/obfuscate && rm -R ./utils/obfuscate/public"
+    "obfuscate": "rm -rf ./utils/obfuscate/* && javascript-obfuscator ./public/js --output ./utils/obfuscate && mv ./utils/obfuscate/public/js/* ./utils/obfuscate && rm -R ./utils/obfuscate/public"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run obfuscate"
+      "pre-commit": "npm run obfuscate"
     }
   }
 }
