@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "obfuscate": "javascript-obfuscator ./public/js --output ./utils/obfuscate && mv ./utils/obfuscate/public/js/* ./utils/obfuscate && rm -R ./utils/obfuscate/public"
   },
   "repository": {
     "type": "git",
@@ -23,15 +24,20 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "husky": "^4.2.3",
     "javascript-obfuscator": "^0.24.6",
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
-    "minify": "^5.1.0",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "popper.js": "^1.16.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run obfuscate"
+    }
   }
 }
