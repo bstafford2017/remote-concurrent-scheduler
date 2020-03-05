@@ -3,10 +3,6 @@ const select = require('../../utils/lib/select')
 const filter = require('../filter')
 const isStr = require('../isStr')
 
-function isStr(obj){
-    return typeof obj === 'string'
-}
-
 function insert(obj, table_name) {
     return new Promise((resolve, reject) => {
         let sql = `INSERT INTO ${table_name} VALUES (`

@@ -3,6 +3,7 @@ const parser = require('cookie-parser')
 const logger = require('./utils/logger')
 const verifyToken = require('./utils/verifyToken')
 const obfuscate = require('./utils/obfuscate')
+const minify = require('./utils/minify')
 
 const app = express()
 
@@ -19,10 +20,13 @@ app.use(logger)
 app.use(parser())
 
 // Middleware for verifying token
-app.use(['/calendar.html', '/manageBuildings.html', '/manageRooms.html', '/manageUsers.html', "/settings.html"], verifyToken)
+app.use(['/calendar.html', '/manageBuildings.html', '/manageRooms.html', '/manageUsers.html', '/settings.html'], verifyToken)
 
 // Middleware for obfuscating javascript
 app.use('/js', obfuscate)
+
+// Middleware for minifying
+app.use('/js', minify)
 
 // Static directories for dependencies
 app.use('/', express.static(__dirname + '/public/', {index: 'login.html'}));
