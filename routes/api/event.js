@@ -6,8 +6,28 @@ const update = require('../../utils/lib/update')
 const router = express.Router()
 
 // Get all events
-router.get('/', (req, res) => {
-    select('events').then(results => {
+router.get('/:search', (req, res) => {
+    const cols = ['events.id']
+    const join = [
+        {
+            table: 'users',
+            userId: 'users.id'
+        },
+        {
+            table: 'rooms',
+            roomId: 'rooms.id'
+        },
+        {
+            table: 'recurs',
+            recurId: 'recurs.id'
+        }
+    ]
+    const where = {
+        title: req.params.search,
+        room: req.params.search,
+        building: req.params.search
+    }
+    select('events', where, 'OR', cols, join).then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })

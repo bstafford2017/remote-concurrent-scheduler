@@ -14,10 +14,7 @@ $('#search-button').click(event => {
 
     $.ajax({
         type: 'get',
-        url: '/api/event',
-        data: {
-            search
-        },
+        url: '/api/event/' + search,
         success: function(response) {
             $('#results-list').empty()
             response.results.forEach(event => {
