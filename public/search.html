@@ -1,6 +1,6 @@
 <html lang="en">
     <head>
-        <title>Manage Users</title>
+        <title>Manage Rooms</title>
         <link rel="icon" type="image/png" href="../images/logo-circle.png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="HandheldFriendly" content="true">
@@ -12,16 +12,16 @@
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
         <link rel="stylesheet" type="text/css" href="css/card.css">
         <link rel="stylesheet" type="text/css" href="css/footer.css">
-        <link rel="stylesheet" type="text/css" href="css/manageUsers.css">
+        <link rel="stylesheet" type="text/css" href="css/search.css">
 
         <!-- jQuery.js first, Popper.js, then Bootstrap JS -->
         <script src="../jquery/jquery.js"></script>
         <!--<script src="../popper/popper.min.js"></script>-->
-        <script src="../bootstrapjs/bootstrap.js"></script>
-
+        <script src="../bootstrapjs/bootstrap.js"></script> 
+        
         <script type="text/javascript" src="js/admin.js"></script>
         <script>
-            $(() => $('#manage-users').addClass('active'))
+            $(() => $('#manage-rooms').addClass('active'))
         </script>
     </head>
     <body>
@@ -53,11 +53,10 @@
             </div>
         </nav>
 
-        <!-- Content -->
-        <div class="content row">
-            <div class="card col-lg-3 offset-lg-1 shadow p-3 mb-5 rounded" id="create-card">
+        <div class="content">
+            <div class="card col-lg-8 offset-lg-2 shadow p-3 mb-5 rounded" id="create-card">
                 <div>
-                    <h2 style="text-align: center;">Create User</h2>
+                    <h2 style="text-align: center;">Search Events</h2>
                 </div>
                 <div class="card-body">
                     <div id="create-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -67,65 +66,37 @@
                         </button>
                     </div>
                     <form>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="user-username">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="user-password">
-                        </div>
                         <div class="row">
-                            <div class="form-group col-6">
-                                <label for="fname">First Name</label>
-                                <input type="text" class="form-control" id="user-fname">
+                            <div class="form-group col-8 offset-1">
+                                <input type="text" class="form-control" id="search" placeholder="Event title">
                             </div>
-                            <div class="form-group col-6">
-                                <label for="lname">Last Name</label>
-                                <input type="text" class="form-control" id="user-lname">
-                            </div>
+                            <button id="search-button" class="form-control btn btn-secondary col-2">Search</button>
                         </div>
-                        <div class="form-group form-check col-6 offset-3">
-                            <label for="user-admin">Administrator</label>
-                            <select class="form-control" id="user-admin">
-                                <option selected="" disabled="" hidden="">Select</option>
-                                <option value="0">False</option>
-                                <option value="1">True</option>
-                            </select>
-                        </div>
-                        <button id="create-user" class="btn btn-secondary col-4 offset-4">Create</button>
                     </form>
                 </div> 
             </div>
-            <div class="card col-lg-6 offset-lg-1 shadow p-3 mb-5 rounded" id="manage-card">
+
+            <div class="card col-lg-8 offset-lg-2 shadow p-3 mb-5 rounded" id="results">
                 <div class="card-body table-responsive">
-                    <h2 style="text-align: center;">Manage Users</h2>
-                    <div id="manage-alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <div id="manage-alert-text"></div>
-                        <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Password</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Admin</th>
-                                <th scope="col">Update</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">Building</th>
+                                <th scope="col">Room</th>
+                                <th scope="col">Created By</th>
                             </tr>
                         </thead>
-                        <tbody id="user-list">
-                            
-                        </tbody>
+                        <tbody id="results-list"></tbody>
                     </table>
+                    <p class="response-text">No Results</p>
                 </div>
             </div>
         </div>
-  
+
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -156,6 +127,6 @@
         </footer>
 
         <script type="text/javascript" src="js/signout.js"></script>
-        <script type="text/javascript" src="js/manageUsers.js"></script>
+        <script type="text/javascript" src="js/search.js"></script>
     </body>
 </html>

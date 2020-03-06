@@ -53,4 +53,26 @@ router.delete('/:id', (req, res) => {
     })
 })
 
+/*
+create table recurs (
+    id int not null,
+    day int not null,
+    end date not null,
+    primary key (id));
+
+create table events (
+    id int not null auto_increment,
+    title varchart(55) not null,
+    date date not null,
+    startTime time not null,
+    endTime time not null,
+    recur int not null,
+    room int not null,
+    user int not null,
+    primary key (id),
+    foreign key (recur) references recurs(id),
+    foreign key (room) references rooms(id),
+    foreign key (user) references users(id));
+*/
+
 module.exports = router
