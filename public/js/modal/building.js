@@ -3,7 +3,7 @@ $.ajax({
     url: "api/building",
     success: function(response){
         response.results.forEach(building => {
-            $('#building').append("<option>" + building.name + "</option>")
+            $('#building').append(`<option value="${building.id}">${building.name}</option>`)
         })
     },
     error: function(response){
@@ -13,15 +13,15 @@ $.ajax({
 })
 
 $('#building').change(event => {
-    const building = $('#building option:selected').text()
+    const building = $('#building option:selected').val()
     
     $.ajax({
         type: "get",
         url: "api/room/" + building,
         success: function(response){
+            $('#room').empty()
             response.results.forEach(room => {
-                $('#room').empty()
-                $('#room').append("<option>" + room.number + "</option>")
+                $('#room').append(`<option value="${room.id}">${room.number}</option>`)
             })
         },
         error: function(response){
