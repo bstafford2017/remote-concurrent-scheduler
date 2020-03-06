@@ -1,11 +1,11 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const filter = require('../../utils/filter')
-const con = require('../../utils/database')
 const select = require('../../utils/lib/select')
 const insert = require('../../utils/lib/insert')
 const remove = require('../../utils/lib/remove')
 const update = require('../../utils/lib/update')
+const redirect = require('../../utils/redirect')
 const router = express.Router()
 
 // Get particular user
@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
     jwt.verify(token, 'secret-key', (err, authData) => {
         if(err) {
             console.log(err) 
-            res.redirect('login.html')
+            redirect(__dirname + '/public/login.html', res)
         }
         const where = {
             username: authData.username
@@ -44,23 +44,22 @@ router.get('/admin', (req, res) => {
     jwt.verify(token, 'secret-key', (err, authData) => {
         if(err) {
             console.log(err) 
-            return res.redirect('login.html')
+            redirect(__dirname + '/public/login.html', res)
         }
-
-        const sql = `SELECT * FROM users WHERE username = '${authData.username}';`
-
-        con.query(sql, (err, result) => {
-            if(err)
-                res.status(400).json({ msg: err })
-
-            if(result.length === 0)
-                return res.redirect('login.html')
-            
-            if(result[0].admin === 1) {
+        const where = {
+            username: authData.username
+        }
+        select('users', where).then(results => {
+            if(results.length === 0)
+                redirect(__dirname + '/public/login.html', res)
+        
+            if(results[0].admin === 1) {
                 res.json({ admin: 'true'})
             } else {
                 res.json({ admin: 'false'}) 
             }
+        }).catch(err => {
+            res.status(400).json({ msg: err })
         })
     })
 })

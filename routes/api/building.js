@@ -1,6 +1,4 @@
 const express = require('express')
-const connection = require('../../utils/database')
-const filter = require('../../utils/filter')
 const insert = require('../../utils/lib/insert')
 const remove = require('../../utils/lib/remove')
 const select = require('../../utils/lib/select')
