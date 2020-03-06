@@ -28,9 +28,9 @@ function select(table_name, where_obj, where_connective, table_columns, join_obj
             Object.keys(where_obj).forEach((key, index, arr) => {
                 const val = where_obj[key]
                 if(arr.length - 1 === index)
-                    sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`}`
+                    sql += (isStr(val)) ? `${key} LIKE '%${val}%'` : `${key} = ${val}`
                 else 
-                    sql += `${key} = ${(isStr(val)) ? `'${val}'` : `${val}`} ${where_connective} `
+                    sql += (isStr(val)) ? `${key} LIKE '%${val}%' ${where_connective}` : `${key} = ${val} ${where_connective}`
             })
         }
         console.log(sql)
