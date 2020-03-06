@@ -3,6 +3,7 @@ const parser = require('cookie-parser')
 const logger = require('./utils/logger')
 const verifyToken = require('./utils/verifyToken')
 const obfuscate = require('./utils/obfuscate')
+const redirect = require('./utils/redirect')
 
 const app = express()
 
@@ -19,17 +20,28 @@ app.use(logger)
 app.use(parser())
 
 // Middleware for verifying token
-app.use(['/calendar.html', '/manageBuildings.html', '/manageRooms.html', '/manageUsers.html', '/settings.html'], verifyToken)
+app.use(
+    ['/calendar.html',
+     '/manageBuildings.html',
+     '/manageRooms.html',
+     '/manageUsers.html',
+     '/settings.html'
+    ], verifyToken)
 
 // Middleware for obfuscating javascript
 app.use('/js', obfuscate)
 
 // Static directories for dependencies
-app.use('/', express.static(__dirname + '/public/', {index: 'login.html'}));
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'))
-app.use('/bootstrapjs', express.static(__dirname + '/node_modules/bootstrap/dist/js/'))
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'))
-app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'))
+app.use('/', 
+    express.static(__dirname + '/public/', {index: 'login.html'}));
+app.use('/bootstrap',
+    express.static(__dirname + '/node_modules/bootstrap/dist/css/'))
+app.use('/bootstrapjs', 
+    express.static(__dirname + '/node_modules/bootstrap/dist/js/'))
+app.use('/jquery', 
+    express.static(__dirname + '/node_modules/jquery/dist/'))
+app.use('/popper', 
+    express.static(__dirname + '/node_modules/popper.js/dist/'))
 
 // Routes for API
 app.use('/api/event', require('./routes/api/event'))
@@ -39,7 +51,7 @@ app.use('/api/room', require('./routes/api/room'))
 
 // Catch 404
 app.use((req, res, next) => {
-    res.redirect('error.html')
+    redirect(__dirname + '/public/error.html', res)
 })
 
 
