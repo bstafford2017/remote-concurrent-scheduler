@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // Get particular day's events
 router.get('/:date', (req, res) => {
     const where = {
-        date: req.body.date,
+        date: req.params.date,
     }
     select('events', where).then(results => {
         res.json({ results })
