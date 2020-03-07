@@ -277,8 +277,24 @@ $('.valid').on('click', event => {
     let id = $(event.target).attr('id')
     let day = ("0" + id).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
-    console.log(currentYear + '-' + month + '-' + day)
+    $.ajax({
+        type: 'get',
+        url: 'api/event/' + currentYear + '/' + month + '/' + day,
+        success: function(response){
+            response.results.forEach(event => {
+                $('.view').append(
+                    `<div class="" id="${event.id}">
+                        <input type="text" class="text form-control col-10 d-inline" value="${event.title}">
+                    </div>`)
+            })
+        },
+        error: function(response){
+            alert('#alert', response.responseJSON.msg)
+        }
+    })
     $('#date').val(currentYear + '-' + month + '-' + day)
+    $('.view-header').empty()
+    $('.view-header').append(months[currentMonth] + ' ' + id + ', ' + currentYear)
     $('#myModal').modal('show')
 })
 

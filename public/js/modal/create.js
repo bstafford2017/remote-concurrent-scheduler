@@ -20,10 +20,10 @@ $('#create-event').click(event => {
             recur
         }
         ,success: function(response){
-            response.results.forEach(event => {
-                $('#building').append("<option>" + building.name + "</option>")
-            })
-        },
+            $('.view').append(
+                `<div class="" id="${response.results.id}">
+                    <input type="text" class="text form-control col-10 d-inline" value="${response.results.title}">
+                </div>`)        },
         error: function(response){
             $('#alert').empty()
             $('#alert').append(response)

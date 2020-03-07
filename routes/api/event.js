@@ -35,9 +35,9 @@ router.get('/:search', (req, res) => {
 })
 
 // Get particular day's events
-router.get('/:date', (req, res) => {
+router.get('/:year/:month/:day', (req, res) => {
     const where = {
-        date: req.params.date,
+        date: `${req.params.year}-${req.params.month}-${req.params.day}`
     }
     select('events', where).then(results => {
         res.json({ results })
