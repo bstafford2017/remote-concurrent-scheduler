@@ -9,7 +9,6 @@ $.ajax({
     type: "get",
     url: "/api/token",
     success: function(response){
-        console.log(response)
         if(response.token === true)
             window.location.replace('calendar.html')
     },
