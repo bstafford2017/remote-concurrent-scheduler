@@ -48,16 +48,18 @@ router.get('/:date', (req, res) => {
 
 // Create an event
 router.post('/', (req, res) => {
+    console.log(req.body)
     const event = {
         id: null,
         title: req.body.title,
         date: req.body.date,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        roomId: req.body.roomId,
-        userId: req.body.userId
+        startTime: req.body.start,
+        endTime: req.body.end,
+        recur: null,
+        room: parseInt(req.body.room),
+        user: null
     }
-    insert(event, 'event').then(results => {
+    insert(event, 'events', ['id', 'date', 'startTime', 'endTime']).then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })
@@ -82,13 +84,13 @@ create table recurs (
 
 create table events (
     id int not null auto_increment,
-    title varchart(55) not null,
+    title varchar(55) not null,
     date date not null,
     startTime time not null,
     endTime time not null,
-    recur int not null,
+    recur int,
     room int not null,
-    user int not null,
+    user int,
     primary key (id),
     foreign key (recur) references recurs(id),
     foreign key (room) references rooms(id),

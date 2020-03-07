@@ -10,6 +10,7 @@ let deleteRoom = ''
 
 // Get rooms for building change
 $('#search-button').click(event => {
+    event.preventDefault()
     const search = $('#search').val()
 
     $.ajax({
