@@ -6,12 +6,13 @@ function verifyToken(req, res, next) {
         jwt.verify(token, 'secret-key', (err, authData) => {
             if(err) {
                 console.log(err)
-                res.redirect('login.html')
+                res.redirect('/login.html')
+            } else {
+                next()
             }
-            next()
         })
     } else {
-        res.redirect('login.html')
+        res.redirect('/login.html')
     }
 }
 

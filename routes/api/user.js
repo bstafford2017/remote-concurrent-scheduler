@@ -5,7 +5,6 @@ const insert = require('../../lib/insert')
 const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
-const redirect = require('../../utils/redirect')
 const router = express.Router()
 
 // Get particular user
@@ -14,7 +13,7 @@ router.post('/', (req, res) => {
     jwt.verify(token, 'secret-key', (err, authData) => {
         if(err) {
             console.log(err) 
-            redirect(__dirname + '/public/login.html', res)
+            res.redirect('/login.html')
         }
         const where = {
             username: authData.username
@@ -42,16 +41,16 @@ router.get('/admin', (req, res) => {
     const token = req.cookies.token;
 
     jwt.verify(token, 'secret-key', (err, authData) => {
-        if(err) {
+        if(err || !authData.username) {
             console.log(err) 
-            redirect(__dirname + '/public/login.html', res)
+            return res.redirect('/login.html')
         }
         const where = {
             username: authData.username
         }
         select('users', where).then(results => {
             if(results.length === 0)
-                redirect(__dirname + '/public/login.html', res)
+                return res.redirect('/login.html')
         
             if(results[0].admin === 1) {
                 res.json({ admin: 'true'})
@@ -72,7 +71,7 @@ router.post('/login', (req, res) => {
     }
     select('users', where, 'AND').then(results => {
         if(results.length === 0)
-            return res.redirect('login.html')
+            return redirect('login.html')
 
         if(results[0].username === req.body.username && results[0].password === req.body.password) {
             jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {

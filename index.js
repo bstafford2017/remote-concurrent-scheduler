@@ -3,7 +3,6 @@ const parser = require('cookie-parser')
 const logger = require('./utils/logger')
 const verifyToken = require('./utils/verifyToken')
 const obfuscate = require('./utils/obfuscate')
-const redirect = require('./utils/redirect')
 
 const app = express()
 
@@ -44,6 +43,7 @@ app.use('/popper',
     express.static(__dirname + '/node_modules/popper.js/dist/'))
 
 // Routes for API
+app.use('/api/token', require('./routes/api/token'))
 app.use('/api/event', require('./routes/api/event'))
 app.use('/api/user', require('./routes/api/user'))
 app.use('/api/building', require('./routes/api/building'))
@@ -51,7 +51,8 @@ app.use('/api/room', require('./routes/api/room'))
 
 // Catch 404
 app.use((req, res, next) => {
-    redirect(__dirname + '/public/error.html', res)
+    //redirect('error.html', res)
+    res.redirect('/error.html')
 })
 
 

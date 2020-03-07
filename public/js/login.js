@@ -4,9 +4,19 @@ function alert(selector, text){
     $(selector + '-text').append(text)
 }
 
-if(document.cookie){
-    window.location.replace('calendar.html')
-}
+// For redirecting users if they have a valid cookie
+$.ajax({
+    type: "get",
+    url: "/api/token",
+    success: function(response){
+        console.log(response)
+        if(response.token === true)
+            window.location.replace('calendar.html')
+    },
+    error: function(response){
+        alert('#alert', response.responseJSON.msg)
+    }
+})
 
 $('#submit').click(function(event){
     event.preventDefault()
