@@ -48,15 +48,11 @@ $('#selected-building').change(event => {
                         <td><button class="delete-room btn btn-secondary">Delete</button></td>
                     </tr>`)
             })
+
             if(response.results.length === 0){
-                $('#room-list').append(
-                    `<tr>
-                        <td></td>
-                        <td></td>
-                        <td class="response-text">No results</td>
-                        <td></td>
-                        <td></td>
-                    </tr>`)
+                $('#no-results').show()
+            } else {
+                $('#no-results').hide()
             }
         },
         error: function(response) {
