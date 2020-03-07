@@ -1,8 +1,8 @@
 const express = require('express')
-const insert = require('../../utils/lib/insert')
-const remove = require('../../utils/lib/remove')
-const select = require('../../utils/lib/select')
-const update = require('../../utils/lib/update')
+const insert = require('../../lib/insert')
+const remove = require('../../lib/remove')
+const select = require('../../lib/select')
+const update = require('../../lib/update')
 const router = express.Router()
 
 // Get all buildings

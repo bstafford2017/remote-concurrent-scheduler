@@ -1,7 +1,7 @@
-const select = require('../../utils/lib/select')
-const insert = require('../../utils/lib/insert')
-const remove = require('../../utils/lib/remove')
-const update = require('../../utils/lib/update')
+const insert = require('../../lib/insert')
+const remove = require('../../lib/remove')
+const select = require('../../lib/select')
+const update = require('../../lib/update')
 const express = require('express')
 const router = express.Router()
 
