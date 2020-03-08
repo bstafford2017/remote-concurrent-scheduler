@@ -294,16 +294,32 @@ $('.valid').on('click', event => {
     let id = $(event.target).attr('id')
     let day = ("0" + id).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
-    $('.view').empty()
     $.ajax({
         type: 'get',
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: function(response){
             response.results.forEach(event => {
-                $('.view').append(
-                    `<div class="row" id="${event.id}">
-                        <input type="text" class="text form-control col-10 d-inline" value="${event.title}">
-                        <button class="btn btn-secondary col-2">Delete</button>
+                $('#event-list').append(
+                    `<div class="event">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${event.start}" aria-expanded="false" aria-controls="${event.start}">
+                            ${event.title}
+                        </button>
+                        <div id="${event.start}" class="collapse">
+                            <div clas="card card-body">
+                                <label for="modal-title">Title</label>
+                                <input type="text" class="text form-control" value="${event.title}" id="modal-title">
+                                <div class="row">
+                                    <label for="modal-date">Date</label>
+                                    <input type="date" class="text form-control" value="${event.date}" id="modal-date">
+                                    <label for="modal-start">Start Time</label>
+                                    <select type="date" class="text form-control" value="${event.start}" id="modal-start"></select>
+                                    <label for="modal-end">End Time</label>
+                                    <select type="date" class="text form-control" value="${event.start}" id="modal-end"></select>
+                                </div>
+                                <button class="btn btn-secondary col-2">Update</button>
+                                <button class="btn btn-secondary col-2">Delete</button>
+                            </div>
+                        </div>
                     </div>`)
             })
         },
