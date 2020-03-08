@@ -41,3 +41,18 @@
 .view-link:hover {
     color: #aaa;
 }
+
+.btn-secondary {
+    background-color: #009a44;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #009a43b7;
+    border: none;
+}
+
+.btn-secondary:focus, .btn-secondary:active {
+    background-color: #009a44;
+    border: none;
+}

@@ -301,7 +301,7 @@ $('.valid').on('click', event => {
             response.results.forEach(event => {
                 $('#event-list').append(
                     `<div class="event">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${event.start}" aria-expanded="false" aria-controls="${event.start}">
+                        <button class="btn btn-secondary col-12" type="button" data-toggle="collapse" data-target="#${event.start}" aria-expanded="false" aria-controls="${event.start}">
                             ${event.title}
                         </button>
                         <div id="${event.start}" class="collapse">
