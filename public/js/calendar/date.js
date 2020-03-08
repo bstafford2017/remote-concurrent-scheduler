@@ -125,21 +125,22 @@ function printWeek(date){
         $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
 
-    /*$.ajax({
+    let day = ("0" + date).slice(-2);
+    let month = ("0" + (currentMonth + 1) % 12).slice(-2);
+    $.ajax({
         type: "get",
-        url: "../../api/scripts/event/list.php",
-        data: {
-            date: date,
-            month: currentMonth,
-            year: currentYear
-        },
+        url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: (response) => {
-            $("#0").append(response)        
-
+            response.results.forEach(event => {
+                $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
+            })    
+        },
+        error: function(response){
+            alert('#alert', response.responseJSON.msg)
         }
-    })*/
+    })
     $("#0").append("</div>")
-    $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').outerHeight() + "px; height: " + $('.scale div').outerHeight() + "px;\">ACM Meeting</div>")
+    //$("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').outerHeight() + "px; height: " + $('.scale div').outerHeight() + "px;\">ACM Meeting</div>")
 }
 
 function showWeekCalendar(positive){
@@ -210,23 +211,23 @@ function printMonth(active, valid, row, date){
     }
     $("#row-" + row).append("</div>")
 
+    let day = ("0" + date).slice(-2);
+    let month = ("0" + (currentMonth + 1) % 12).slice(-2);
+
     // Only call for valid dates
     if(valid){
-        /*$.ajax({
+        $.ajax({
             type: "get",
-            url: "../../api/scripts/event/list.php",
-            data: {
-                date: date,
-                month: currentMonth,
-                year: currentYear
-            },
+            url: 'api/event/' + currentYear + '/' + month + '/' + day,
             success: (response) => {
-                $("#row-" + row).append(response)        
-    
+                response.results.forEach(event => {
+                    $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
+                })    
+            },
+            error: function(response){
+                alert('#alert', response.responseJSON.msg)
             }
-        })*/
-        //$("#" + date).append("<div class=\"month-event\">3pm - ACM Meeting</div>")
-        $("#" + date).append("<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">3pm - ACM Meeting</div>")
+        })
     }
 }
 
@@ -277,14 +278,16 @@ $('.valid').on('click', event => {
     let id = $(event.target).attr('id')
     let day = ("0" + id).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
+    $('.view').empty()
     $.ajax({
         type: 'get',
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: function(response){
             response.results.forEach(event => {
                 $('.view').append(
-                    `<div class="" id="${event.id}">
+                    `<div class="row" id="${event.id}">
                         <input type="text" class="text form-control col-10 d-inline" value="${event.title}">
+                        <button class="btn btn-secondary col-2">Delete</button>
                     </div>`)
             })
         },
