@@ -216,7 +216,8 @@ function printMonth(active, valid, row, date){
 
     // Only call for valid dates
     if(valid){
-        $.ajax({
+        // CHANGE TO ONE CALL PER MONTH
+        /*$.ajax({
             type: "get",
             url: 'api/event/' + currentYear + '/' + month + '/' + day,
             success: (response) => {
@@ -227,12 +228,27 @@ function printMonth(active, valid, row, date){
             error: function(response){
                 alert('#alert', response.responseJSON.msg)
             }
-        })
+        })*/
     }
 }
 
 function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
+
+    $.ajax({
+        type: "get",
+        url: 'api/event/' + currentYear + '/' + (currentMonth + 1),
+        success: (response) => {
+            response.results.forEach(event => {
+                let date = event.date.split('T')[0]
+                let day = parseInt(date.substring(5,7))
+                $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
+            })    
+        },
+        error: function(response){
+            alert('#alert', response.responseJSON.msg)
+        }
+    })
 
     let firstDay = (new Date(currentYear, currentMonth)).getDay()
     let table = $('.month-by-month')

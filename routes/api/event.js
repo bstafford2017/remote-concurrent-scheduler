@@ -34,6 +34,19 @@ router.get('/:search', (req, res) => {
     })
 })
 
+// Get particular month's events
+router.get('/:year/:month', (req, res) => {
+    const where = {
+        'YEAR(date)': req.params.year,
+        'MONTH(date)': req.params.month,
+    }
+    select('events', where, 'AND').then(results => {
+        res.json({ results })
+    }).catch(err => {
+        res.status(400).json({ msg: err })
+    })
+})
+
 // Get particular day's events
 router.get('/:year/:month/:day', (req, res) => {
     const where = {
