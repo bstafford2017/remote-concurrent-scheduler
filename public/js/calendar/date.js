@@ -241,7 +241,7 @@ function showMonthCalendar() {
         success: (response) => {
             response.results.forEach(event => {
                 let date = event.date.split('T')[0]
-                let day = parseInt(date.substring(5,7))
+                let day = parseInt(date.substring(8,10))
                 $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
             })    
         },
