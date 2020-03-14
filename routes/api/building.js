@@ -6,43 +6,47 @@ const update = require('../../lib/update')
 const router = express.Router()
 
 // Get all buildings
-router.get('/', (req, res) => {
-    select('buildings').then(results => {
+router.get('/', async (req, res) => {
+    try {
+        const results = await select('buildings')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Create a building
-router.post('/create', (req, res) => {
-    const building = {
-        id: null,
-        name: req.body.name
-    }
-    insert(building, 'buildings').then(results => {
+router.post('/create', async (req, res) => {
+    try {
+        const building = {
+            id: null,
+            name: req.body.name
+        }
+        const results = await insert(building, 'buildings')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Update a building
-router.post('/update', (req, res) => {
-    update(req.body.names, 'buildings').then(results => {
+router.post('/update', async (req, res) => {
+    try {
+        const results = await update(req.body.names, 'buildings')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Delete a building
-router.post('/delete', (req, res) => {
-    remove(req.body.ids, 'buildings', 'id').then(results => {
+router.post('/delete', async (req, res) => {
+    try {
+        const results = await remove(req.body.ids, 'buildings', 'id')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 /*

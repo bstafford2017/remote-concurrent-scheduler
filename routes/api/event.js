@@ -7,68 +7,71 @@ const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 // Get all events
-router.get('/:search', (req, res) => {
-    const cols = 
-        [
-            'events.id',
-            'events.title',
-            'events.date',
-            'events.startTime',
-            'events.endTime',
-            'rooms.number',
-            'users.username'
+router.get('/:search', async (req, res) => {
+    try {
+        const cols = 
+            [
+                'events.id',
+                'events.title',
+                'events.date',
+                'events.startTime',
+                'events.endTime',
+                'rooms.number',
+                'users.username'
+            ]
+        const join = [
+            {
+                table: 'users',
+                user: 'users.id'
+            },
+            {
+                table: 'rooms',
+                room: 'rooms.id'
+            },
+            {
+                table: 'recurs',
+                recur: 'recurs.id'
+            }
         ]
-    /*const join = [
-        {
-            table: 'users',
-            user: 'users.id'
-        },
-        {
-            table: 'rooms',
-            room: 'rooms.id'
-        },
-        {
-            table: 'recurs',
-            recur: 'recurs.id'
+        const where = {
+            title: req.params.search,
+            room: req.params.search,
+            building: req.params.search,
+            user: req.params.search,
+            date: req.params.search
         }
-    ]*/
-    const where = {
-        title: req.params.search,
-        room: req.params.search,
-        building: req.params.search,
-        user: req.params.search,
-        date: req.params.search
-    }
-    select('events', where, 'OR', cols, join).then(results => {
+        const results = await select('events', where, 'OR', cols, join)
         res.json({ results })
-    }).catch(err => {
+    } catch (eer) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Get particular month's events
-router.get('/:year/:month', (req, res) => {
-    const where = {
-        'YEAR(date)': req.params.year,
-        'MONTH(date)': req.params.month,
-    }
-    select('events', where, 'AND').then(results => {
+router.get('/:year/:month', async (req, res) => {
+    try {
+        const where = {
+            'YEAR(date)': req.params.year,
+            'MONTH(date)': req.params.month,
+        }
+        const results = await select('events', where, 'AND')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Get particular day's events
-router.get('/:year/:month/:day', (req, res) => {
-    const where = {
-        date: `${req.params.year}-${req.params.month}-${req.params.day}`
-    }
-    select('events', where).then(results => {
+router.get('/:year/:month/:day', async (req, res) => {
+    try {
+        const where = {
+            date: `${req.params.year}-${req.params.month}-${req.params.day}`
+        }
+        const results = await select('events', where)
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Create an event

@@ -10,30 +10,32 @@ const router = express.Router()
 // Get particular user
 router.post('/', (req, res) => {
     const token = req.cookies.token
-    jwt.verify(token, 'secret-key', (err, authData) => {
+    jwt.verify(token, 'secret-key', async (err, authData) => {
         if(err) {
             console.log(err) 
             res.redirect('/login.html')
         }
-        const where = {
-            username: authData.username
-        }
-        select('users', where).then(results => {
+        try {
+            const where = {
+                username: authData.username
+            }
+            const results = select('users', where)
             res.json({ results: results[0] })
-        }).catch(err => {
+        } catch (err) {
             res.status(400).json({ msg: err })
-        })
+        }
     })
 })
 
 
 // Get all users
-router.get('/', (req, res) => {
-    select('users').then(results => {
+router.get('/', async (req, res) => {
+    try {
+        const results = await select('users')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Check if user is admin
@@ -90,47 +92,50 @@ router.post('/login', (req, res) => {
 
 // Create a user
 router.post('/create', (req, res) => {
-    const user = {
-        id: null,
-        username: req.body.username,
-        password: req.body.password,
-        fname: req.body.fname,
-        lname: req.body.lname,
-        admin: parseInt(req.body.admin),
-    }
-    insert(user, 'users').then(results => {
+    try {
+        const user = {
+            id: null,
+            username: req.body.username,
+            password: req.body.password,
+            fname: req.body.fname,
+            lname: req.body.lname,
+            admin: parseInt(req.body.admin),
+        }
+        const results = insert(user, 'users')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Update a user
 // ** change to update function
-router.post('/update', (req, res) => {
-    const user = [{
-        id: req.body.id,
-        username: req.body.username,
-        password: req.body.password,
-        fname: req.body.fname,
-        lname: req.body.lname,
-        admin: parseInt(req.body.admin),
-    }]
-    update(user, 'users').then(results => {
+router.post('/update', async (req, res) => {
+    try {
+        const user = [{
+            id: req.body.id,
+            username: req.body.username,
+            password: req.body.password,
+            fname: req.body.fname,
+            lname: req.body.lname,
+            admin: parseInt(req.body.admin),
+        }]
+        const results = await update(user, 'users')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Delete a user
-router.post('/delete', (req, res) => {
-    const id = [req.body.id]
-    remove(id, 'users', 'id').then(results => {
+router.post('/delete', async (req, res) => {
+    try {
+        const id = [req.body.id]
+        const results = await remove(id, 'users', 'id')
         res.json({ results })
-    }).catch(err => {
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 /*
