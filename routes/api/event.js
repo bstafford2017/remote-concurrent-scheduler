@@ -3,29 +3,41 @@ const insert = require('../../lib/insert')
 const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 // Get all events
 router.get('/:search', (req, res) => {
-    const cols = ['events.id']
-    const join = [
+    const cols = 
+        [
+            'events.id',
+            'events.title',
+            'events.date',
+            'events.startTime',
+            'events.endTime',
+            'rooms.number',
+            'users.username'
+        ]
+    /*const join = [
         {
             table: 'users',
-            userId: 'users.id'
+            user: 'users.id'
         },
         {
             table: 'rooms',
-            roomId: 'rooms.id'
+            room: 'rooms.id'
         },
         {
             table: 'recurs',
-            recurId: 'recurs.id'
+            recur: 'recurs.id'
         }
-    ]
+    ]*/
     const where = {
         title: req.params.search,
         room: req.params.search,
-        building: req.params.search
+        building: req.params.search,
+        user: req.params.search,
+        date: req.params.search
     }
     select('events', where, 'OR', cols, join).then(results => {
         res.json({ results })
@@ -60,23 +72,32 @@ router.get('/:year/:month/:day', (req, res) => {
 })
 
 // Create an event
-router.post('/', (req, res) => {
-    console.log(req.body)
-    const event = {
-        id: null,
-        title: req.body.title,
-        date: req.body.date,
-        startTime: req.body.start,
-        endTime: req.body.end,
-        recur: null,
-        room: parseInt(req.body.room),
-        user: null
-    }
-    insert(event, 'events', ['id', 'date', 'startTime', 'endTime']).then(results => {
-        res.json({ results })
-    }).catch(err => {
+router.post('/', async (req, res) => {
+    try {
+        const token = req.cookies.token
+        const authData = await jwt.verify(token, 'secret-key')
+        
+        // Get user id
+        const userWhere = {
+            username: authData.username
+        }
+        const selectResults = await select('users', userWhere)
+
+        const event = {
+            id: null,
+            title: req.body.title,
+            date: req.body.date,
+            startTime: req.body.start,
+            endTime: req.body.end,
+            recur: null,
+            room: parseInt(req.body.room),
+            user: selectResults[0].id
+        }
+        const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
+        res.json({ insertResults })
+    } catch (err) {
         res.status(400).json({ msg: err })
-    })
+    }
 })
 
 // Delete an event

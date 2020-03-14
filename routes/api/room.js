@@ -8,10 +8,10 @@ const router = express.Router()
 // Get particular building's rooms
 router.get('/:building', (req, res) => {
     const columns = ['rooms.id', 'number', 'seats', 'projector', 'name']
-    const join = {
+    const join = [{
         table: 'buildings',
         building: 'buildings.id'
-    }
+    }]
     const where = {
         'buildings.id': req.params.building
     }
