@@ -8,22 +8,21 @@ const update = require('../../lib/update')
 const router = express.Router()
 
 // Get particular user
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const token = req.cookies.token
-    jwt.verify(token, 'secret-key', async (err, authData) => {
+    const jwtResults = jwt.verify(token, 'secret-key', (err, authData) => {
         if(err) {
             console.log(err) 
             res.redirect('/login.html')
         }
-        try {
-            const where = {
-                username: authData.username
-            }
-            const results = select('users', where)
-            res.json({ results: results[0] })
-        } catch (err) {
-            res.status(400).json({ msg: err })
+        const where = {
+            username: authData.username
         }
+        select('users', where).then(results => {
+            res.json({ results: results[0] })
+        }).catch(err => {
+            res.status(400).json({ msg: err })
+        })
     })
 })
 
@@ -91,7 +90,7 @@ router.post('/login', (req, res) => {
 })
 
 // Create a user
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     try {
         const user = {
             id: null,
@@ -101,7 +100,7 @@ router.post('/create', (req, res) => {
             lname: req.body.lname,
             admin: parseInt(req.body.admin),
         }
-        const results = insert(user, 'users')
+        const results = await insert(user, 'users')
         res.json({ results })
     } catch (err) {
         res.status(400).json({ msg: err })

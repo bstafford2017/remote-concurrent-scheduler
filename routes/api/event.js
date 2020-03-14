@@ -9,16 +9,15 @@ const router = express.Router()
 // Get all events
 router.get('/:search', async (req, res) => {
     try {
-        const cols = 
-            [
-                'events.id',
-                'events.title',
-                'events.date',
-                'events.startTime',
-                'events.endTime',
-                'rooms.number',
-                'users.username'
-            ]
+        const cols = [
+            'events.id',
+            'events.title',
+            'events.date',
+            'events.startTime',
+            'events.endTime',
+            'rooms.number',
+            'users.username'
+        ]
         const join = [
             {
                 table: 'users',
