@@ -34,10 +34,10 @@ router.post('/create', async (req, res) => {
         }
         let insertResults = await insert(room, 'rooms')
         const columns = ['rooms.id', 'number', 'seats', 'projector', 'name']
-        const join = {
+        const join = [{
             table: 'buildings',
             building: 'buildings.id'
-        }
+        }]
         const where = {
             'rooms.id' : insertResults.id
         }
