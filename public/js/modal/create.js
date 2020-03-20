@@ -24,7 +24,9 @@ $('#create-event').click(event => {
                 `<div class="" id="${response.results.id}">
                     <input type="text" class="text form-control col-10 d-inline" value="${response.results.title}">
                 </div>`)
+            console.log(response.results)
             let day = parseInt(response.results.date.substring(8,10))
+            console.log(day)
             $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${response.results.title}</div>`)       
             $('#myModal').modal('hide')
         },

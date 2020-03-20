@@ -96,7 +96,7 @@ router.post('/', async (req, res) => {
             user: selectResults[0].id
         }
         const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
-        res.json({ insertResults })
+        res.json({ results: insertResults })
     } catch (err) {
         res.status(400).json({ msg: err })
     }
