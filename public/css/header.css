@@ -51,7 +51,7 @@ input[type='radio']:checked:after {
   width: 15px;
   height: 15px;
   border-radius: 15px;
-  top: -2px;
+  top: -4px;
   left: -1px;
   position: relative;
   background-color: #00aa4f;
