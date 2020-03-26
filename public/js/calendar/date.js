@@ -226,7 +226,8 @@ function showMonthCalendar() {
             response.results.forEach(event => {
                 let date = event.date.split('T')[0]
                 let day = parseInt(date.substring(8,10))
-                $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
+                $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                    title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
             })
         },
         error: function(response){
@@ -288,25 +289,31 @@ $(document).on('click', '.valid', event => {
             response.results.forEach(event => {
                 $('#event-list').append(
                     `<div class="event">
-                        <button class="btn btn-secondary col-12" type="button" data-toggle="collapse" data-target="#modal-${event.id}" aria-expanded="false" aria-controls="modal-${event.id}">
+                        <button class="btn btn-secondary col-12" type="button"
+                            data-toggle="collapse" data-target="#modal-${event.id}"
+                            aria-expanded="false" aria-controls="modal-${event.id}">
                             ${event.title}
                         </button>
                         <div id="modal-${event.id}" class="collapse col-10 offset-1">
                             <div class="form-group">
                                 <label for="${event.id}-title">Title</label>
-                                <input type="text" class="text form-control" value="${event.title}" id="${event.id}-title">
+                                <input type="text" class="text form-control"
+                                    value="${event.title}" id="${event.id}-title">
                             </div>
                             <div class="form-group">
                                 <label for="${event.id}-date">Date</label>
-                                <input type="date" class="text form-control" value="${event.date}" id="${event.id}-date">
+                                <input type="date" class="text form-control"
+                                    value="${event.date}" id="${event.id}-date">
                             </div>
                             <div class="form-group">
                                 <label for="${event.id}-start">Start Time</label>
-                                <select type="date" class="text form-control" value="${event.startTime}" id="${event.id}-start"></select>
+                                <select type="date" class="text form-control"
+                                    value="${event.startTime}" id="${event.id}-start"></select>
                             </div>
                             <div class="form-group">
                                 <label for="${event.id}-end">End Time</label>
-                                <select type="date" class="text form-control" value="${event.endTime}" id="${event.id}-end"></select>
+                                <select type="date" class="text form-control"
+                                    value="${event.endTime}" id="${event.id}-end"></select>
                             </div>
                             <button class="btn btn-secondary col-3 offset-2">Update</button>
                             <button class="btn btn-secondary col-3 offset-2">Delete</button>
