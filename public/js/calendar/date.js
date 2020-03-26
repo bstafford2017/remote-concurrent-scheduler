@@ -288,24 +288,28 @@ $(document).on('click', '.valid', event => {
             response.results.forEach(event => {
                 $('#event-list').append(
                     `<div class="event">
-                        <button class="btn btn-secondary col-12" type="button" data-toggle="collapse" data-target="#${event.id}" aria-expanded="false" aria-controls="${event.id}">
+                        <button class="btn btn-secondary col-12" type="button" data-toggle="collapse" data-target="#modal-${event.id}" aria-expanded="false" aria-controls="modal-${event.id}">
                             ${event.title}
                         </button>
-                        <div id="${event.id}" class="collapse">
-                            <div clas="card card-body">
+                        <div id="modal-${event.id}" class="collapse col-10 offset-1">
+                            <div class="form-group">
                                 <label for="${event.id}-title">Title</label>
                                 <input type="text" class="text form-control" value="${event.title}" id="${event.id}-title">
-                                <div class="row">
-                                    <label for="${event.id}-date">Date</label>
-                                    <input type="date" class="text form-control" value="${event.date}" id="${event.id}-date">
-                                    <label for="${event.id}-start">Start Time</label>
-                                    <select type="date" class="text form-control" value="${event.startTime}" id="${event.id}-start"></select>
-                                    <label for="${event.id}-end">End Time</label>
-                                    <select type="date" class="text form-control" value="${event.endTime}" id="${event.id}-end"></select>
-                                </div>
-                                <button class="btn btn-secondary col-2">Update</button>
-                                <button class="btn btn-secondary col-2">Delete</button>
                             </div>
+                            <div class="form-group">
+                                <label for="${event.id}-date">Date</label>
+                                <input type="date" class="text form-control" value="${event.date}" id="${event.id}-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="${event.id}-start">Start Time</label>
+                                <select type="date" class="text form-control" value="${event.startTime}" id="${event.id}-start"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="${event.id}-end">End Time</label>
+                                <select type="date" class="text form-control" value="${event.endTime}" id="${event.id}-end"></select>
+                            </div>
+                            <button class="btn btn-secondary col-3 offset-2">Update</button>
+                            <button class="btn btn-secondary col-3 offset-2">Delete</button>
                         </div>
                     </div>`)
             })
