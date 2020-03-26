@@ -132,7 +132,13 @@ function printWeek(date){
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: (response) => {
             response.results.forEach(event => {
-                $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
+                const start = event.startTime.split(':')[0]
+                const end = event.endTime.split(':')[0]
+                const diff = end - start
+                $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + (start - 6)
+                    * $('.scale div').outerHeight() + "px; height: " + diff * 
+                    $('.scale div').outerHeight() + "px; width: " + $('.valid').width() + 
+                    "px;position: absolute;\">" + event.title + "</div>")
             })    
         },
         error: function(response){
@@ -140,7 +146,6 @@ function printWeek(date){
         }
     })
     $("#0").append("</div>")
-    //$("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + 9 * $('.scale div').outerHeight() + "px; height: " + $('.scale div').outerHeight() + "px;\">ACM Meeting</div>")
 }
 
 function showWeekCalendar(positive){
@@ -181,7 +186,6 @@ function showWeekCalendar(positive){
     if(week[0] !== 0){
         first = (positive) ? changeAndCheck(week[6], 1) : changeAndCheck(week[0], -7)
     }
-    //console.log("first day: " + first + " " + currentMonth + " " + currentYear)
 
     // Set days for the week
     for(let i = 0; i < 7; i++){
@@ -210,26 +214,6 @@ function printMonth(active, valid, row, date){
         $("#row-" + row).append("<div class=\"invalid\">" + date)
     }
     $("#row-" + row).append("</div>")
-
-    let day = ("0" + date).slice(-2);
-    let month = ("0" + (currentMonth + 1) % 12).slice(-2);
-
-    // Only call for valid dates
-    if(valid){
-        // CHANGE TO ONE CALL PER MONTH
-        /*$.ajax({
-            type: "get",
-            url: 'api/event/' + currentYear + '/' + month + '/' + day,
-            success: (response) => {
-                response.results.forEach(event => {
-                    $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
-                })    
-            },
-            error: function(response){
-                alert('#alert', response.responseJSON.msg)
-            }
-        })*/
-    }
 }
 
 function showMonthCalendar() {
@@ -243,7 +227,7 @@ function showMonthCalendar() {
                 let date = event.date.split('T')[0]
                 let day = parseInt(date.substring(8,10))
                 $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
-            })    
+            })
         },
         error: function(response){
             alert('#alert', response.responseJSON.msg)
@@ -331,5 +315,3 @@ $(document).on('click', '.valid', event => {
     $('.view-header').append(months[currentMonth] + ' ' + id + ', ' + currentYear)
     $('#myModal').modal('show')
 })
-
-//$(document).on('click', (event) => console.log(event))

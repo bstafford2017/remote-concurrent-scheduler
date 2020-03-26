@@ -40,7 +40,6 @@
 
 .table {
   display: flex;
-  height: 85%;
   /* Remove Bootstrap default */
   margin-bottom: 0;
 }
