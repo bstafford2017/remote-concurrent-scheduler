@@ -1,10 +1,15 @@
-function alert(selector, text){
+function alert(selector, text) {
     $(selector).show()
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
 }
 
-function timeConversion(time){
+function formatDate(date) {
+    const unformatted = date.split('T')[0].split('-')
+    return unformatted[1] + '-' + unformatted[2] + '-' + unformatted[0]
+}
+
+function timeConversion(time) {
     const splitTime = time.split(':')
     const hours = splitTime[0] % 12 || 12
     const minutes = splitTime[1]
@@ -30,7 +35,7 @@ $('#search-button').click(event => {
                 $('#results-list').append(
                     `<tr id="${event.id}"></td>
                         <td>${event.title}</td>
-                        <td>${event.date.split("T")[0]}</td>
+                        <td>${formatDate(event.date)}</td>
                         <td>${timeConversion(event.startTime)}</td>
                         <td>${timeConversion(event.endTime)}</td>
                         <td>${event.name}</td>
