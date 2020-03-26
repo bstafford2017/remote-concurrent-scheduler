@@ -135,8 +135,8 @@ function printWeek(date){
                 const start = event.startTime.split(':')[0]
                 const end = event.endTime.split(':')[0]
                 const diff = end - start
-                $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + (start - 6)
-                    * $('.scale div').outerHeight() + "px; height: " + diff * 
+                $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + (start - 6) *
+                    $('.scale div').outerHeight() + "px; height: " + diff * 
                     $('.scale div').outerHeight() + "px; width: " + $('.valid').width() + 
                     "px;position: absolute;\">" + event.title + "</div>")
             })    
@@ -275,29 +275,33 @@ function showMonthCalendar() {
 
 $(document).on('click', '.valid', event => {
     let id = $(event.target).attr('id')
-    let day = ("0" + id).slice(-2);
+    if(typeof id === 'undefined') {
+        id = $(event.target).parent().attr('id')
+    }
+    let day = (id > 9) ? id : "0" + id;
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
     $.ajax({
         type: 'get',
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: function(response){
+            $('#event-list').empty()
             response.results.forEach(event => {
                 $('#event-list').append(
                     `<div class="event">
-                        <button class="btn btn-secondary col-12" type="button" data-toggle="collapse" data-target="#${event.start}" aria-expanded="false" aria-controls="${event.start}">
+                        <button class="btn btn-secondary col-12" type="button" data-toggle="collapse" data-target="#${event.id}" aria-expanded="false" aria-controls="${event.id}">
                             ${event.title}
                         </button>
-                        <div id="${event.start}" class="collapse">
+                        <div id="${event.id}" class="collapse">
                             <div clas="card card-body">
-                                <label for="modal-title">Title</label>
-                                <input type="text" class="text form-control" value="${event.title}" id="modal-title">
+                                <label for="${event.id}-title">Title</label>
+                                <input type="text" class="text form-control" value="${event.title}" id="${event.id}-title">
                                 <div class="row">
-                                    <label for="modal-date">Date</label>
-                                    <input type="date" class="text form-control" value="${event.date}" id="modal-date">
-                                    <label for="modal-start">Start Time</label>
-                                    <select type="date" class="text form-control" value="${event.start}" id="modal-start"></select>
-                                    <label for="modal-end">End Time</label>
-                                    <select type="date" class="text form-control" value="${event.start}" id="modal-end"></select>
+                                    <label for="${event.id}-date">Date</label>
+                                    <input type="date" class="text form-control" value="${event.date}" id="${event.id}-date">
+                                    <label for="${event.id}-start">Start Time</label>
+                                    <select type="date" class="text form-control" value="${event.startTime}" id="${event.id}-start"></select>
+                                    <label for="${event.id}-end">End Time</label>
+                                    <select type="date" class="text form-control" value="${event.endTime}" id="${event.id}-end"></select>
                                 </div>
                                 <button class="btn btn-secondary col-2">Update</button>
                                 <button class="btn btn-secondary col-2">Delete</button>
