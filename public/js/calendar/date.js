@@ -294,29 +294,37 @@ $(document).on('click', '.valid', event => {
                             aria-expanded="false" aria-controls="modal-${event.id}">
                             ${event.title}
                         </button>
-                        <div id="modal-${event.id}" class="collapse col-10 offset-1">
-                            <div class="form-group">
-                                <label for="${event.id}-title">Title</label>
-                                <input type="text" class="text form-control"
-                                    value="${event.title}" id="${event.id}-title">
+                        <div id="modal-${event.id}" 
+                            class="card card-body collapse col-10 offset-1 mt-3">
+                            <h2 style="text-align: center;">Edit</h2>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="${event.id}-title">Title</label>
+                                    <input type="text" class="text form-control"
+                                        value="${event.title}" id="${event.id}-title">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="${event.id}-date">Date</label>
+                                    <input type="date" class="text form-control"
+                                        value="${event.date}" id="${event.id}-date">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="${event.id}-date">Date</label>
-                                <input type="date" class="text form-control"
-                                    value="${event.date}" id="${event.id}-date">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="${event.id}-start">Start Time</label>
+                                    <select type="date" class="text form-control"
+                                        value="${event.startTime}" id="${event.id}-start"></select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="${event.id}-end">End Time</label>
+                                    <select type="date" class="text form-control"
+                                        value="${event.endTime}" id="${event.id}-end"></select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="${event.id}-start">Start Time</label>
-                                <select type="date" class="text form-control"
-                                    value="${event.startTime}" id="${event.id}-start"></select>
+                            <div class="row">
+                                <button class="btn btn-secondary col-3 offset-2">Update</button>
+                                <button class="btn btn-secondary col-3 offset-2">Delete</button>
                             </div>
-                            <div class="form-group">
-                                <label for="${event.id}-end">End Time</label>
-                                <select type="date" class="text form-control"
-                                    value="${event.endTime}" id="${event.id}-end"></select>
-                            </div>
-                            <button class="btn btn-secondary col-3 offset-2">Update</button>
-                            <button class="btn btn-secondary col-3 offset-2">Delete</button>
                         </div>
                     </div>`)
             })
