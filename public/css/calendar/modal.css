@@ -6,10 +6,6 @@
     margin: 10px;
 }
 
-.view-header {
-
-}
-
 .view-item {
     height: 30px;
     font-size: 20px;
@@ -25,10 +21,6 @@
 
 .view-item-header:hover {
     color: #009a44;
-}
-
-.view-item-title {
-    
 }
 
 .view-item-body {
