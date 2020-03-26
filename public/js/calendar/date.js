@@ -289,8 +289,7 @@ function showMonthCalendar() {
     }
 }
 
-$('.valid').on('click', event => {
-    console.log(event)
+$(document).on('click', '.valid', event => {
     let id = $(event.target).attr('id')
     let day = ("0" + id).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
