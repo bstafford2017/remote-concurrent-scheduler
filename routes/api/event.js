@@ -39,9 +39,9 @@ router.get('/:search', async (req, res) => {
         ]
         const where = {
             title: req.params.search,
-            room: req.params.search,
-            building: req.params.search,
-            user: req.params.search,
+            'rooms.number': req.params.search,
+            'buildings.name': req.params.search,
+            'users.username': req.params.search,
             date: req.params.search
         }
         const results = await select('events', where, 'OR', cols, join)

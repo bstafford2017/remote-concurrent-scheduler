@@ -4,6 +4,14 @@ function alert(selector, text){
     $(selector + '-text').append(text)
 }
 
+function timeConversion(time){
+    const splitTime = time.split(':')
+    const hours = splitTime[0] % 12 || 12
+    const minutes = splitTime[1]
+    const AmOrPm = hours >= 12 ? 'pm' : 'am'
+    return hours + ':' + minutes + AmOrPm
+}
+
 // Global variables
 let updateRoom = {}
 let deleteRoom = ''
@@ -22,9 +30,9 @@ $('#search-button').click(event => {
                 $('#results-list').append(
                     `<tr id="${event.id}"></td>
                         <td>${event.title}</td>
-                        <td>${event.date}</td>
-                        <td>${event.startTime}</td>
-                        <td>${event.endTime}</td>
+                        <td>${event.date.split("T")[0]}</td>
+                        <td>${timeConversion(event.startTime)}</td>
+                        <td>${timeConversion(event.endTime)}</td>
                         <td>${event.name}</td>
                         <td>${event.number}</td>
                         <td>${event.username}</td>
