@@ -15,6 +15,7 @@ router.get('/:search', async (req, res) => {
             'events.date',
             'events.startTime',
             'events.endTime',
+            'buildings.name',
             'rooms.number',
             'users.username'
         ]
@@ -30,6 +31,10 @@ router.get('/:search', async (req, res) => {
             {
                 table: 'recurs',
                 recur: 'recurs.id'
+            },
+            {
+                table: 'buildings',
+                'rooms.building': 'buildings.id'
             }
         ]
         const where = {
@@ -110,6 +115,8 @@ router.delete('/:id', (req, res) => {
         res.status(400).json({ msg: err })
     })
 })
+
+// LEFT OUTER JOIN
 
 /*
 create table recurs (

@@ -21,14 +21,13 @@ $('#search-button').click(event => {
             response.results.forEach(event => {
                 $('#results-list').append(
                     `<tr id="${event.id}"></td>
-                        <td><input type="text" class="number form-control" value="${event.number}"></td>
-                        <td><input type="text" class="seats form-control" value="${event.seats}"></td>
-                        <td><select class="projector form-control">
-                            <option value="0" ${(event.projector === 0) ? 'selected' : ''}>False</option>
-                            <option value="1" ${(event.projector === 1) ? 'selected' : ''}>True</option>
-                        </select></td>
-                        <td><button class="update-room btn btn-secondary">Update</button></td>
-                        <td><button class="delete-room btn btn-secondary">Delete</button></td>
+                        <td>${event.title}</td>
+                        <td>${event.date}</td>
+                        <td>${event.startTime}</td>
+                        <td>${event.endTime}</td>
+                        <td>${event.name}</td>
+                        <td>${event.number}</td>
+                        <td>${event.username}</td>
                     </tr>`)
             })
             if(response.results.length === 0){
