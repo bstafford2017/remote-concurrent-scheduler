@@ -39,9 +39,12 @@ $('#start-time').change(event => {
         if(start === $(this).val()){
             hitStart = true
             $(this).hide()
+            return;
         }
         
         if(!hitStart)
             $(this).hide()
+        else
+            $(this).show()
     })
 })
