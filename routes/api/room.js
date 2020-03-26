@@ -9,10 +9,12 @@ const router = express.Router()
 router.get('/:building', async (req, res) => {
     try {
         const columns = ['rooms.id', 'number', 'seats', 'projector', 'name']
-        const join = [{
-            table: 'buildings',
-            building: 'buildings.id'
-        }]
+        const join = [
+            {
+            'JOIN': 'buildings',
+            'building': 'buildings.id'
+            }
+        ]
         const where = {
             'buildings.id': req.params.building
         }
@@ -34,10 +36,12 @@ router.post('/create', async (req, res) => {
         }
         let insertResults = await insert(room, 'rooms')
         const columns = ['rooms.id', 'number', 'seats', 'projector', 'name']
-        const join = [{
-            table: 'buildings',
-            building: 'buildings.id'
-        }]
+        const join = [
+            {
+            'JOIN': 'buildings',
+            'building': 'buildings.id'
+            }
+        ]
         const where = {
             'rooms.id' : insertResults.id
         }

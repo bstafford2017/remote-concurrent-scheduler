@@ -21,19 +21,19 @@ router.get('/:search', async (req, res) => {
         ]
         const join = [
             {
-                table: 'users',
-                user: 'users.id'
+                'JOIN': 'users',
+                'user': 'users.id'
             },
             {
-                table: 'rooms',
-                room: 'rooms.id'
+                'JOIN': 'rooms',
+                'room': 'rooms.id'
             },
             {
-                table: 'recurs',
+                'LEFT OUTER JOIN': 'recurs',
                 recur: 'recurs.id'
             },
             {
-                table: 'buildings',
+                'JOIN': 'buildings',
                 'rooms.building': 'buildings.id'
             }
         ]
@@ -115,8 +115,6 @@ router.delete('/:id', (req, res) => {
         res.status(400).json({ msg: err })
     })
 })
-
-// LEFT OUTER JOIN
 
 /*
 create table recurs (
