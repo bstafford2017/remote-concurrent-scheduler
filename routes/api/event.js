@@ -45,6 +45,9 @@ router.get('/:search', async (req, res) => {
             date: req.params.search
         }
         const results = await select('events', where, 'OR', cols, join)
+        results.sort((a, b) => {
+            return a.date - b.date;
+        })
         res.json({ results })
     } catch (eer) {
         res.status(400).json({ msg: err })
@@ -68,10 +71,29 @@ router.get('/:year/:month', async (req, res) => {
 // Get particular day's events
 router.get('/:year/:month/:day', async (req, res) => {
     try {
+        const cols = [
+            'events.id',
+            'events.title',
+            'events.date',
+            'events.startTime',
+            'events.endTime',
+            'buildings.name',
+            'rooms.number'
+        ]
+        const join = [
+            {
+                'join': 'rooms',
+                'events.room': 'rooms.id'
+            },
+            {
+                'join': 'buildings',
+                'rooms.building': 'buildings.id'
+            }
+        ]
         const where = {
             date: `${req.params.year}-${req.params.month}-${req.params.day}`
         }
-        const results = await select('events', where)
+        const results = await select('events', where, 'AND', cols, join)
         res.json({ results })
     } catch (err) {
         res.status(400).json({ msg: err })

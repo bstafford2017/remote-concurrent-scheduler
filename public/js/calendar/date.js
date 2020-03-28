@@ -286,6 +286,9 @@ $(document).on('click', '.valid', event => {
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: function(response){
             $('#event-list').empty()
+            if(response.results.length == 0) {
+                $('#event-list').append('<h5 style="text-align: center">No Events</h5>');
+            }
             response.results.forEach(event => {
                 $('#event-list').append(
                     `<div class="event">
@@ -306,19 +309,39 @@ $(document).on('click', '.valid', event => {
                                 <div class="form-group col-6">
                                     <label for="${event.id}-date">Date</label>
                                     <input type="date" class="text form-control"
-                                        value="${event.date}" id="${event.id}-date">
+                                        value="${event.date.split("T")[0]}" id="${event.id}-date">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="${event.id}-building">Building</label>
+                                    <select type="date" class="text form-control"
+                                        id="${event.id}-building">
+                                        <option>${event.name}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="${event.id}-room">Room</label>
+                                    <select type="date" class="text form-control"
+                                        id="${event.id}-room">
+                                        <option>${event.number}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-start">Start Time</label>
                                     <select type="date" class="text form-control"
-                                        value="${event.startTime}" id="${event.id}-start"></select>
+                                        id="${event.id}-start">
+                                        <option>${event.startTime}</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="${event.id}-end">End Time</label>
                                     <select type="date" class="text form-control"
-                                        value="${event.endTime}" id="${event.id}-end"></select>
+                                        id="${event.id}-end">
+                                        <option>${event.endTime}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
