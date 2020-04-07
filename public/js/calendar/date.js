@@ -279,8 +279,8 @@ $(document).on('click', '.valid', event => {
     if(typeof id === 'undefined') {
         id = $(event.target).parent().attr('id')
     }
-    let day = (id > 9) ? id : "0" + id;
-    let month = ("0" + (currentMonth + 1) % 12).slice(-2);
+    let day = (id > 9) ? id : "0" + id
+    let month = ("0" + (currentMonth + 1) % 12).slice(-2)
     $.ajax({
         type: 'get',
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
@@ -290,6 +290,8 @@ $(document).on('click', '.valid', event => {
                 $('#event-list').append('<h5 style="text-align: center">No Events</h5>');
             }
             response.results.forEach(event => {
+                const startTime = event.startTime.substring(0, event.startTime.length - 3)
+                const endTime = event.endTime.substring(0, event.endTime.length - 3)
                 $('#event-list').append(
                     `<div class="event">
                         <button class="btn btn-secondary col-12" type="button"
@@ -315,14 +317,14 @@ $(document).on('click', '.valid', event => {
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-building">Building</label>
-                                    <select type="date" class="text form-control"
+                                    <select type="date" class="building text form-control"
                                         id="${event.id}-building">
                                         <option>${event.name}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="${event.id}-room">Room</label>
-                                    <select type="date" class="text form-control"
+                                    <select type="date" class="room text form-control"
                                         id="${event.id}-room">
                                         <option>${event.number}</option>
                                     </select>
@@ -331,16 +333,44 @@ $(document).on('click', '.valid', event => {
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-start">Start Time</label>
-                                    <select type="date" class="text form-control"
+                                    <select type="date" class="start-time text form-control"
                                         id="${event.id}-start">
-                                        <option>${event.startTime}</option>
+                                        <option selected disabled hidden>Select</option>
+                                        <option ${(startTime === '6:00') ? 'selected' : ''}>6:00 am</option>
+                                        <option ${(startTime === '7:00') ? 'selected' : ''}>7:00 am</option>
+                                        <option ${(startTime === '8:00') ? 'selected' : ''}>8:00 am</option>
+                                        <option ${(startTime === '9:00') ? 'selected' : ''}>9:00 am</option>
+                                        <option ${(startTime === '10:00') ? 'selected' : ''}>10:00 am</option>
+                                        <option ${(startTime === '11:00') ? 'selected' : ''}>11:00 am</option>
+                                        <option ${(startTime === '12:00') ? 'selected' : ''}>12:00 pm</option>
+                                        <option ${(startTime === '13:00') ? 'selected' : ''}>1:00 pm</option>
+                                        <option ${(startTime === '14:00') ? 'selected' : ''}>2:00 pm</option>
+                                        <option ${(startTime === '15:00') ? 'selected' : ''}>3:00 pm</option>
+                                        <option ${(startTime === '16:00') ? 'selected' : ''}>4:00 pm</option>
+                                        <option ${(startTime === '17:00') ? 'selected' : ''}>5:00 pm</option>
+                                        <option ${(startTime === '18:00') ? 'selected' : ''}>6:00 pm</option>
+                                        <option ${(startTime === '19:00') ? 'selected' : ''}>7:00 pm</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="${event.id}-end">End Time</label>
-                                    <select type="date" class="text form-control"
+                                    <select type="date" class="end-time text form-control"
                                         id="${event.id}-end">
-                                        <option>${event.endTime}</option>
+                                        <option selected disabled hidden>Select</option>
+                                        <option ${(endTime === '6:00') ? 'selected' : ''}>6:00 am</option>
+                                        <option ${(endTime === '7:00') ? 'selected' : ''}>7:00 am</option>
+                                        <option ${(endTime === '8:00') ? 'selected' : ''}>8:00 am</option>
+                                        <option ${(endTime === '9:00') ? 'selected' : ''}>9:00 am</option>
+                                        <option ${(endTime === '10:00') ? 'selected' : ''}>10:00 am</option>
+                                        <option ${(endTime === '11:00') ? 'selected' : ''}>11:00 am</option>
+                                        <option ${(endTime === '12:00') ? 'selected' : ''}>12:00 pm</option>
+                                        <option ${(endTime === '13:00') ? 'selected' : ''}>1:00 pm</option>
+                                        <option ${(endTime === '14:00') ? 'selected' : ''}>2:00 pm</option>
+                                        <option ${(endTime === '15:00') ? 'selected' : ''}>3:00 pm</option>
+                                        <option ${(endTime === '16:00') ? 'selected' : ''}>4:00 pm</option>
+                                        <option ${(endTime === '17:00') ? 'selected' : ''}>5:00 pm</option>
+                                        <option ${(endTime === '18:00') ? 'selected' : ''}>6:00 pm</option>
+                                        <option ${(endTime === '19:00') ? 'selected' : ''}>7:00 pm</option>
                                     </select>
                                 </div>
                             </div>
