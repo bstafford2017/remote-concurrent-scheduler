@@ -1,27 +1,28 @@
-$.ajax({
+$($.ajax({
     type: "get",
     url: "api/building",
     success: function(response){
         response.results.forEach(building => {
-            $('.building').append(`<option value="${building.id}">${building.name}</option>`)
+            $('#building').append(`<option value="${building.id}">${building.name}</option>`)
         })
     },
     error: function(response){
         $('#alert').empty()
         $('#alert').append(response)
     }
-})
+}))
 
+/* For create building change */
 $(document).on('change', '#building', event => {
-    const building = $('#building option:selected').val()
+    const building = $(event.target).children('option:selected').val()
     
     $.ajax({
         type: "get",
         url: "api/room/" + building,
         success: function(response){
-            $('.room').empty()
+            $('#room').empty()
             response.results.forEach(room => {
-                $('.room').append(`<option value="${room.id}">${room.number}</option>`)
+                $('#room').append(`<option value="${room.id}">${room.number}</option>`)
             })
         },
         error: function(response){

@@ -379,12 +379,16 @@ $(document).on('click', '.valid', event => {
                             </div>
                         </div>
                     </div>`)
-                $('#building').children().each(function() {
+                $('#building').children().each(function(i) {
+                    // Skip adding the 'select' option
+                    if(i === 0) return
+
                     if(this.text === event.name) {
                         $('#' + event.id + '-building').append(`<option 
                             value="${this.value}" selected>${this.text}</option>`)
                     } else {
-                        $('#' + event.id + '-building').append($(this))
+                        $('#' + event.id + '-building').append(`<option 
+                            value="${this.value}">${this.text}</option>`)
                     }
                 })
             })
@@ -399,6 +403,7 @@ $(document).on('click', '.valid', event => {
     $('#myModal').modal('show')
 })
 
+/* For event building change */
 $(document).on('change', '.building', event => {
     const building = $(event.target).children('option:selected').val()
 
