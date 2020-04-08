@@ -319,7 +319,6 @@ $(document).on('click', '.valid', event => {
                                     <label for="${event.id}-building">Building</label>
                                     <select type="date" class="building text form-control"
                                         id="${event.id}-building">
-                                        <option>${event.name}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
@@ -380,6 +379,14 @@ $(document).on('click', '.valid', event => {
                             </div>
                         </div>
                     </div>`)
+                $('#building').children().each(function() {
+                    if(this.text === event.name) {
+                        $('#' + event.id + '-building').append(`<option 
+                            value="${this.value}" selected>${this.text}</option>`)
+                    } else {
+                        $('#' + event.id + '-building').append($(this))
+                    }
+                })
             })
         },
         error: function(response){
@@ -390,4 +397,23 @@ $(document).on('click', '.valid', event => {
     $('.view-header').empty()
     $('.view-header').append(months[currentMonth] + ' ' + id + ', ' + currentYear)
     $('#myModal').modal('show')
+})
+
+$(document).on('change', '.building', event => {
+    const building = $('.building option:selected').val()
+
+    $.ajax({
+        type: "get",
+        url: "api/room/" + building,
+        success: function(response){
+            $('.room').empty()
+            response.results.forEach(room => {
+                $('.room').append(`<option value="${room.id}">${room.number}</option>`)
+            })
+        },
+        error: function(response){
+            $('#alert').empty()
+            $('#alert').append(response)
+        }
+    })
 })

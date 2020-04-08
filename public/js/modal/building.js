@@ -12,8 +12,8 @@ $.ajax({
     }
 })
 
-$(document).on('change', '.building', event => {
-    const building = $('.building option:selected').val()
+$(document).on('change', '#building', event => {
+    const building = $('#building option:selected').val()
     
     $.ajax({
         type: "get",

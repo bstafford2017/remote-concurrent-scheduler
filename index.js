@@ -28,7 +28,7 @@ app.use(
     ], verifyToken)
 
 // Middleware for obfuscating javascript
-//app.use('/js', obfuscate)
+app.use('/js', obfuscate)
 
 // Static directories for dependencies
 app.use('/', 
