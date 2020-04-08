@@ -295,7 +295,6 @@ $(document).on('click', '.valid', event => {
                     (event.startTime.charAt(0) === '0') ? 1 : 0, event.startTime.length - 3)
                 const endTime = event.endTime.substring(
                     (event.endTime.charAt(0) === '0') ? 1 : 0, event.endTime.length - 3)
-                console.log(startTime + " " + endTime)
                 $('#event-list').append(
                     `<div class="event">
                         <button class="btn btn-secondary col-12" type="button"
