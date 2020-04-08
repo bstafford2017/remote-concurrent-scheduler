@@ -26,6 +26,10 @@
   border-radius: 10px;
 }
 
+.more {
+  background-color: rgb(110, 110, 110);
+}
+
 /* Handles item for each event */
 .item {
   font-size: 13px;

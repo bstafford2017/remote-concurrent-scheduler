@@ -223,11 +223,45 @@ function showMonthCalendar() {
         type: "get",
         url: 'api/event/' + currentYear + '/' + (currentMonth + 1),
         success: (response) => {
+            /* 
+                events = [
+                    dayEvents: [
+                        { ... }
+                    ]
+                ]
+            */
+            const events = [[]]
             response.results.forEach(event => {
                 let date = event.date.split('T')[0]
                 let day = parseInt(date.substring(8,10))
-                $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
-                    title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)       
+                if(typeof events[day] !== 'undefined'){
+                    events[day] = [...events[day], event]
+                } else {
+                    events[day] = [event]
+                }
+            })
+            console.log(events)
+            events.forEach(dayEvents => {
+                if(dayEvents.length > 3) {
+                    for(let i = 0; i < 2; i++) {
+                        const event = dayEvents[i]
+                        let date = event.date.split('T')[0]
+                        let day = parseInt(date.substring(8,10))
+                        $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`) 
+                        if(i === 1) {
+                            $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                                title=\"Tooltip on top\" class=\"month-event more\">See More</div>`) 
+                        }     
+                    }
+                } else {
+                    dayEvents.forEach(event => {
+                        let date = event.date.split('T')[0]
+                        let day = parseInt(date.substring(8,10))
+                        $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)
+                    })
+                }
             })
         },
         error: function(response){
