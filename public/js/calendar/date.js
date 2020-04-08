@@ -291,8 +291,11 @@ $(document).on('click', '.valid', event => {
                 $('#event-list').append('<h5 style="text-align: center">No Events</h5>');
             }
             response.results.forEach(event => {
-                const startTime = event.startTime.substring(0, event.startTime.length - 3)
-                const endTime = event.endTime.substring(0, event.endTime.length - 3)
+                const startTime = event.startTime.substring(
+                    (event.startTime.charAt(0) === '0') ? 1 : 0, event.startTime.length - 3)
+                const endTime = event.endTime.substring(
+                    (event.endTime.charAt(0) === '0') ? 1 : 0, event.endTime.length - 3)
+                console.log(startTime + " " + endTime)
                 $('#event-list').append(
                     `<div class="event">
                         <button class="btn btn-secondary col-12" type="button"
@@ -336,20 +339,20 @@ $(document).on('click', '.valid', event => {
                                     <select type="date" class="start-time text form-control"
                                         id="${event.id}-start">
                                         <option selected disabled hidden>Select</option>
-                                        <option ${(startTime === '6:00') ? 'selected' : ''}>6:00 am</option>
-                                        <option ${(startTime === '7:00') ? 'selected' : ''}>7:00 am</option>
-                                        <option ${(startTime === '8:00') ? 'selected' : ''}>8:00 am</option>
-                                        <option ${(startTime === '9:00') ? 'selected' : ''}>9:00 am</option>
-                                        <option ${(startTime === '10:00') ? 'selected' : ''}>10:00 am</option>
-                                        <option ${(startTime === '11:00') ? 'selected' : ''}>11:00 am</option>
-                                        <option ${(startTime === '12:00') ? 'selected' : ''}>12:00 pm</option>
-                                        <option ${(startTime === '13:00') ? 'selected' : ''}>1:00 pm</option>
-                                        <option ${(startTime === '14:00') ? 'selected' : ''}>2:00 pm</option>
-                                        <option ${(startTime === '15:00') ? 'selected' : ''}>3:00 pm</option>
-                                        <option ${(startTime === '16:00') ? 'selected' : ''}>4:00 pm</option>
-                                        <option ${(startTime === '17:00') ? 'selected' : ''}>5:00 pm</option>
-                                        <option ${(startTime === '18:00') ? 'selected' : ''}>6:00 pm</option>
-                                        <option ${(startTime === '19:00') ? 'selected' : ''}>7:00 pm</option>
+                                        <option value="6:00" ${(startTime === '6:00') ? 'selected' : ''}>6:00 am</option>
+                                        <option value="7:00" ${(startTime === '7:00') ? 'selected' : ''}>7:00 am</option>
+                                        <option value="8:00" ${(startTime === '8:00') ? 'selected' : ''}>8:00 am</option>
+                                        <option value="9:00" ${(startTime === '9:00') ? 'selected' : ''}>9:00 am</option>
+                                        <option value="10:00" ${(startTime === '10:00') ? 'selected' : ''}>10:00 am</option>
+                                        <option value="11:00" ${(startTime === '11:00') ? 'selected' : ''}>11:00 am</option>
+                                        <option value="12:00" ${(startTime === '12:00') ? 'selected' : ''}>12:00 pm</option>
+                                        <option value="13:00" ${(startTime === '13:00') ? 'selected' : ''}>1:00 pm</option>
+                                        <option value="14:00" ${(startTime === '14:00') ? 'selected' : ''}>2:00 pm</option>
+                                        <option value="15:00" ${(startTime === '15:00') ? 'selected' : ''}>3:00 pm</option>
+                                        <option value="16:00" ${(startTime === '16:00') ? 'selected' : ''}>4:00 pm</option>
+                                        <option value="17:00" ${(startTime === '17:00') ? 'selected' : ''}>5:00 pm</option>
+                                        <option value="18:00" ${(startTime === '18:00') ? 'selected' : ''}>6:00 pm</option>
+                                        <option value="19:00" ${(startTime === '19:00') ? 'selected' : ''}>7:00 pm</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
@@ -357,20 +360,20 @@ $(document).on('click', '.valid', event => {
                                     <select type="date" class="end-time text form-control"
                                         id="${event.id}-end">
                                         <option selected disabled hidden>Select</option>
-                                        <option ${(endTime === '6:00') ? 'selected' : ''}>6:00 am</option>
-                                        <option ${(endTime === '7:00') ? 'selected' : ''}>7:00 am</option>
-                                        <option ${(endTime === '8:00') ? 'selected' : ''}>8:00 am</option>
-                                        <option ${(endTime === '9:00') ? 'selected' : ''}>9:00 am</option>
-                                        <option ${(endTime === '10:00') ? 'selected' : ''}>10:00 am</option>
-                                        <option ${(endTime === '11:00') ? 'selected' : ''}>11:00 am</option>
-                                        <option ${(endTime === '12:00') ? 'selected' : ''}>12:00 pm</option>
-                                        <option ${(endTime === '13:00') ? 'selected' : ''}>1:00 pm</option>
-                                        <option ${(endTime === '14:00') ? 'selected' : ''}>2:00 pm</option>
-                                        <option ${(endTime === '15:00') ? 'selected' : ''}>3:00 pm</option>
-                                        <option ${(endTime === '16:00') ? 'selected' : ''}>4:00 pm</option>
-                                        <option ${(endTime === '17:00') ? 'selected' : ''}>5:00 pm</option>
-                                        <option ${(endTime === '18:00') ? 'selected' : ''}>6:00 pm</option>
-                                        <option ${(endTime === '19:00') ? 'selected' : ''}>7:00 pm</option>
+                                        <option value="6:00" ${(endTime === '6:00') ? 'selected' : ''}>6:00 am</option>
+                                        <option value="7:00" ${(endTime === '7:00') ? 'selected' : ''}>7:00 am</option>
+                                        <option value="8:00" ${(endTime === '8:00') ? 'selected' : ''}>8:00 am</option>
+                                        <option value="9:00" ${(endTime === '9:00') ? 'selected' : ''}>9:00 am</option>
+                                        <option value="10:00" ${(endTime === '10:00') ? 'selected' : ''}>10:00 am</option>
+                                        <option value="11:00" ${(endTime === '11:00') ? 'selected' : ''}>11:00 am</option>
+                                        <option value="12:00" ${(endTime === '12:00') ? 'selected' : ''}>12:00 pm</option>
+                                        <option value="13:00" ${(endTime === '13:00') ? 'selected' : ''}>1:00 pm</option>
+                                        <option value="14:00" ${(endTime === '14:00') ? 'selected' : ''}>2:00 pm</option>
+                                        <option value="15:00" ${(endTime === '15:00') ? 'selected' : ''}>3:00 pm</option>
+                                        <option value="16:00" ${(endTime === '16:00') ? 'selected' : ''}>4:00 pm</option>
+                                        <option value="17:00" ${(endTime === '17:00') ? 'selected' : ''}>5:00 pm</option>
+                                        <option value="18:00" ${(endTime === '18:00') ? 'selected' : ''}>6:00 pm</option>
+                                        <option value="19:00" ${(endTime === '19:00') ? 'selected' : ''}>7:00 pm</option>
                                     </select>
                                 </div>
                             </div>
@@ -382,7 +385,7 @@ $(document).on('click', '.valid', event => {
                     </div>`)
 
                 // Remove all end-times before start-time on load
-                const start = $(event.target).val()
+                const start = $('#' + event.id + '-start option:selected').val()
                 let hitStart = false
                 $('#' + event.id + '-end > option').each(function() {
                     if(start === $(this).val()){
