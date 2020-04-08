@@ -400,15 +400,16 @@ $(document).on('click', '.valid', event => {
 })
 
 $(document).on('change', '.building', event => {
-    const building = $('.building option:selected').val()
+    const building = $(event.target).children('option:selected').val()
 
     $.ajax({
         type: "get",
         url: "api/room/" + building,
         success: function(response){
-            $('.room').empty()
+            const element = $(event.target).parents('.row').find('.room')
+            element.empty()
             response.results.forEach(room => {
-                $('.room').append(`<option value="${room.id}">${room.number}</option>`)
+                element.append(`<option value="${room.id}">${room.number}</option>`)
             })
         },
         error: function(response){
