@@ -21,7 +21,7 @@ $(document).on('change', '.building', event => {
         type: "get",
         url: "api/room/" + building,
         success: function(response){
-            const element = $(event.target).parents('.row').find('.room')
+            const element = $(event.target).parents('.parent').find('.room')
             element.empty()
             response.results.forEach(room => {
                 element.append(`<option value="${room.id}">${room.number}</option>`)
@@ -39,7 +39,7 @@ $(document).on('change', '.start-time', event => {
     $('.end-time').prop('selectedIndex', 0)
     const start = $(event.target).val()
     let hitStart = false
-    $(event.target).parents('.row').find('.end-time > option').each(function() {
+    $(event.target).parents('.parent').find('.end-time > option').each(function() {
         if(start === $(this).val()){
             hitStart = true
             $(this).hide()
@@ -51,4 +51,28 @@ $(document).on('change', '.start-time', event => {
         else
             $(this).show()
     })
+})
+
+// For create recur validation
+$('#recur').change(() => {
+    if($('#recur').is(':checked')){
+        $('#recur-end').removeAttr('disabled')
+        $('#sunday').removeAttr('disabled')
+        $('#monday').removeAttr('disabled')
+        $('#tuesday').removeAttr('disabled')
+        $('#wednesday').removeAttr('disabled')
+        $('#thursday').removeAttr('disabled')
+        $('#friday').removeAttr('disabled')
+        $('#saturday').removeAttr('disabled')
+    } else {
+        $('#recur-end').attr('disabled', 'disabled')
+        $('#sunday').attr('disabled', 'disabled')
+        $('#monday').attr('disabled', 'disabled')
+        $('#tuesday').attr('disabled', 'disabled')
+        $('#wednesday').attr('disabled', 'disabled')
+        $('#thursday').attr('disabled', 'disabled')
+        $('#friday').attr('disabled', 'disabled')
+        $('#saturday').attr('disabled', 'disabled')
+    }
+
 })

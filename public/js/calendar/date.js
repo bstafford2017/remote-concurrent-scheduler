@@ -311,7 +311,7 @@ $(document).on('click', '.valid', event => {
                         <div id="modal-${event.id}" 
                             class="card card-body collapse col-10 offset-1 mt-3">
                             <h2 style="text-align: center;">Edit</h2>
-                            <div class="row">
+                            <div class="row parent">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-title">Title</label>
                                     <input type="text" class="text form-control"
@@ -323,7 +323,7 @@ $(document).on('click', '.valid', event => {
                                         value="${event.date.split("T")[0]}" id="${event.id}-date">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row parent">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-building">Building</label>
                                     <select type="date" class="building text form-control"
@@ -338,7 +338,7 @@ $(document).on('click', '.valid', event => {
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row parent">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-start">Start Time</label>
                                     <select type="date" class="start-time text form-control"
@@ -382,7 +382,7 @@ $(document).on('click', '.valid', event => {
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row parent">
                                 <button class="update btn btn-secondary col-3 offset-2">Update</button>
                                 <button class="delete btn btn-secondary col-3 offset-2">Delete</button>
                             </div>
