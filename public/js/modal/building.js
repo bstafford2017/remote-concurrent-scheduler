@@ -12,7 +12,7 @@ $($.ajax({
     }
 }))
 
-/* For create building change */
+/* For create tab building change */
 $(document).on('change', '#building', event => {
     const building = $(event.target).children('option:selected').val()
     
@@ -32,6 +32,28 @@ $(document).on('change', '#building', event => {
     })
 })
 
+/* For view tab building change */
+$(document).on('change', '.building', event => {
+    const building = $(event.target).children('option:selected').val()
+
+    $.ajax({
+        type: "get",
+        url: "api/room/" + building,
+        success: function(response){
+            const element = $(event.target).parents('.row').find('.room')
+            element.empty()
+            response.results.forEach(room => {
+                element.append(`<option value="${room.id}">${room.number}</option>`)
+            })
+        },
+        error: function(response){
+            $('#alert').empty()
+            $('#alert').append(response)
+        }
+    })
+})
+
+/* For both create and view tab changing the start-time */
 $(document).on('change', '.start-time', event => {
     $('.end-time').prop('selectedIndex', 0)
     const start = $(event.target).val()

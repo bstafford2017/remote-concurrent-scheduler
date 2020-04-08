@@ -286,7 +286,8 @@ $(document).on('click', '.valid', event => {
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: function(response){
             $('#event-list').empty()
-            if(response.results.length == 0) {
+            $('#event-list').append('<i>Click to manage each event</i>')
+            if(response.results.length === 0) {
                 $('#event-list').append('<h5 style="text-align: center">No Events</h5>');
             }
             response.results.forEach(event => {
@@ -379,6 +380,24 @@ $(document).on('click', '.valid', event => {
                             </div>
                         </div>
                     </div>`)
+
+                // Remove all end-times before start-time on load
+                const start = $(event.target).val()
+                let hitStart = false
+                $('#' + event.id + '-end > option').each(function() {
+                    if(start === $(this).val()){
+                        hitStart = true
+                        $(this).hide()
+                        return;
+                    }
+                    
+                    if(!hitStart)
+                        $(this).hide()
+                    else
+                        $(this).show()
+                })
+
+                // Add buildings to event
                 $('#building').children().each(function(i) {
                     // Skip adding the 'select' option
                     if(i === 0) return
@@ -401,25 +420,4 @@ $(document).on('click', '.valid', event => {
     $('.view-header').empty()
     $('.view-header').append(months[currentMonth] + ' ' + id + ', ' + currentYear)
     $('#myModal').modal('show')
-})
-
-/* For event building change */
-$(document).on('change', '.building', event => {
-    const building = $(event.target).children('option:selected').val()
-
-    $.ajax({
-        type: "get",
-        url: "api/room/" + building,
-        success: function(response){
-            const element = $(event.target).parents('.row').find('.room')
-            element.empty()
-            response.results.forEach(room => {
-                element.append(`<option value="${room.id}">${room.number}</option>`)
-            })
-        },
-        error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
-        }
-    })
 })
