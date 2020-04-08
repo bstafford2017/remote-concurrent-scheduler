@@ -131,7 +131,7 @@ router.post('/', async (req, res) => {
 
 // Delete an event
 router.delete('/:id', (req, res) => {
-    remove([req.body.id], 'events', 'id').then(results => {
+    remove([req.params.id], 'events', 'id').then(results => {
         res.json({ results })
     }).catch(err => {
         res.status(400).json({ msg: err })

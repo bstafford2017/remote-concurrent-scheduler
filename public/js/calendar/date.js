@@ -296,12 +296,18 @@ $(document).on('click', '.valid', event => {
                 const endTime = event.endTime.substring(
                     (event.endTime.charAt(0) === '0') ? 1 : 0, event.endTime.length - 3)
                 $('#event-list').append(
-                    `<div class="event">
+                    `<div class="event" id="${event.id}">
                         <button class="btn btn-secondary col-12" type="button"
                             data-toggle="collapse" data-target="#modal-${event.id}"
                             aria-expanded="false" aria-controls="modal-${event.id}">
                             ${event.title}
                         </button>
+                        <div id="alert" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <div id="alert-text"></div>
+                            <button type="button" class="close" aria-label="Close" onclick="$('.alert').hide()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <div id="modal-${event.id}" 
                             class="card card-body collapse col-10 offset-1 mt-3">
                             <h2 style="text-align: center;">Edit</h2>
@@ -377,8 +383,8 @@ $(document).on('click', '.valid', event => {
                                 </div>
                             </div>
                             <div class="row">
-                                <button class="btn btn-secondary col-3 offset-2">Update</button>
-                                <button class="btn btn-secondary col-3 offset-2">Delete</button>
+                                <button class="update btn btn-secondary col-3 offset-2">Update</button>
+                                <button class="delete btn btn-secondary col-3 offset-2">Delete</button>
                             </div>
                         </div>
                     </div>`)
@@ -415,7 +421,8 @@ $(document).on('click', '.valid', event => {
             })
         },
         error: function(response){
-            alert('#alert', response.responseJSON.msg)
+            $('.alert').children().first().append(response.responseJSON.msg)
+            $('.alert').show()
         }
     })
     $('#date').val(currentYear + '-' + month + '-' + day)
