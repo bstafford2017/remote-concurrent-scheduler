@@ -1,3 +1,4 @@
+/* On load add building to input */
 $($.ajax({
     type: "get",
     url: "api/building",
@@ -12,7 +13,7 @@ $($.ajax({
     }
 }))
 
-/* For both create and view tab building change */
+/* Both create and view tab building change */
 $(document).on('change', '.building', event => {
     const building = $(event.target).children('option:selected').val()
 
@@ -33,7 +34,7 @@ $(document).on('change', '.building', event => {
     })
 })
 
-/* For both create and view tab changing the start-time */
+/* Both create and view tab changing the start-time */
 $(document).on('change', '.start-time', event => {
     $('.end-time').prop('selectedIndex', 0)
     const start = $(event.target).val()

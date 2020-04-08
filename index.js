@@ -29,6 +29,14 @@ app.use(
 
 // Middleware for obfuscating javascript
 //app.use('/js', obfuscate)
+/*
+,
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run obfuscate"
+    }
+  }
+*/
 
 // Static directories for dependencies
 app.use('/', 

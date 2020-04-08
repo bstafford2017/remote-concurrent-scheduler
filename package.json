@@ -34,10 +34,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run obfuscate"
-    }
   }
 }
