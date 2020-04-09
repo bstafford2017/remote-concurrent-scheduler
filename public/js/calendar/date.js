@@ -240,7 +240,6 @@ function showMonthCalendar() {
                     events[day] = [event]
                 }
             })
-            console.log(events)
             events.forEach(dayEvents => {
                 if(dayEvents.length > 3) {
                     for(let i = 0; i < 2; i++) {

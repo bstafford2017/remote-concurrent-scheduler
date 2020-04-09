@@ -19,12 +19,7 @@ $('#create-event').click(event => {
             end,
             recur
         },
-        success: function(response){
-            $('.view').append(
-                `<div class="" id="${response.results.id}">
-                    <input type="text" class="text form-control col-10 d-inline" value="${response.results.title}">
-                </div>`)
-            console.log(response.results)
+        success: function(response) {
             let day = parseInt(response.results.date.substring(8,10))
             if($('#by-week').is(":checked")){
                 const start = response.results.startTime.split(':')[0]
@@ -39,7 +34,7 @@ $('#create-event').click(event => {
             }
             $('#myModal').modal('hide')
         },
-        error: function(response){
+        error: function(response) {
             $('#alert').empty()
             $('#alert').append(response)
         }
