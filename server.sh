@@ -5,10 +5,10 @@ echo 'Resetting server dependencies...'
 rm -R node_modules
 
 echo 'Updating server dependencies...'
-npm install
+npm install --silent --no-progress
 
 echo 'Checking for dependency updates...'
-npm update
+npm update --silent
 
 echo 'Setting up server...'
-npm run dev
+npm run dev --silent
