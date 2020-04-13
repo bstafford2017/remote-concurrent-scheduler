@@ -1,12 +1,12 @@
 {
   "name": "remote-concurrent-scheduler",
   "version": "1.0.0",
-  "description": "Co-creator: Nancy Nettum Professor Advisor: John Nordlie Created by: Benjamin Stafford, Zachary Popek, and Jonathan Schmitz",
+  "description": "Co-creator: Nancy Nettum Professor Advisor: John Nordlie Created by: Benjamin Stafford, and Jonathan Schmitz",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "obfuscate": "rm -rf ./utils/obfuscate/* && javascript-obfuscator ./public/js --output ./utils/obfuscate && mv ./utils/obfuscate/public/js/* ./utils/obfuscate && rm -R ./utils/obfuscate/public"
+    "obfuscate": "rm -rf ./obfuscate && javascript-obfuscator ./public/js --output ./obfuscate && mv ./obfuscate/public/js/* ./obfuscate && rm -rf ./obfuscate/public"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/bstafford2017/remote-concurrent-scheduler#readme",
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "child_process": "^1.0.2",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
