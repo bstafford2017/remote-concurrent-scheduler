@@ -2,7 +2,7 @@ const fs = require('fs')
 const obfuscator = require('javascript-obfuscator')
 
 function obfuscate(req, res, next) {
-    /*fs.readFile(__dirname + '/obfuscate/' + req.url, 'UTF-8', (err, data) => {
+    /*fs.readFile(__dirname + '../obfuscate/' + req.url, 'UTF-8', (err, data) => {
         if(err)
             throw err
         res.send(data)
