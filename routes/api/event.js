@@ -78,7 +78,8 @@ router.get('/:year/:month/:day', async (req, res) => {
             'events.startTime',
             'events.endTime',
             'buildings.name',
-            'rooms.number'
+            'rooms.number',
+            'events.room'
         ]
         const join = [
             {
@@ -129,13 +130,43 @@ router.post('/', async (req, res) => {
     }
 })
 
-// Delete an event
-router.delete('/:id', (req, res) => {
-    remove([req.params.id], 'events', 'id').then(results => {
+// Update an event
+router.post('/:id', async (req, res) => {
+    try {
+        const token = req.cookies.token
+        const authData = await jwt.verify(token, 'secret-key')
+        
+        // Get user id
+        const userWhere = {
+            username: authData.username
+        }
+        const selectResults = await select('users', userWhere)
+
+        const event = [{
+            'id': parseInt(req.params.id),
+            'title': req.body.title,
+            'date': req.body.date,
+            'startTime': req.body.start,
+            'endTime': req.body.end,
+            'recur': null,
+            'room': parseInt(req.body.room),
+            'user': selectResults[0].id
+        }]
+        const results = await update(event, 'events')
         res.json({ results })
-    }).catch(err => {
+    } catch(err) {
         res.status(400).json({ msg: err })
-    })
+    }
+})
+
+// Delete an event
+router.delete('/:id', async (req, res) => {
+    try {
+        const results = await remove([req.params.id], 'events', 'id')
+        res.json({ results })
+    } catch(err) {
+        res.status(400).json({ msg: err })
+    }
 })
 
 /*

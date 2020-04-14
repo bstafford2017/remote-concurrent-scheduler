@@ -347,27 +347,27 @@ $(document).on('click', '.valid', event => {
                             <div class="row parent">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-title">Title</label>
-                                    <input type="text" class="text form-control"
-                                        value="${event.title}" id="${event.id}-title">
+                                    <input type="text" class="title form-control"
+                                        value="${event.title}" id="${event.id}-title" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="${event.id}-date">Date</label>
-                                    <input type="date" class="text form-control"
-                                        value="${event.date.split("T")[0]}" id="${event.id}-date">
+                                    <input type="date" class="date form-control"
+                                        value="${event.date.split("T")[0]}" id="${event.id}-date" required>
                                 </div>
                             </div>
                             <div class="row parent">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-building">Building</label>
                                     <select type="date" class="building text form-control"
-                                        id="${event.id}-building">
+                                        id="${event.id}-building" required>
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="${event.id}-room">Room</label>
                                     <select type="date" class="room text form-control"
-                                        id="${event.id}-room">
-                                        <option>${event.number}</option>
+                                        id="${event.id}-room" required>
+                                        <option value="${event.room}">${event.number}</option>
                                     </select>
                                 </div>
                             </div>
@@ -375,7 +375,7 @@ $(document).on('click', '.valid', event => {
                                 <div class="form-group col-6">
                                     <label for="${event.id}-start">Start Time</label>
                                     <select type="date" class="start-time text form-control"
-                                        id="${event.id}-start">
+                                        id="${event.id}-start" required>
                                         <option selected disabled hidden>Select</option>
                                         <option value="6:00" ${(startTime === '6:00') ? 'selected' : ''}>6:00 am</option>
                                         <option value="7:00" ${(startTime === '7:00') ? 'selected' : ''}>7:00 am</option>
@@ -396,7 +396,7 @@ $(document).on('click', '.valid', event => {
                                 <div class="form-group col-6">
                                     <label for="${event.id}-end">End Time</label>
                                     <select type="date" class="end-time text form-control"
-                                        id="${event.id}-end">
+                                        id="${event.id}-end" required>
                                         <option selected disabled hidden>Select</option>
                                         <option value="6:00" ${(endTime === '6:00') ? 'selected' : ''}>6:00 am</option>
                                         <option value="7:00" ${(endTime === '7:00') ? 'selected' : ''}>7:00 am</option>
