@@ -29,7 +29,6 @@
     "javascript-obfuscator": "^0.27.4",
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "popper.js": "^1.16.1"
   },
