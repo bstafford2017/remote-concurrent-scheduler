@@ -104,15 +104,31 @@ router.get('/:year/:month/:day', async (req, res) => {
 // Create an event
 router.post('/', async (req, res) => {
     try {
+        // Validate availibility
+        const eventWhere = {
+            date: req.body.date,
+            startTime: req.body.start,
+            endTime: req.body.end,
+        }
+        const whereCompare = {
+            startTime: '>',
+            endTime: '<'
+        }
+        const eventResults = await select('events', eventWhere, 'AND', 
+            undefined, undefined, whereCompare, 'OR')
+        if(eventResults.length !== 0) {
+            res.status(400).json({ msg: 'Room is unavailable during this time / date' })
+        }
+
+        // Get logged in user
         const token = req.cookies.token
         const authData = await jwt.verify(token, 'secret-key')
-        
-        // Get user id
         const userWhere = {
             username: authData.username
         }
-        const selectResults = await select('users', userWhere)
+        const userResults = await select('users', userWhere)
 
+        // Insert event
         const event = {
             id: null,
             title: req.body.title,
@@ -121,7 +137,7 @@ router.post('/', async (req, res) => {
             endTime: req.body.end,
             recur: null,
             room: parseInt(req.body.room),
-            user: selectResults[0].id
+            user: userResults[0].id
         }
         const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
         res.json({ results: insertResults })
@@ -133,15 +149,31 @@ router.post('/', async (req, res) => {
 // Update an event
 router.post('/:id', async (req, res) => {
     try {
+        // Validate availibility
+        const eventWhere = {
+            date: req.body.date,
+            startTime: req.body.start,
+            endTime: req.body.end,
+        }
+        const whereCompare = {
+            startTime: '>',
+            endTime: '<'
+        }
+        const eventResults = await select('events', eventWhere, 'AND', 
+            undefined, undefined, whereCompare, 'OR')
+        if(eventResults.length !== 0) {
+            res.status(400).json({ msg: 'Room is unavailable during this time / date' })
+        }
+        
+        // Get logged in user
         const token = req.cookies.token
         const authData = await jwt.verify(token, 'secret-key')
-        
-        // Get user id
         const userWhere = {
             username: authData.username
         }
-        const selectResults = await select('users', userWhere)
+        const userResults = await select('users', userWhere)
 
+        // Update event
         const event = [{
             'id': parseInt(req.params.id),
             'title': req.body.title,
@@ -150,7 +182,7 @@ router.post('/:id', async (req, res) => {
             'endTime': req.body.end,
             'recur': null,
             'room': parseInt(req.body.room),
-            'user': selectResults[0].id
+            'user': userResults[0].id
         }]
         const results = await update(event, 'events')
         res.json({ results })
