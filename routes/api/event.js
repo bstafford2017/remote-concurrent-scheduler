@@ -79,7 +79,8 @@ router.get('/:year/:month/:day', async (req, res) => {
             'events.endTime',
             'buildings.name',
             'rooms.number',
-            'events.room'
+            'events.room',
+            'recurs.end'
         ]
         const join = [
             {
@@ -89,12 +90,19 @@ router.get('/:year/:month/:day', async (req, res) => {
             {
                 'join': 'buildings',
                 'rooms.building': 'buildings.id'
+            },
+            {
+                'left join': 'recurs',
+                'events.recur': 'recurs.id'
             }
         ]
         const where = {
-            date: `${req.params.year}-${req.params.month}-${req.params.day}`
+            'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`
         }
-        const results = await select('events', where, 'AND', cols, join)
+        const whereCompare = {
+            'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`
+        }
+        const results = await select('events', where, 'AND', cols, join, whereCompare, 'AND')
         res.json({ results })
     } catch (err) {
         res.status(400).json({ msg: err })
@@ -120,6 +128,14 @@ router.post('/', async (req, res) => {
             res.status(400).json({ msg: 'Room is unavailable during this time / date' })
         }
 
+        // Insert recur
+        const recur = {
+            id: null,
+            weekdays: req.body.weekString,
+            end: req.body.endRecur
+        }
+        const recurInsertResults = await insert(recur, 'recurs', ['id', 'date'])
+
         // Get logged in user
         const token = req.cookies.token
         const authData = await jwt.verify(token, 'secret-key')
@@ -135,7 +151,7 @@ router.post('/', async (req, res) => {
             date: req.body.date,
             startTime: req.body.start,
             endTime: req.body.end,
-            recur: null,
+            recur: req.body.recur ? req.body.recur : null,
             room: parseInt(req.body.room),
             user: userResults[0].id
         }
@@ -202,12 +218,6 @@ router.delete('/:id', async (req, res) => {
 })
 
 /*
-create table recurs (
-    id int not null,
-    day int not null,
-    end date not null,
-    primary key (id));
-
 create table events (
     id int not null auto_increment,
     title varchar(55) not null,

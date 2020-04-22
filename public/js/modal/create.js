@@ -6,7 +6,27 @@ $('#create-event').click(event => {
     const date = $('#date').val()
     const start = $('#start-time option:selected').val()
     const end = $('#end-time option:selected').val()
-    const recur = $('#recur-end').val()
+    const endRecur = $('#recur-end').val()
+    let weekString = ''
+    if($('#recur').is(':checked')) {
+        let atLeastOne = false
+        $('.form-check-input').each(function() {
+            if($(this).attr('id') !== 'recur') {
+                if($(this).is(':checked')) {
+                    atLeastOne = true
+                    weekString += '1'
+                } else {
+                    weekString += '0'
+                }
+            }
+        })
+        if(!atLeastOne) {
+            alert('Select at least one weekday')
+        }
+        if(!endRecur) {
+            alert('Select a date to end recurring event')
+        }
+    }
     $.ajax({
         type: "post",
         url: "api/event",
@@ -17,7 +37,8 @@ $('#create-event').click(event => {
             date,
             start,
             end,
-            recur
+            weekString,
+            endRecur
         },
         success: function(response) {
             let day = parseInt(response.results.date.substring(8,10))
