@@ -50,7 +50,7 @@ router.get('/:search', async (req, res) => {
         })
         res.json({ results })
     } catch (eer) {
-        res.status(400).json({ msg: err })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -64,7 +64,7 @@ router.get('/:year/:month', async (req, res) => {
         const results = await select('events', where, 'AND')
         res.json({ results })
     } catch (err) {
-        res.status(400).json({ msg: err })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -97,15 +97,17 @@ router.get('/:year/:month/:day', async (req, res) => {
             }
         ]
         const where = {
-            'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`
-        }
-        const whereCompare = {
+            'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
             'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`
+        }
+        // FIX '%xxxxx%'
+        const whereCompare = {
+            'recurs.end': '<='
         }
         const results = await select('events', where, 'AND', cols, join, whereCompare, 'AND')
         res.json({ results })
     } catch (err) {
-        res.status(400).json({ msg: err })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -151,14 +153,15 @@ router.post('/', async (req, res) => {
             date: req.body.date,
             startTime: req.body.start,
             endTime: req.body.end,
-            recur: req.body.recur ? req.body.recur : null,
+            recur: recurInsertResults.id ? parseInt(recurInsertResults.id) : null,
             room: parseInt(req.body.room),
-            user: userResults[0].id
+            user: parseInt(userResults[0].id)
         }
         const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
         res.json({ results: insertResults })
     } catch (err) {
-        res.status(400).json({ msg: err })
+        console.log(err)
+        res.status(400).json({ msg: err.toString().toString() })
     }
 })
 
@@ -203,7 +206,7 @@ router.post('/:id', async (req, res) => {
         const results = await update(event, 'events')
         res.json({ results })
     } catch(err) {
-        res.status(400).json({ msg: err })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -213,7 +216,7 @@ router.delete('/:id', async (req, res) => {
         const results = await remove([req.params.id], 'events', 'id')
         res.json({ results })
     } catch(err) {
-        res.status(400).json({ msg: err })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
