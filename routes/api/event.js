@@ -96,15 +96,40 @@ router.get('/:year/:month/:day', async (req, res) => {
                 'events.recur': 'recurs.id'
             }
         ]
+        const date = new Date(`${req.params.year}-${req.params.month}-${req.params.day}`)
+        let matchWeek = ''
+        switch(date.getDay()){
+            case 0:
+                matchWeek = '1______'
+                break
+            case 1:
+                matchWeek = '_1_____'
+                break
+            case 2:
+                matchWeek = '__1____'
+                break
+            case 3:
+                matchWeek = '___1___'
+                break
+            case 4:
+                matchWeek = '____1__'
+                break
+            case 5:
+                matchWeek = '_____1_'
+                break
+            case 6:
+                matchWeek = '______1'
+                break
+        }
         const where = {
             'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
-            'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`
+            'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
+            'recurs.weekdays': matchWeek
         }
-        // FIX '%xxxxx%'
         const whereCompare = {
-            'recurs.end': '<='
+            'recurs.end': '>='
         }
-        const results = await select('events', where, 'AND', cols, join, whereCompare, 'AND')
+        const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND')
         res.json({ results })
     } catch (err) {
         res.status(400).json({ msg: err.toString() })
