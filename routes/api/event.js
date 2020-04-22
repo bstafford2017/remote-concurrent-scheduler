@@ -96,7 +96,7 @@ router.get('/:year/:month/:day', async (req, res) => {
                 'events.recur': 'recurs.id'
             }
         ]
-        const date = new Date(`${req.params.year}-${req.params.month}-${req.params.day}`)
+        const date = new Date(`${req.params.year}-${req.params.month}-${req.params.day}T00:00:01`)
         let matchWeek = ''
         switch(date.getDay()){
             case 0:
@@ -121,13 +121,16 @@ router.get('/:year/:month/:day', async (req, res) => {
                 matchWeek = '______1'
                 break
         }
+        console.log(date.getDay() + " " + matchWeek + " " + date.toISOString())
         const where = {
             'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
+            'recurs.weekdays': matchWeek,
             'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
-            'recurs.weekdays': matchWeek
+            'date': `${req.params.year}-${req.params.month}-${req.params.day}` 
         }
         const whereCompare = {
-            'recurs.end': '>='
+            'recurs.end': '>=',
+            'date': '<='
         }
         const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND')
         res.json({ results })

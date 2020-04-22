@@ -214,22 +214,53 @@ function printMonth(active, valid, row, date){
         $("#row-" + row).append("<div class=\"invalid\">" + date)
     }
     $("#row-" + row).append("</div>")
+    
+    let day = ("0" + date).slice(-2);
+    let month = ("0" + (currentMonth + 1) % 12).slice(-2);
+
+    // Only call for valid dates
+    if(valid){
+        $.ajax({
+            type: "get",
+            url: 'api/event/' + currentYear + '/' + month + '/' + day,
+            success: (response) => {
+                console.log(day + " " + response.results)
+                if(response.results.length >= 3) {
+                    for(let i = 0; i < 2; i++) {
+                        const event = response.results[i]
+                        $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`) 
+                        if(i === 1) {
+                            $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                                title=\"Tooltip on top\" class=\"month-event more\">See More</div>`) 
+                        }     
+                    }
+                } else {
+                    response.results.forEach(event => {
+                        $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)
+                    })
+                }
+            },
+            error: function(response){
+                alert('#alert', response.responseJSON.msg)
+            }
+        })
+    }
 }
 
 function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
-
+    /*
     $.ajax({
         type: "get",
         url: 'api/event/' + currentYear + '/' + (currentMonth + 1),
         success: (response) => {
-            /* 
-                events = [
-                    dayEvents: [
-                        { ... }
-                    ]
-                ]
-            */
+                // events = [
+                //     dayEvents: [
+                //         { ... }
+                //     ]
+                // ]
             const events = [[]]
             response.results.forEach(event => {
                 let date = event.date.split('T')[0]
@@ -267,7 +298,7 @@ function showMonthCalendar() {
             alert('#alert', response.responseJSON.msg)
         }
     })
-
+    */
     let firstDay = (new Date(currentYear, currentMonth)).getDay()
     let table = $('.month-by-month')
 
