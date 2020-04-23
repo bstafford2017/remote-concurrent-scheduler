@@ -32,6 +32,38 @@ $('#search-button').click(event => {
         success: function(response) {
             $('#results-list').empty()
             response.results.forEach(event => {
+                let weekdaysString = ''
+                if(event.weekdays) {
+                    for(let i = 0; i < 7; i++) {
+                        if(event.weekdays.charAt(i) === '1'){
+                            switch(i){
+                                case 0:
+                                    weekdaysString += 'Sun '
+                                    break
+                                case 1:
+                                    weekdaysString += 'Mon '
+                                    break
+                                case 2:
+                                    weekdaysString += 'Tues '
+                                    break
+                                case 3:
+                                    weekdaysString += ' Wed'
+                                    break
+                                case 4:
+                                    weekdaysString += ' Thur'
+                                    break
+                                case 5:
+                                    weekdaysString += ' Fri'
+                                    break
+                                case 6:
+                                    weekdaysString += ' Sat'
+                                    break
+                            }
+                        }
+                    }
+                } else {
+                    weekdaysString = '-'
+                }
                 $('#results-list').append(
                     `<tr id="${event.id}"></td>
                         <td>${event.title}</td>
@@ -40,6 +72,8 @@ $('#search-button').click(event => {
                         <td>${timeConversion(event.endTime)}</td>
                         <td>${event.name}</td>
                         <td>${event.number}</td>
+                        <td>${weekdaysString}</td>
+                        <td>${(event.end) ? formatDate(event.end) : '-'}</td>
                         <td>${event.username}</td>
                     </tr>`)
             })

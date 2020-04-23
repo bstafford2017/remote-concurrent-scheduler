@@ -17,7 +17,9 @@ router.get('/:search', async (req, res) => {
             'events.endTime',
             'buildings.name',
             'rooms.number',
-            'users.username'
+            'users.username',
+            'recurs.weekdays',
+            'recurs.end'
         ]
         const join = [
             {
