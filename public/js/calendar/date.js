@@ -446,42 +446,45 @@ $(document).on('click', '.valid', event => {
                                     </select>
                                 </div>
                             </div>
-                            <div class="row parent">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input recur" type="checkbox" id="${event.id}-recur">
-                                    <label class="form-check-label" for="${event.id}-recur">Recur</label>
+                            <div class="row parent" style="display: ${event.end ? 'block' : 'none'}">
+                                <div class="form-group col-6 offset-3">
+                                    <label for="${event.id}-recur-end">End Recur Date</label>
+                                    <input type="date" class="form-control recur-end" id="${event.id}-recur-end">
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input sunday" type="checkbox" id="${event.id}-sunday" disabled>
+                                    <input class="form-check-input sunday" type="checkbox" id="${event.id}-sunday" 
+                                        ${(event.weekdays.charAt(0) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-sunday">Sun</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input monday" type="checkbox" id="${event.id}-monday" disabled>
+                                    <input class="form-check-input monday" type="checkbox" id="${event.id}-monday"
+                                        ${(event.weekdays.charAt(1) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-monday">Mon</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input tuesday" type="checkbox" id="${event.id}-tuesday" disabled>
+                                    <input class="form-check-input tuesday" type="checkbox" id="${event.id}-tuesday"
+                                        ${(event.weekdays.charAt(2) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-tuesday">Tues</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input wednesday" type="checkbox" id="${event.id}-wednesday" disabled>
+                                    <input class="form-check-input wednesday" type="checkbox" id="${event.id}-wednesday"
+                                        ${(event.weekdays.charAt(3) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-wednesday">Wed</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input thursday" type="checkbox" id="${event.id}-thursday" disabled>
+                                    <input class="form-check-input thursday" type="checkbox" id="${event.id}-thursday"
+                                        ${(event.weekdays.charAt(4) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-thursday">Thur</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input friday" type="checkbox" id="${event.id}-friday" disabled>
+                                    <input class="form-check-input friday" type="checkbox" id="${event.id}-friday"
+                                        ${(event.weekdays.charAt(5) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-friday">Fri</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input saturday" type="checkbox" id="${event.id}-saturday" disabled>
+                                    <input class="form-check-input saturday" type="checkbox" id="${event.id}-saturday"
+                                        ${(event.weekdays.charAt(6) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-saturday">Sat</label>
-                                </div>
-                                <div class="form-group">
-                                    <label for="${event.id}-recur-end">End Recur Date</label>
-                                    <input type="date" class="form-control recur-end" id="${event.id}-recur-end" disabled>
                                 </div>
                             </div>
                             <div class="row parent">

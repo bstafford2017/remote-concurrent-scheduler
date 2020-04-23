@@ -76,27 +76,3 @@ $('#recur').change(() => {
     }
 
 })
-
-// For update recur validation
-$(document).on('change', '.recur', event => {
-    const parent = $(event.target).parents('.event')
-    if(parent.find('.recur').is(':checked')){
-        parent.find('.recur-end').removeAttr('disabled')
-        parent.find('.sunday').removeAttr('disabled')
-        parent.find('.monday').removeAttr('disabled')
-        parent.find('.tuesday').removeAttr('disabled')
-        parent.find('.wednesday').removeAttr('disabled')
-        parent.find('.thursday').removeAttr('disabled')
-        parent.find('.friday').removeAttr('disabled')
-        parent.find('.saturday').removeAttr('disabled')
-    } else {
-        parent.find('.recur-end').attr('disabled', 'disabled')
-        parent.find('.sunday').attr('disabled', 'disabled')
-        parent.find('.monday').attr('disabled', 'disabled')
-        parent.find('.tuesday').attr('disabled', 'disabled')
-        parent.find('.wednesday').attr('disabled', 'disabled')
-        parent.find('.thursday').attr('disabled', 'disabled')
-        parent.find('.friday').attr('disabled', 'disabled')
-        parent.find('.saturday').attr('disabled', 'disabled')
-    }
-})

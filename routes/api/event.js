@@ -82,7 +82,8 @@ router.get('/:year/:month/:day', async (req, res) => {
             'buildings.name',
             'rooms.number',
             'events.room',
-            'recurs.end'
+            'recurs.end',
+            'recurs.weekdays'
         ]
         const join = [
             {
