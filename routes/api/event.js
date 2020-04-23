@@ -132,7 +132,7 @@ router.get('/:year/:month/:day', async (req, res) => {
             'recurs.end': '>=',
             'date': '<='
         }
-        const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND')
+        const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND', true)
         res.json({ results })
     } catch (err) {
         res.status(400).json({ msg: err.toString() })
