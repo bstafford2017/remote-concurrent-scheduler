@@ -382,7 +382,7 @@ $(document).on('click', '.valid', event => {
                                         value="${event.title}" id="${event.id}-title" required>
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="${event.id}-date">Date</label>
+                                    <label for="${event.id}-date">${event.end ? 'Start Date' : 'Date'}Date</label>
                                     <input type="date" class="date form-control"
                                         value="${event.date.split("T")[0]}" id="${event.id}-date" required>
                                 </div>
@@ -446,11 +446,16 @@ $(document).on('click', '.valid', event => {
                                     </select>
                                 </div>
                             </div>
-                            <div class="row parent" style="display: ${event.end ? 'block' : 'none'}">
+                            <!--  CANNOT USE RECUR VARIABLE IF NOT DEFINED
+                                FINISH RECUR UPDATE!!!
+                            -->
+                            <div class="row parent recur-block" style="display: ${event.end ? 'block' : 'none'}" id="${event.recurId}">
                                 <div class="form-group col-6 offset-3">
                                     <label for="${event.id}-recur-end">End Recur Date</label>
-                                    <input type="date" class="form-control recur-end" id="${event.id}-recur-end">
+                                    <input type="date" class="form-control recur-end" 
+                                        value="${event.end ? event.end.split("T")[0] : ''}" id="${event.id}-recur-end">
                                 </div>
+                                ${event.end ? `
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input sunday" type="checkbox" id="${event.id}-sunday" 
                                         ${(event.weekdays.charAt(0) === '1') ? 'checked' : ''}>
@@ -485,10 +490,10 @@ $(document).on('click', '.valid', event => {
                                     <input class="form-check-input saturday" type="checkbox" id="${event.id}-saturday"
                                         ${(event.weekdays.charAt(6) === '1') ? 'checked' : ''}>
                                     <label class="form-check-label" for="${event.id}-saturday">Sat</label>
-                                </div>
+                                </div>`: ''}
                             </div>
                             <div class="row parent">
-                                <button class="update btn btn-secondary col-3 offset-2">Update</button>
+                                <button class="update btn btn-secondary col-3 offset-2">${(event.end) ? 'Update All' : 'Update'}</button>
                                 <button class="delete btn btn-secondary col-3 offset-2">${(event.end) ? 'Delete All' : 'Delete'}</button>
                             </div>
                         </div>

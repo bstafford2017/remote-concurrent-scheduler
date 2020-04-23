@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
         const results = await select('buildings')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
@@ -25,6 +26,7 @@ router.post('/create', async (req, res) => {
         const results = await insert(building, 'buildings')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
@@ -35,6 +37,7 @@ router.post('/update', async (req, res) => {
         const results = await update(req.body.names, 'buildings')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
@@ -45,6 +48,7 @@ router.post('/delete', async (req, res) => {
         const results = await remove(req.body.ids, 'buildings', 'id')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })

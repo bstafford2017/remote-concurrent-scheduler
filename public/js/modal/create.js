@@ -47,7 +47,7 @@ $('#create-event').click(event => {
                 const start = response.results.startTime.split(':')[0]
                 const end = response.results.endTime.split(':')[0]
                 const diff = end - start
-                $("#" + date).append("<div class=\"week-event\" style=\"margin-top:" + (start - 6) *
+                $("#" + day).append("<div class=\"week-event\" style=\"margin-top:" + (start - 6) *
                     $('.scale div').outerHeight() + "px; height: " + diff * 
                     $('.scale div').outerHeight() + "px;\">" + response.results.title + "</div>")
             } else {

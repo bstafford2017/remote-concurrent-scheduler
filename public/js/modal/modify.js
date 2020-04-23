@@ -10,9 +10,11 @@ $(document).on('click', '.update', event => {
     const end = parent.find('.end-time option:selected').val()
     const endRecur = parent.find('.recur-end').val()
     let weekString = ''
-    if($(parent.find('.recur')).is(':checked')) {
-        let atLeastOne = false
-        parent.find('.form-check-input').each(function() {
+    let atLeastOne = false
+    let recurId = ''
+    if(parent.find('.recur-block').css('display') === 'block'){
+        recurId = parent.find('.recur-block').attr('id')
+        $(parent.find('.form-check-input')).each(function() {
             if($(this).attr('id') !== 'recur') {
                 if($(this).is(':checked')) {
                     atLeastOne = true
@@ -40,7 +42,8 @@ $(document).on('click', '.update', event => {
             start,
             end,
             weekString,
-            endRecur
+            endRecur,
+            recurId
         },
         success: function(response){
             $('#myModal').modal('hide')

@@ -21,7 +21,8 @@ router.post('/', async (req, res) => {
         select('users', where).then(results => {
             res.json({ results: results[0] })
         }).catch(err => {
-            res.status(400).json({ msg: err.toString() })
+            console.log(err)
+        res.status(400).json({ msg: err.toString() })
         })
     })
 })
@@ -33,6 +34,7 @@ router.get('/', async (req, res) => {
         const results = await select('users')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
@@ -59,7 +61,8 @@ router.get('/admin', (req, res) => {
                 res.json({ admin: 'false'}) 
             }
         }).catch(err => {
-            res.status(400).json({ msg: err.toString() })
+            console.log(err)
+        res.status(400).json({ msg: err.toString() })
         })
     })
 })
@@ -76,15 +79,18 @@ router.post('/login', (req, res) => {
 
         if(results[0].username === req.body.username && results[0].password === req.body.password) {
             jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
-                if(err) 
+                if(err) {
+                    console.log(err)
                     res.status(400).json({ msg: err.toString() })
-                else
+                } else {
                     res.json({ token })
+                }
             })
         } else {
             return res.status(400).json({ msg: 'Invalid username/password' })
         }
     }).catch(err => {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     })
 })
@@ -103,6 +109,7 @@ router.post('/create', async (req, res) => {
         const results = await insert(user, 'users')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
@@ -122,6 +129,7 @@ router.post('/update', async (req, res) => {
         const results = await update(user, 'users')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
@@ -133,6 +141,7 @@ router.post('/delete', async (req, res) => {
         const results = await remove(id, 'users', 'id')
         res.json({ results })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
