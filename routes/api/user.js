@@ -100,7 +100,7 @@ router.post('/create', async (req, res) => {
     try {
         const user = {
             id: null,
-            username: req.body.username,
+            username: filter(req.body.username),
             password: req.body.password,
             fname: req.body.fname,
             lname: req.body.lname,
