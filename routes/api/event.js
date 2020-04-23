@@ -159,12 +159,15 @@ router.post('/', async (req, res) => {
         }
 
         // Insert recur
-        const recur = {
-            id: null,
-            weekdays: req.body.weekString,
-            end: req.body.endRecur
+        const recurInsertResults = null
+        if(req.body.weekString && req.body.endRecur) {
+            const recur = {
+                id: null,
+                weekdays: req.body.weekString,
+                end: req.body.endRecur
+            }
+            recurInsertResults = await insert(recur, 'recurs', ['id', 'date'])
         }
-        const recurInsertResults = await insert(recur, 'recurs', ['id', 'date'])
 
         // Get logged in user
         const token = req.cookies.token
@@ -181,7 +184,7 @@ router.post('/', async (req, res) => {
             date: req.body.date,
             startTime: req.body.start,
             endTime: req.body.end,
-            recur: recurInsertResults.id ? parseInt(recurInsertResults.id) : null,
+            recur: recurInsertResults ? parseInt(recurInsertResults.id) : null,
             room: parseInt(req.body.room),
             user: parseInt(userResults[0].id)
         }

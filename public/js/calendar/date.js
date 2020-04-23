@@ -450,6 +450,10 @@ $(document).on('click', '.valid', event => {
                                 <button class="update btn btn-secondary col-3 offset-2">Update</button>
                                 <button class="delete btn btn-secondary col-3 offset-2">Delete</button>
                             </div>
+                            <div class="row parent m-2">
+                            ${(typeof end === 'undefined') ? '</br><button class="delete-all btn btn-secondary col-3 offset-2">Delete All</button>' + 
+                            '<button class="update-all btn btn-secondary col-3 offset-2">Update All</button>' : ''}
+                            </div>
                         </div>
                     </div>`)
 
