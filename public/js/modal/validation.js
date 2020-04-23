@@ -80,7 +80,6 @@ $('#recur').change(() => {
 // For update recur validation
 $(document).on('change', '.recur', event => {
     const parent = $(event.target).parents('.event')
-    console.log('test')
     if(parent.find('.recur').is(':checked')){
         parent.find('.recur-end').removeAttr('disabled')
         parent.find('.sunday').removeAttr('disabled')
