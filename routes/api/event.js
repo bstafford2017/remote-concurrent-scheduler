@@ -159,7 +159,7 @@ router.post('/', async (req, res) => {
         }
 
         // Insert recur
-        const recurInsertResults = null
+        let recurInsertResults = null
         if(req.body.weekString && req.body.endRecur) {
             const recur = {
                 id: null,
@@ -250,6 +250,10 @@ router.delete('/:id', async (req, res) => {
         res.status(400).json({ msg: err.toString() })
     }
 })
+
+/*
+    ADD UPDATE END TIME AND WEEKDAYS
+*/
 
 /*
 create table events (

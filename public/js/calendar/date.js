@@ -447,6 +447,44 @@ $(document).on('click', '.valid', event => {
                                 </div>
                             </div>
                             <div class="row parent">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input recur" type="checkbox" id="${event.id}-recur">
+                                    <label class="form-check-label" for="${event.id}-recur">Recur</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input sunday" type="checkbox" id="${event.id}-sunday" disabled>
+                                    <label class="form-check-label" for="${event.id}-sunday">Sun</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input monday" type="checkbox" id="${event.id}-monday" disabled>
+                                    <label class="form-check-label" for="${event.id}-monday">Mon</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input tuesday" type="checkbox" id="${event.id}-tuesday" disabled>
+                                    <label class="form-check-label" for="${event.id}-tuesday">Tues</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input wednesday" type="checkbox" id="${event.id}-wednesday" disabled>
+                                    <label class="form-check-label" for="${event.id}-wednesday">Wed</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input thursday" type="checkbox" id="${event.id}-thursday" disabled>
+                                    <label class="form-check-label" for="${event.id}-thursday">Thur</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input friday" type="checkbox" id="${event.id}-friday" disabled>
+                                    <label class="form-check-label" for="${event.id}-friday">Fri</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input saturday" type="checkbox" id="${event.id}-saturday" disabled>
+                                    <label class="form-check-label" for="${event.id}-saturday">Sat</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="${event.id}-recur-end">End Recur Date</label>
+                                    <input type="date" class="form-control recur-end" id="${event.id}-recur-end" disabled>
+                                </div>
+                            </div>
+                            <div class="row parent">
                                 <button class="update btn btn-secondary col-3 offset-2">Update</button>
                                 <button class="delete btn btn-secondary col-3 offset-2">${(event.end) ? 'Delete All' : 'Delete'}</button>
                             </div>

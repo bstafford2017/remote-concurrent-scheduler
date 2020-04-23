@@ -8,7 +8,27 @@ $(document).on('click', '.update', event => {
     const room = parent.find('.room').val()
     const start = parent.find('.start-time option:selected').val()
     const end = parent.find('.end-time option:selected').val()
-
+    const endRecur = parent.find('.recur-end').val()
+    let weekString = ''
+    if($(parent.find('.recur')).is(':checked')) {
+        let atLeastOne = false
+        parent.find('.form-check-input').each(function() {
+            if($(this).attr('id') !== 'recur') {
+                if($(this).is(':checked')) {
+                    atLeastOne = true
+                    weekString += '1'
+                } else {
+                    weekString += '0'
+                }
+            }
+        })
+        if(!atLeastOne) {
+            alert('Select at least one weekday')
+        }
+        if(!endRecur) {
+            alert('Select a date to end recurring event')
+        }
+    }
     $.ajax({
         type: "post",
         url: "api/event/" + id,
@@ -18,7 +38,9 @@ $(document).on('click', '.update', event => {
             building,
             room,
             start,
-            end
+            end,
+            weekString,
+            endRecur
         },
         success: function(response){
             $('#myModal').modal('hide')
