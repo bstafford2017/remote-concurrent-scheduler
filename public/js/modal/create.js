@@ -11,7 +11,6 @@ $('#create-event').click(event => {
     if($('#recur').is(':checked')) {
         let atLeastOne = false
         $('.form-row').find('.form-check-input').each(function() {
-            console.log($(this))
             if($(this).attr('id') !== 'recur') {
                 if($(this).is(':checked')) {
                     atLeastOne = true
