@@ -186,6 +186,7 @@ router.post('/', async (req, res) => {
         // For getting a regular event that overlap
         const where1 = {
             'events.date': req.body.date,
+            'room': parseInt(req.body.room),
             'startTime': req.body.end,
             'endTime': req.body.start,
         }
@@ -198,6 +199,7 @@ router.post('/', async (req, res) => {
         // For gettings recurring events that overlap
         const where2 = {
             'recurs.weekdays': matchWeek,
+            'room': parseInt(req.body.room),
             'recurs.end': req.body.date,
             'date': req.body.date,
             'startTime': req.body.end,
@@ -311,6 +313,7 @@ router.post('/:id', async (req, res) => {
             'endTime': req.body.end,
         }
         const whereCompare2 = {
+            'room': '!=',
             'recurs.end': '>=',
             'date': '<=',
             'events.id': '!=',
