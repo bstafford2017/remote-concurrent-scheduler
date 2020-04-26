@@ -50,7 +50,7 @@ router.post('/update', async (req, res) => {
 router.post('/delete', async (req, res) => {
     try {
         const ids = req.body.map(id => {
-            return parseInt(id)
+            return parseInt(filter(id))
         })
         const results = await remove(ids, 'buildings', 'id')
         res.json({ results })

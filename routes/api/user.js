@@ -11,12 +11,15 @@ const router = express.Router()
 router.post('/', async (req, res) => {
     try {
         const token = req.cookies.token
+        if(!token) {
+            return res.redirect('/login.html')
+        }
         const jwtResults = await jwt.verify(token, 'secret-key')
         if(!jwtResults) {
-            res.redirect('/login.html')
+            return res.redirect('/login.html')
         }
         const where = {
-            username: jwtResults.username
+            username: filter(jwtResults.username)
         }
         const results = await select('users', where)
         res.json({ results: results[0] })
@@ -51,7 +54,7 @@ router.get('/admin', async (req, res) => {
             return res.redirect('/login.html')
         } 
         const where = {
-            username: verifyResults.username
+            username: filter(verifyResults.username)
         }
         const results = await select('users', where)
         if(results.length === 0) {
@@ -106,7 +109,7 @@ router.post('/create', async (req, res) => {
             password: filter(req.body.password),
             fname: filter(req.body.fname),
             lname: filter(req.body.lname),
-            admin: parseInt(req.body.admin),
+            admin: parseInt(filter(req.body.admin)),
         }
         const results = await insert(user, 'users')
         res.json({ results })
@@ -121,12 +124,12 @@ router.post('/create', async (req, res) => {
 router.post('/update', async (req, res) => {
     try {
         const user = [{
-            id: parseInt(req.body.id),
+            id: parseInt(filter(req.body.id)),
             username: filter(req.body.username),
             password: filter(req.body.password),
             fname: filter(req.body.fname),
             lname: filter(req.body.lname),
-            admin: parseInt(req.body.admin),
+            admin: parseInt(filter(req.body.admin)),
         }]
         const results = await update(user, 'users')
         res.json({ results })
@@ -139,7 +142,7 @@ router.post('/update', async (req, res) => {
 // Delete a user
 router.post('/delete', async (req, res) => {
     try {
-        const id = [parseInt(req.body.id)]
+        const id = [parseInt(filter(req.body.id))]
         const results = await remove(id, 'users', 'id')
         res.json({ results })
     } catch (err) {

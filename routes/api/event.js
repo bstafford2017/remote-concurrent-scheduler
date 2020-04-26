@@ -187,7 +187,7 @@ router.post('/', async (req, res) => {
         // For getting a regular event that overlap
         const where1 = {
             'events.date': filter(req.body.date),
-            'room': parseInt(req.body.room),
+            'room': parseInt(filter(req.body.room)),
             'startTime': filter(req.body.end),
             'endTime': filter(req.body.start)
         }
@@ -200,7 +200,7 @@ router.post('/', async (req, res) => {
         // For gettings recurring events that overlap
         const where2 = {
             'recurs.weekdays': filter(matchWeek),
-            'room': parseInt(req.body.room),
+            'room': parseInt(filter(req.body.room)),
             'recurs.end': filter(req.body.date),
             'date': filter(req.body.date),
             'startTime': filter(req.body.end),
@@ -245,9 +245,9 @@ router.post('/', async (req, res) => {
             date: filter(req.body.date),
             startTime: filter(req.body.start),
             endTime: filter(req.body.end),
-            recur: recurInsertResults ? parseInt(recurInsertResults.id) : null,
-            room: parseInt(req.body.room),
-            user: parseInt(userResults[0].id)
+            recur: recurInsertResults ? parseInt(filter(recurInsertResults.id)) : null,
+            room: parseInt(filter(req.body.room)),
+            user: parseInt(filter(userResults[0].id))
         }
         const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
         res.json({ results: insertResults })
@@ -293,7 +293,7 @@ router.post('/:id', async (req, res) => {
         // For getting a regular event that overlap
         const where1 = {
             'events.date': filter(req.body.date),
-            'room': parseInt(req.body.room),
+            'room': parseInt(filter(req.body.room)),
             'startTime': filter(req.body.end),
             'endTime': filter(req.body.start),
         }
@@ -305,9 +305,9 @@ router.post('/:id', async (req, res) => {
         // For gettings recurring events that overlap
         const where2 = {
             'events.date': filter(req.body.date),
-            'room': parseInt(req.body.room),
+            'room': parseInt(filter(req.body.room)),
             'recurs.weekdays': filter(matchWeek),
-            'events.id': parseInt(req.params.id),
+            'events.id': parseInt(filter(req.params.id)),
             'recurs.end': filter(req.body.date),
             'date': filter(req.body.date),
             'startTime': filter(req.body.start),
@@ -331,7 +331,7 @@ router.post('/:id', async (req, res) => {
         if(req.body.recurId && req.body.weekString && req.body.end) {
             // Update recur
             const recur = [{
-                'recurs.id': parseInt(req.body.recurId),
+                'recurs.id': parseInt(filter(req.body.recurId)),
                 'recurs.weekdays': filter(req.body.weekString),
                 'recurs.end': filter(req.body.endRecur)
             }]
@@ -348,14 +348,14 @@ router.post('/:id', async (req, res) => {
 
         // Update event
         const event = [{
-            'id': parseInt(req.params.id),
+            'id': parseInt(filter(req.params.id)),
             'title': filter(req.body.title),
             'date': filter(req.body.date),
             'startTime': filter(req.body.start),
             'endTime': filter(req.body.end),
-            'recur': req.body.recurId ? parseInt(req.body.recurId) : null,
-            'room': parseInt(req.body.room),
-            'user': userResults[0].id
+            'recur': req.body.recurId ? parseInt(filter(req.body.recurId)) : null,
+            'room': parseInt(filter(req.body.room)),
+            'user': parseInt(filter(userResults[0].id))
         }]
         const results = await update(event, 'events')
         res.json({ results })
@@ -368,7 +368,7 @@ router.post('/:id', async (req, res) => {
 // Delete an event
 router.delete('/:id', async (req, res) => {
     try {
-        const results = await remove([parseInt(req.params.id)], 'events', 'id')
+        const results = await remove([parseInt(filter(req.params.id))], 'events', 'id')
         res.json({ results })
     } catch(err) {
         console.log(err)
