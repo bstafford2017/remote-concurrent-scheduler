@@ -9,22 +9,21 @@ const router = express.Router()
 
 // Get particular user
 router.post('/', async (req, res) => {
-    const token = req.cookies.token
-    const jwtResults = jwt.verify(token, 'secret-key', (err, authData) => {
-        if(err) {
-            console.log(err) 
+    try {
+        const token = req.cookies.token
+        const jwtResults = await jwt.verify(token, 'secret-key')
+        if(!jwtResults) {
             res.redirect('/login.html')
         }
         const where = {
             username: authData.username
         }
-        select('users', where).then(results => {
-            res.json({ results: results[0] })
-        }).catch(err => {
-            console.log(err)
+        const results = await select('users', where)
+        res.json({ results: results[0] })
+    } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
-        })
-    })
+    }
 })
 
 
@@ -40,42 +39,42 @@ router.get('/', async (req, res) => {
 })
 
 // Check if user is admin
-router.get('/admin', (req, res) => {
-    const token = req.cookies.token;
+router.get('/admin', async (req, res) => {
+    try {
+        const token = req.cookies.token
 
-    jwt.verify(token, 'secret-key', (err, authData) => {
-        if(err || !authData.username) {
-            console.log(err) 
+        const verifyResults = await jwt.verify(token, 'secret-key')
+        if(!verifyResults) {
+            return res.redirect('/login.html')
+        } 
+        const where = {
+            username: verifyResults.username
+        }
+        const results = await select('users', where)
+        if(results.length === 0) {
             return res.redirect('/login.html')
         }
-        const where = {
-            username: authData.username
+        if(results[0].admin === 1) {
+            res.json({ admin: 'true'})
+        } else {
+            res.json({ admin: 'false'}) 
         }
-        select('users', where).then(results => {
-            if(results.length === 0)
-                return res.redirect('/login.html')
-        
-            if(results[0].admin === 1) {
-                res.json({ admin: 'true'})
-            } else {
-                res.json({ admin: 'false'}) 
-            }
-        }).catch(err => {
-            console.log(err)
+    } catch (err) {
+        console.log(err)
         res.status(400).json({ msg: err.toString() })
-        })
-    })
+    }
 })
 
 // Get particular user
-router.post('/login', (req, res) => {
-    const where = {
-        username: filter(req.body.username),
-        password: req.body.password
-    }
-    select('users', where, 'AND').then(results => {
+router.post('/login', async (req, res) => {
+    try {
+        const where = {
+            username: filter(req.body.username),
+            password: req.body.password
+        }
+        const results = await select('users', where, 'AND')
         if(results.length === 0)
-            return redirect('login.html')
+            return res.redirect('login.html')
 
         if(results[0].username === req.body.username && results[0].password === req.body.password) {
             jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
@@ -89,10 +88,10 @@ router.post('/login', (req, res) => {
         } else {
             return res.status(400).json({ msg: 'Invalid username/password' })
         }
-    }).catch(err => {
+    } catch (err) {
         console.log(err)
         res.status(400).json({ msg: err.toString() })
-    })
+    }
 })
 
 // Create a user
