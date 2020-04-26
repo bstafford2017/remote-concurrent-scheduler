@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             res.redirect('/login.html')
         }
         const where = {
-            username: authData.username
+            username: jwtResults.username
         }
         const results = await select('users', where)
         res.json({ results: results[0] })

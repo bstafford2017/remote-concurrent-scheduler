@@ -375,6 +375,7 @@ $(document).on('click', '.valid', event => {
                         <div id="modal-${event.id}" 
                             class="card card-body collapse col-10 offset-1 mt-3">
                             <h2 style="text-align: center;">Edit</h2>
+                            <small class="form-text text-muted text-center">Note: All special characters will be removed</small>
                             <div class="row parent">
                                 <div class="form-group col-6">
                                     <label for="${event.id}-title">Title</label>
