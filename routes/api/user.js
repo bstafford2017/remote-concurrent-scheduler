@@ -42,6 +42,9 @@ router.get('/', async (req, res) => {
 router.get('/admin', async (req, res) => {
     try {
         const token = req.cookies.token
+        if(!token) {
+            return res.redirect('/login.html')
+        }
 
         const verifyResults = await jwt.verify(token, 'secret-key')
         if(!verifyResults) {
@@ -70,7 +73,7 @@ router.post('/login', async (req, res) => {
     try {
         const where = {
             username: filter(req.body.username),
-            password: req.body.password
+            password: filter(req.body.password)
         }
         const results = await select('users', where, 'AND')
         if(results.length === 0)
@@ -100,9 +103,9 @@ router.post('/create', async (req, res) => {
         const user = {
             id: null,
             username: filter(req.body.username),
-            password: req.body.password,
-            fname: req.body.fname,
-            lname: req.body.lname,
+            password: filter(req.body.password),
+            fname: filter(req.body.fname),
+            lname: filter(req.body.lname),
             admin: parseInt(req.body.admin),
         }
         const results = await insert(user, 'users')
@@ -118,11 +121,11 @@ router.post('/create', async (req, res) => {
 router.post('/update', async (req, res) => {
     try {
         const user = [{
-            id: req.body.id,
-            username: req.body.username,
-            password: req.body.password,
-            fname: req.body.fname,
-            lname: req.body.lname,
+            id: parseInt(req.body.id),
+            username: filter(req.body.username),
+            password: filter(req.body.password),
+            fname: filter(req.body.fname),
+            lname: filter(req.body.lname),
             admin: parseInt(req.body.admin),
         }]
         const results = await update(user, 'users')
@@ -136,7 +139,7 @@ router.post('/update', async (req, res) => {
 // Delete a user
 router.post('/delete', async (req, res) => {
     try {
-        const id = [req.body.id]
+        const id = [parseInt(req.body.id)]
         const results = await remove(id, 'users', 'id')
         res.json({ results })
     } catch (err) {
