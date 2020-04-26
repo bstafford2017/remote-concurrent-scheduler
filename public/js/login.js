@@ -1,7 +1,12 @@
-function alert(selector, text){
-    $(selector).show()
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-warning')
+    }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
+    $(selector).show()
 }
 
 // For redirecting users if they have a valid cookie
@@ -13,7 +18,7 @@ $.ajax({
             window.location.replace('calendar.html')
     },
     error: function(response){
-        alert('#alert', response.responseJSON.msg)
+        alert('#alert', response.responseJSON.msg, false)
     }
 })
 
@@ -36,7 +41,7 @@ $('#submit').click(function(event){
             window.location.replace('calendar.html')
         },
         error: function(response){
-            alert('#alert', response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
             $('#username').val('')
             $('#password').val('')
         }

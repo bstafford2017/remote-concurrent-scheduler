@@ -1,7 +1,12 @@
-function alert(selector, text){
-    $(selector).show()
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-warning')
+    }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
+    $(selector).show()
 }
 
 // Get all buildings
@@ -20,7 +25,7 @@ $.ajax({
         })
     },
     error: function(response) {
-        alert('#alert', response.responseJSON.msg)
+        alert('#alert', response.responseJSON.msg, false)
     }
 })
 
@@ -43,7 +48,7 @@ $('#create-building').click((event) => {
             $('#building-name').val('')
         },
         error: function(response){
-            alert('#create-alert', response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
@@ -75,7 +80,7 @@ $('#update-building').click((event) => {
                 })
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     }
@@ -91,7 +96,7 @@ $('#delete-building').click((event) => {
     })
 
     if(ids.length === 0) {
-        alert('#manage-alert', 'Please select a name(s) to delete')
+        alert('#alert', 'Please select a name(s) to delete', false)
     } else {
         $.ajax({
             type: 'post',
@@ -105,7 +110,7 @@ $('#delete-building').click((event) => {
                 })
             },
             error: function(response){
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     }

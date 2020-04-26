@@ -1,7 +1,12 @@
-function alert(selector, text){
-    $(selector).show()
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-warning')
+    }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
+    $(selector).show()
 }
 
 // Global variable
@@ -30,8 +35,7 @@ $.ajax({
         })
     },
     error: function(response) {
-        $('#alert').empty()
-        $('#alert').append(response.responseJSON.msg)
+        alert('#alert', response.responseJSON.msg, false)
     }
 })
 
@@ -70,7 +74,7 @@ $('#create-user').click((event) => {
                 </tr>`)
         },
         error: function(response){
-            alert('#create-alert', response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
@@ -124,7 +128,7 @@ $('.modal .btn-secondary').click((event) => {
                 })
             },
             error: function(response){
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     } else {
@@ -146,10 +150,10 @@ $('.modal .btn-secondary').click((event) => {
                 admin
             },
             success: function(response) {
-                
+                alert('#alert', response, true) 
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     }

@@ -1,7 +1,12 @@
-function alert(selector, text) {
-    $(selector).show()
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-warning')
+    }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
+    $(selector).show()
 }
 
 function formatDate(date) {
@@ -85,7 +90,7 @@ $('#search-button').click(event => {
             }
         },
         error: function(response) {
-            alert('#create-alert', response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
@@ -136,7 +141,7 @@ $('.modal .btn-secondary').click((event) => {
                 $('#selected-building').trigger('change')
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     } else {
@@ -159,7 +164,7 @@ $('.modal .btn-secondary').click((event) => {
                 $('#selected-building').trigger('change')
             },
             error: function(response) {
-                alert('#manage-alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     }

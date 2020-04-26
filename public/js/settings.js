@@ -1,7 +1,12 @@
-function alert(selector, text){
-    $(selector).show()
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-warning')
+    }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
+    $(selector).show()
 }
 
 // Global values
@@ -11,9 +16,6 @@ let user = {}
 $.ajax({
     type: 'post',
     url: 'api/user',
-    data: {
-        
-    },
     success: function(response) {
         user = response.results
         $('#username').val(response.results.username)
@@ -24,8 +26,7 @@ $.ajax({
         $('#admin').append(response.results.admin ? 'Yes' : 'No')
     },
     error: function(response) {
-        $('#alert').empty()
-        $('#alert').append(response.responseJSON.msg)
+        alert('#alert', response.responseJSON.msg, false)
     }
 })
 
@@ -46,7 +47,6 @@ $('.modal .btn-secondary').click(event => {
     const fname = $('#fname').val()
     const lname = $('#lname').val()
     const admin = user.admin
-    $("#myModal").modal('hide')
     $.ajax({
         type: 'post',
         url: 'api/user/update',
@@ -59,10 +59,10 @@ $('.modal .btn-secondary').click(event => {
             admin
         },
         success: function(response) {
-            
+            $("#myModal").modal('hide')
         },
         error: function(response) {
-            alert('#manage-card', response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
