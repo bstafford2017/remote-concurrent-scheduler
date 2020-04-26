@@ -3,6 +3,7 @@ const insert = require('../../lib/insert')
 const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
+const filter = require('../../utils/filter')
 const router = express.Router()
 
 // Get all buildings
@@ -21,7 +22,7 @@ router.post('/create', async (req, res) => {
     try {
         const building = {
             id: null,
-            name: req.body.name
+            name: filter(req.body.name)
         }
         const results = await insert(building, 'buildings')
         res.json({ results })
@@ -34,7 +35,10 @@ router.post('/create', async (req, res) => {
 // Update a building
 router.post('/update', async (req, res) => {
     try {
-        const results = await update(req.body.names, 'buildings')
+        const names = req.body.names.map(name => {
+            return filter(name)
+        })
+        const results = await update(names, 'buildings')
         res.json({ results })
     } catch (err) {
         console.log(err)
@@ -45,7 +49,10 @@ router.post('/update', async (req, res) => {
 // Delete a building
 router.post('/delete', async (req, res) => {
     try {
-        const results = await remove(req.body.ids, 'buildings', 'id')
+        const ids = req.body.map(id => {
+            return parseInt(id)
+        })
+        const results = await remove(ids, 'buildings', 'id')
         res.json({ results })
     } catch (err) {
         console.log(err)

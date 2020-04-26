@@ -3,6 +3,7 @@ const insert = require('../../lib/insert')
 const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
+const filter = require('../../utils/filter')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 
@@ -67,11 +68,11 @@ router.get('/:search', async (req, res) => {
             }
         ]
         const where = {
-            title: req.params.search,
-            'rooms.number': req.params.search,
-            'buildings.name': req.params.search,
-            'users.username': req.params.search,
-            date: req.params.search
+            title: filter(req.params.search),
+            'rooms.number': filter(req.params.search),
+            'buildings.name': filter(req.params.search),
+            'users.username': filter(req.params.search),
+            date: filter(req.params.search)
         }
         const results = await select('events', where, 'OR', cols, join)
         results.sort((a, b) => {
@@ -88,8 +89,8 @@ router.get('/:search', async (req, res) => {
 router.get('/:year/:month', async (req, res) => {
     try {
         const where = {
-            'YEAR(date)': req.params.year,
-            'MONTH(date)': req.params.month,
+            'YEAR(date)': filter(req.params.year),
+            'MONTH(date)': filter(req.params.month)
         }
         const results = await select('events', where, 'AND')
         res.json({ results })
@@ -185,10 +186,10 @@ router.post('/', async (req, res) => {
 
         // For getting a regular event that overlap
         const where1 = {
-            'events.date': req.body.date,
+            'events.date': filter(req.body.date),
             'room': parseInt(req.body.room),
-            'startTime': req.body.end,
-            'endTime': req.body.start,
+            'startTime': filter(req.body.end),
+            'endTime': filter(req.body.start)
         }
         const whereCompare1 = {
             'startTime': '<',
@@ -198,12 +199,12 @@ router.post('/', async (req, res) => {
 
         // For gettings recurring events that overlap
         const where2 = {
-            'recurs.weekdays': matchWeek,
+            'recurs.weekdays': filter(matchWeek),
             'room': parseInt(req.body.room),
-            'recurs.end': req.body.date,
-            'date': req.body.date,
-            'startTime': req.body.end,
-            'endTime': req.body.start,
+            'recurs.end': filter(req.body.date),
+            'date': filter(req.body.date),
+            'startTime': filter(req.body.end),
+            'endTime': filter(req.body.start)
         }
         const whereCompare2 = {
             'recurs.end': '>=',
@@ -223,8 +224,8 @@ router.post('/', async (req, res) => {
         if(req.body.weekString && req.body.endRecur) {
             const recur = {
                 id: null,
-                weekdays: req.body.weekString,
-                end: req.body.endRecur
+                weekdays: filter(req.body.weekString),
+                end: filter(req.body.endRecur)
             }
             recurInsertResults = await insert(recur, 'recurs', ['id', 'date'])
         }
@@ -240,10 +241,10 @@ router.post('/', async (req, res) => {
         // Insert event
         const event = {
             id: null,
-            title: req.body.title,
-            date: req.body.date,
-            startTime: req.body.start,
-            endTime: req.body.end,
+            title: filter(req.body.title),
+            date: filter(req.body.date),
+            startTime: filter(req.body.start),
+            endTime: filter(req.body.end),
             recur: recurInsertResults ? parseInt(recurInsertResults.id) : null,
             room: parseInt(req.body.room),
             user: parseInt(userResults[0].id)
@@ -291,10 +292,10 @@ router.post('/:id', async (req, res) => {
         const matchWeek = getWeekString(date.getDay())
         // For getting a regular event that overlap
         const where1 = {
-            'events.date': req.body.date,
+            'events.date': filter(req.body.date),
             'room': parseInt(req.body.room),
-            'startTime': req.body.end,
-            'endTime': req.body.start,
+            'startTime': filter(req.body.end),
+            'endTime': filter(req.body.start),
         }
         const whereCompare1 = {
             'startTime': '<',
@@ -303,14 +304,14 @@ router.post('/:id', async (req, res) => {
         const eventResults1 = await select('events', where1, 'AND', cols, join, whereCompare1, 'AND', true)
         // For gettings recurring events that overlap
         const where2 = {
-            'events.date': req.body.date,
+            'events.date': filter(req.body.date),
             'room': parseInt(req.body.room),
-            'recurs.weekdays': matchWeek,
+            'recurs.weekdays': filter(matchWeek),
             'events.id': parseInt(req.params.id),
-            'recurs.end': req.body.date,
-            'date': req.body.date,
-            'startTime': req.body.start,
-            'endTime': req.body.end,
+            'recurs.end': filter(req.body.date),
+            'date': filter(req.body.date),
+            'startTime': filter(req.body.start),
+            'endTime': filter(req.body.end),
         }
         const whereCompare2 = {
             'room': '!=',
@@ -330,9 +331,9 @@ router.post('/:id', async (req, res) => {
         if(req.body.recurId && req.body.weekString && req.body.end) {
             // Update recur
             const recur = [{
-                'recurs.id': req.body.recurId,
-                'recurs.weekdays': req.body.weekString,
-                'recurs.end': req.body.endRecur
+                'recurs.id': parseInt(req.body.recurId),
+                'recurs.weekdays': filter(req.body.weekString),
+                'recurs.end': filter(req.body.endRecur)
             }]
             const recurInsertResults = await update(recur, 'recurs')
         }
@@ -348,11 +349,11 @@ router.post('/:id', async (req, res) => {
         // Update event
         const event = [{
             'id': parseInt(req.params.id),
-            'title': req.body.title,
-            'date': req.body.date,
-            'startTime': req.body.start,
-            'endTime': req.body.end,
-            'recur': req.body.recurId ? req.body.recurId : null,
+            'title': filter(req.body.title),
+            'date': filter(req.body.date),
+            'startTime': filter(req.body.start),
+            'endTime': filter(req.body.end),
+            'recur': req.body.recurId ? parseInt(req.body.recurId) : null,
             'room': parseInt(req.body.room),
             'user': userResults[0].id
         }]
@@ -367,17 +368,13 @@ router.post('/:id', async (req, res) => {
 // Delete an event
 router.delete('/:id', async (req, res) => {
     try {
-        const results = await remove([req.params.id], 'events', 'id')
+        const results = await remove([parseInt(req.params.id)], 'events', 'id')
         res.json({ results })
     } catch(err) {
         console.log(err)
         res.status(400).json({ msg: err.toString() })
     }
 })
-
-/*
-    ADD UPDATE END TIME AND WEEKDAYS
-*/
 
 /*
 create table events (

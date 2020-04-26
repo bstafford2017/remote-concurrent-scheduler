@@ -16,7 +16,7 @@ router.get('/:building', async (req, res) => {
             }
         ]
         const where = {
-            'buildings.id': req.params.building
+            'buildings.id': parseInt(req.params.building)
         }
         const results = await select('rooms', where, 'OR', columns, join)
         res.json({ results })
@@ -30,7 +30,7 @@ router.post('/create', async (req, res) => {
     try {
         const room = {
             id: null,
-            number: req.body.number,
+            number: parseInt(req.body.number),
             seats: parseInt(req.body.seats),
             projector: parseInt(req.body.projector),
             building: parseInt(req.body.building)
@@ -57,8 +57,8 @@ router.post('/create', async (req, res) => {
 router.post('/update', async (req, res) => {
     try {
         const room = [{
-            id: req.body.id,
-            number: req.body.number,
+            id: parseInt(req.body.id),
+            number: parseInt(req.body.number),
             seats: parseInt(req.body.seats),
             projector: parseInt(req.body.projector),
             building: parseInt(req.body.building)
@@ -73,7 +73,7 @@ router.post('/update', async (req, res) => {
 
 router.post('/delete', async (req, res) => {
     try {
-        const room = [req.body.id]
+        const room = [parseInt(req.body.id)]
         const results = await remove(room, 'rooms', 'id')
         res.json({ results })
     } catch (err) {
