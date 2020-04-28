@@ -4,6 +4,7 @@ const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
 const filter = require('../../utils/filter')
+const log = require('../../utils/log')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 
@@ -80,8 +81,8 @@ router.get('/:search', async (req, res) => {
         })
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -95,8 +96,8 @@ router.get('/:year/:month', async (req, res) => {
         const results = await select('events', where, 'AND')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -145,8 +146,8 @@ router.get('/:year/:month/:day', async (req, res) => {
         const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND', true)
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -252,8 +253,8 @@ router.post('/', async (req, res) => {
         const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
         res.json({ results: insertResults })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -360,8 +361,8 @@ router.post('/:id', async (req, res) => {
         const results = await update(event, 'events')
         res.json({ results })
     } catch(err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -371,8 +372,8 @@ router.delete('/:id', async (req, res) => {
         const results = await remove([parseInt(filter(req.params.id))], 'events', 'id')
         res.json({ results })
     } catch(err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 

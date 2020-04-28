@@ -3,6 +3,7 @@ const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
 const filter = require('../../utils/filter')
+const log = require('../../utils/log')
 const express = require('express')
 const router = express.Router()
 
@@ -22,8 +23,8 @@ router.get('/:building', async (req, res) => {
         const results = await select('rooms', where, 'OR', columns, join)
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -50,8 +51,8 @@ router.post('/create', async (req, res) => {
         let selectResults = await select('rooms', where, 'AND', columns, join)
         res.json({ results: selectResults[0] })
     } catch (err){
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -67,8 +68,8 @@ router.post('/update', async (req, res) => {
         const results = await update(room, 'rooms')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -78,8 +79,8 @@ router.post('/delete', async (req, res) => {
         const results = await remove(room, 'rooms', 'id')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 

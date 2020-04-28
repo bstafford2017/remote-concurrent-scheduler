@@ -4,6 +4,7 @@ const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
 const filter = require('../../utils/filter')
+const log = require('../../utils/log')
 const router = express.Router()
 
 // Get all buildings
@@ -12,8 +13,8 @@ router.get('/', async (req, res) => {
         const results = await select('buildings')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -27,8 +28,8 @@ router.post('/create', async (req, res) => {
         const results = await insert(building, 'buildings')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -41,8 +42,8 @@ router.post('/update', async (req, res) => {
         const results = await update(names, 'buildings')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
@@ -55,8 +56,8 @@ router.post('/delete', async (req, res) => {
         const results = await remove(ids, 'buildings', 'id')
         res.json({ results })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ msg: err.toString() })
+        log('error-log', err + '\n')
+        res.status(400).json({ msg: err })
     }
 })
 
