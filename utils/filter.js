@@ -1,5 +1,6 @@
 function filter(str){
-    return str.replace(/[`~!@#$%^&*()_|+\-=?;'",.<>\{\}\[\]\\]/gi, '')
+    str = str.toString()
+    return str.replace(/[`~!@#$%^&*()_|+=?;'",.<>\{\}\[\]\\]/gi, '')
 }
 
 module.exports = filter
