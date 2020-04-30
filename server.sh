@@ -12,3 +12,6 @@ npm update --silent
 
 echo 'Setting up server...'
 npm run dev --silent
+
+echo 'Openning web app'
+x-www-browser http://localhost:5000/live.html
