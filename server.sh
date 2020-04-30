@@ -13,5 +13,8 @@ npm update --silent
 echo 'Setting up server...'
 npm run dev --silent
 
+echo 'Checking USB for backup'
+./path.sh
+
 echo 'Openning web app'
 x-www-browser http://localhost:5000/live.html
