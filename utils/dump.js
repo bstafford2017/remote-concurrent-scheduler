@@ -7,6 +7,6 @@ mysqldump({
         password : 'root',
         database : 'rcs'
     },
-    dumpToFile: '/media/*/full-datebase.sql.gz',
+    dumpToFile: '/media/pi/*/full-datebase.sql.gz',
     compressFile: true
 });
