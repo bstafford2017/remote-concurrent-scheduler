@@ -5,8 +5,12 @@ let currentMonth = today.getMonth()
 let currentYear = today.getFullYear()
 let currentDate = today.getDate() - 1
 let week = [0, 0, 0, 0, 0, 0, 0]
-$(".scale").hide()
-showMonthCalendar()
+if($('#by-week').is(':checked')) {
+    showWeekCalendar()
+} else {
+    $(".scale").hide()
+    showMonthCalendar()
+}
 
 // Handles click event for changing displays
 $('#by-week').click(event => {
