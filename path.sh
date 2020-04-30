@@ -1,8 +1,12 @@
 #!/bin/sh
-2>/dev/null
-p=$(ls -d /media/pi/*|head -1|sed 's/.*/\0\/full-database.sql.gz/' 2>/dev/null)
-o=$(cat /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js|grep -o /media/pi/*/full-database.sql.gz) 2>/dev/null
 
+#get location of usb & add full-database.sql.gz
+p=$(ls -d /media/pi/* 2>/dev/null|head -1|sed 's/.*/\0\/full-database.sql.gz/' 2>/dev/null)
+
+#get current path referenced in dump.js
+o=$(cat /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js|grep -o /.*/pi/.*/.*\.gz) 2>/dev/null
+
+#check for usb
 if ["${p}" == ""] 2>/dev/null;
 then
 	#no usb found
@@ -10,7 +14,7 @@ then
 fi
 #escape regex characters from new path(p) and old path(o)
 p=$(echo "${p}"|sed -e 's/[]$.*[\^\/]/\\&/g') 2>/dev/null
-o= $(echo "${o}"|sed -e 's/[]$.*[\^\/]/\\&/g') 2>/dev/null
-#echo $p
-sed -i -e "s/${o}/${p}/" /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js 2>/dev/null
-#cat /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js
+o=$(echo "${o}"|sed -e 's/[]$.*[\^\/]/\\&/g') 2>/dev/null
+
+#swap out old path for current one
+sed -i -e "s/${o}/${p}/" /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js 
