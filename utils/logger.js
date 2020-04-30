@@ -3,7 +3,8 @@ const path = require('path')
 
 // Middleware function
 const logger = (req, res, next) => {
-    const content = `[${req.method}] ${req.protocol}://${req.get('host')}${req.originalUrl}: ${new Date().toISOString().slice(0, 10)} @ ${new Date().toLocaleTimeString()} : ${req.body}`
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const content = `[${req.method}:${ip}] ${req.protocol}://${req.get('host')}${req.originalUrl}: ${new Date().toISOString().slice(0, 10)} @ ${new Date().toLocaleTimeString()} : ${req.body}`
     const targetPath = path.join('./logs', 'log.txt')
     // Save to log file
     if(fs.existsSync(targetPath)){
