@@ -10,11 +10,11 @@ npm install --silent --no-progress
 echo 'Checking for dependency updates...'
 npm update --silent
 
-echo 'Setting up server...'
-npm run dev --silent
-
 echo 'Checking USB for backup'
 ./path.sh
+
+echo 'Setting up server...'
+npm run dev --silent
 
 echo 'Openning web app'
 x-www-browser http://localhost:5000/live.html
