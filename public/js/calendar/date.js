@@ -195,10 +195,13 @@ function showWeekCalendar(positive, reload){
             } else {
                 changeHeader(currentMonth, currentYear)
             }
-            // Month will be one the right month (furthest month) 
-            // if reload and on edge of two months
-            if(reload && Math.abs(week[0] - week[6]) > 7) {
-                currentMonth--
+            if(reload) {
+                if(currentMonth === 0) {
+                    currentMonth = 11
+                    currentYear--
+                } else {
+                    currentMonth--
+                }
             }
             week.forEach(day => printWeek(day))
         }
