@@ -196,12 +196,31 @@ function showWeekCalendar(positive, reload){
                 changeHeader(currentMonth, currentYear)
             }
             if(reload) {
-                if(currentMonth === 0) {
-                    currentMonth = 11
-                    currentYear--
-                } else {
-                    currentMonth--
+                // Since reload and edge month, month will be most recent month so
+                // need to decrement month
+                if(Math.abs(week[0] - week[6]) > 7) {
+                    if(currentMonth === 0) {
+                        currentMonth = 11
+                        currentYear--
+                    } else {
+                        currentMonth--
+                    }
                 }
+                for(let i = 0; i < 7; i++) {
+                    // Hit new month edge month, increment month
+                    if(week[i] - week[6] === (i - 6)) {
+                        if(currentMonth === 11) {
+                            currentMonth = 0
+                            currentYear++
+                        } else {
+                            currentMonth++
+                        }
+                        printWeek(week[i])
+                    } else {
+                        printWeek(week[i])
+                    }
+                }
+                return
             }
             week.forEach(day => printWeek(day))
         }
