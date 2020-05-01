@@ -133,11 +133,22 @@ router.get('/:year/:month/:day', async (req, res) => {
         ]
         const date = new Date(`${req.params.year}-${req.params.month}-${req.params.day}T00:00:01`)
         const matchWeek = getWeekString(date.getDay())
-        const where = {
-            'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
-            'recurs.weekdays': matchWeek,
-            'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
-            'date': `${req.params.year}-${req.params.month}-${req.params.day}` 
+        let where = {}
+        if(req.body.room){
+            where = {
+                'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
+                'recurs.weekdays': matchWeek,
+                'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
+                'date': `${req.params.year}-${req.params.month}-${req.params.day}`,
+                'room': parseInt(filter(req.body.room))
+            }
+        } else {
+            where = {
+                'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
+                'recurs.weekdays': matchWeek,
+                'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
+                'date': `${req.params.year}-${req.params.month}-${req.params.day}`
+            }
         }
         const whereCompare = {
             'recurs.end': '>=',

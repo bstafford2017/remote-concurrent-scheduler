@@ -4,7 +4,7 @@ $($.ajax({
     url: "api/building",
     success: function(response){
         response.results.forEach(building => {
-            $('#building').append(`<option value="${building.id}">${building.name}</option>`)
+            $('#building, #filter-building').append(`<option value="${building.id}">${building.name}</option>`)
         })
     },
     error: function(response){
@@ -12,6 +12,28 @@ $($.ajax({
         $('#alert').append(response)
     }
 }))
+
+/* For filter building selection */
+$(document).on('change', '#filter-building', event => {
+    const building = $('#filter-building').val()
+
+    $.ajax({
+        type: "get",
+        url: "api/room/" + building,
+        success: function(response){
+            const element = $('#filter-room')
+            element.empty()
+            response.results.forEach(room => {
+                element.append(`<option value="${room.id}">${room.number}</option>`)
+            })
+        },
+        error: function(response){
+            $('#alert').empty()
+            $('#alert').append(response)
+        }
+    })
+})
+
 
 /* Both create and view tab building change */
 $(document).on('change', '.building', event => {

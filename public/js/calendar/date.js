@@ -15,14 +15,20 @@ if($('#by-week').is(':checked')) {
 // Handles click event for changing displays
 $('#by-week').click(event => {
     clear()
-    $(".scale").show();
+    $(".scale").show()
+    $("#filter").show()
     showWeekCalendar()
 })
 
 $('#by-month').click(event => {
     clear()
     $(".scale").hide()
+    $("#filter").hide()
     showMonthCalendar()
+})
+
+$(document).on('#filter-room', 'change', event => {
+    showWeekCalendar()
 })
 
 function clear(){
@@ -129,11 +135,19 @@ function printWeek(date){
         $("#0").append("<div id=\"" + date + "\" class=\"valid\">" + date)        
     }
 
+    // For live GET url
+    const url_string = window.location.href
+    const url = new URL(url_string);
+    const room = url.searchParams.get("room");
+
     let day = ("0" + date).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
     $.ajax({
         type: "get",
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
+        data: {
+            room: (room) ? room : $('#filter-room').val()
+        },
         success: (response) => {
             response.results.forEach(event => {
                 const start = event.startTime.split(':')[0]
@@ -179,10 +193,10 @@ function showWeekCalendar(positive){
         if(currentMonth === 0){
             currentMonth = 11
             currentYear--
-            first = daysInMonth + first
+            first = daysInMonth() + first
         } else {
             currentMonth--
-            first = daysInMonth + first
+            first = daysInMonth() + first
         }
     }
     
@@ -228,7 +242,6 @@ function printMonth(active, valid, row, date){
             type: "get",
             url: 'api/event/' + currentYear + '/' + month + '/' + day,
             success: (response) => {
-                console.log(day + " " + response.results)
                 if(response.results.length >= 3) {
                     for(let i = 0; i < 2; i++) {
                         const event = response.results[i]
