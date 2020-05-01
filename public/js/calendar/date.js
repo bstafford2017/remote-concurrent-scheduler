@@ -17,6 +17,7 @@ $('#by-week').click(event => {
     clear()
     $(".scale").show()
     $("#filter").show()
+    showWeekCalendar(undefined, true)
 })
 
 $('#by-month').click(event => {
@@ -206,19 +207,21 @@ function showWeekCalendar(positive, reload){
                         currentMonth--
                     }
                 }
+                let newMonth = false
                 for(let i = 0; i < 7; i++) {
                     // Hit new month edge month, increment month
                     if(week[i] - week[6] === (i - 6)) {
-                        if(currentMonth === 11) {
-                            currentMonth = 0
-                            currentYear++
-                        } else {
-                            currentMonth++
+                        if(!newMonth) {
+                            if(currentMonth === 11) {
+                                currentMonth = 0
+                                currentYear++
+                            } else {
+                                currentMonth++
+                            }
                         }
-                        printWeek(week[i])
-                    } else {
-                        printWeek(week[i])
+                        newMonth = true;
                     }
+                    printWeek(week[i])
                 }
                 return
             }
