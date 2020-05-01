@@ -140,7 +140,7 @@ router.post('/:year/:month/:day', async (req, res) => {
                 'recurs.weekdays': matchWeek,
                 'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
                 'date': `${req.params.year}-${req.params.month}-${req.params.day}`,
-                'room': parseInt(filter(req.body.room))
+                'rooms.number': filter(req.body.room)
             }
         } else {
             where = {
