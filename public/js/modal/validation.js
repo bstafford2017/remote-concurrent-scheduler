@@ -23,6 +23,7 @@ $(document).on('change', '#filter-building', event => {
         success: function(response){
             const element = $('#filter-room')
             element.empty()
+            element.append('<option selected disabled hidden>All Rooms</option>')
             response.results.forEach(room => {
                 element.append(`<option value="${room.id}">${room.number}</option>`)
             })
@@ -45,6 +46,7 @@ $(document).on('change', '.building', event => {
         success: function(response){
             const element = $(event.target).parents('.parent').find('.room')
             element.empty()
+            element.append('<option selected disabled hidden>All Rooms</option>')
             response.results.forEach(room => {
                 element.append(`<option value="${room.id}">${room.number}</option>`)
             })

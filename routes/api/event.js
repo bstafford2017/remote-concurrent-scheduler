@@ -102,7 +102,7 @@ router.get('/:year/:month', async (req, res) => {
 })
 
 // Get particular day's events
-router.get('/:year/:month/:day', async (req, res) => {
+router.post('/:year/:month/:day', async (req, res) => {
     try {
         const cols = [
             'events.id',

@@ -27,7 +27,9 @@ $('#by-month').click(event => {
     showMonthCalendar()
 })
 
-$(document).on('#filter-room', 'change', event => {
+/* Reload week calendar after selection */
+$(document).on('change', '#filter-room', event => {
+    clear()
     showWeekCalendar()
 })
 
@@ -143,7 +145,7 @@ function printWeek(date){
     let day = ("0" + date).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
     $.ajax({
-        type: "get",
+        type: "post",
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         data: {
             room: (room) ? room : $('#filter-room').val()
@@ -239,7 +241,7 @@ function printMonth(active, valid, row, date){
     // Only call for valid dates
     if(valid){
         $.ajax({
-            type: "get",
+            type: "post",
             url: 'api/event/' + currentYear + '/' + month + '/' + day,
             success: (response) => {
                 if(response.results.length >= 3) {
@@ -270,7 +272,7 @@ function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
     /*
     $.ajax({
-        type: "get",
+        type: "post",
         url: 'api/event/' + currentYear + '/' + (currentMonth + 1),
         success: (response) => {
                 // events = [
@@ -363,7 +365,7 @@ $(document).on('click', '.valid', event => {
     let day = (id > 9) ? id : "0" + id
     let month = ("0" + (currentMonth + 1) % 12).slice(-2)
     $.ajax({
-        type: 'get',
+        type: 'post',
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         success: function(response){
             $('#event-list').empty()
