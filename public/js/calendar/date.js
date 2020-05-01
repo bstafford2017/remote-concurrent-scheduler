@@ -147,8 +147,8 @@ function printWeek(date){
     let selectedRoom = $('#filter-room option:selected').text()
 
     // If selected items aren't really selected
-    if($('#filter-building option:selected').attr('disabled') === 'disabled' || 
-        $('#filter-room option:selected').attr('disabled') === 'disabled') {
+    if($('#filter-building option:selected').attr('disabled') || 
+        $('#filter-room option:selected').attr('disabled')) {
         selectedBuilding = null
         selectedRoom = null
     }
@@ -159,8 +159,8 @@ function printWeek(date){
         type: "post",
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         data: {
-            building: (building) ? building : $('#filter-building option:selected').text(),
-            room: (room) ? room : $('#filter-room option:selected').text()
+            building: (building) ? building : selectedBuilding,
+            room: (room) ? room : selectedRoom
         },
         success: (response) => {
             response.results.forEach(event => {
