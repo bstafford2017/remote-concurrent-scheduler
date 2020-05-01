@@ -140,7 +140,18 @@ function printWeek(date){
     // For live GET url
     const url_string = window.location.href
     const url = new URL(url_string);
+    const building = url.searchParams.get('building')
     const room = url.searchParams.get("room");
+
+    let selectedBuilding = $('#filter-building option:selected').text()
+    let selectedRoom = $('#filter-room option:selected').text()
+
+    // If selected items aren't really selected
+    if($('#filter-building option:selected').attr('disabled') === 'disabled' || 
+        $('#filter-room option:selected').attr('disabled') === 'disabled') {
+        selectedBuilding = null
+        selectedRoom = null
+    }
 
     let day = ("0" + date).slice(-2);
     let month = ("0" + (currentMonth + 1) % 12).slice(-2);
@@ -148,7 +159,8 @@ function printWeek(date){
         type: "post",
         url: 'api/event/' + currentYear + '/' + month + '/' + day,
         data: {
-            room: (room) ? room : $('#filter-room').val()
+            building: (building) ? building : $('#filter-building option:selected').text(),
+            room: (room) ? room : $('#filter-room option:selected').text()
         },
         success: (response) => {
             response.results.forEach(event => {

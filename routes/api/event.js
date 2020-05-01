@@ -134,12 +134,13 @@ router.post('/:year/:month/:day', async (req, res) => {
         const date = new Date(`${req.params.year}-${req.params.month}-${req.params.day}T00:00:01`)
         const matchWeek = getWeekString(date.getDay())
         let where = {}
-        if(req.body.room){
+        if(req.body.room && req.body.building){
             where = {
                 'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
                 'recurs.weekdays': matchWeek,
                 'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
                 'date': `${req.params.year}-${req.params.month}-${req.params.day}`,
+                'buildings.name': filter(req.body.building),
                 'rooms.number': filter(req.body.room)
             }
         } else {
