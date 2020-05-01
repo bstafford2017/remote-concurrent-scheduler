@@ -17,7 +17,6 @@ $('#by-week').click(event => {
     clear()
     $(".scale").show()
     $("#filter").show()
-    showWeekCalendar()
 })
 
 $('#by-month').click(event => {
