@@ -30,7 +30,7 @@ $('#by-month').click(event => {
 /* Reload week calendar after selection */
 $(document).on('change', '#filter-room', event => {
     clear()
-    showWeekCalendar()
+    showWeekCalendar(undefined, true)
 })
 
 function clear(){
@@ -180,7 +180,7 @@ function printWeek(date){
     $("#0").append("</div>")
 }
 
-function showWeekCalendar(positive){
+function showWeekCalendar(positive, reload){
     $('.row').remove()
     $('.week-by-week').append("<div id=\"0\" class=\"row\">")
 
@@ -195,6 +195,11 @@ function showWeekCalendar(positive){
                 addToHeader(currentMonth, currentYear)
             } else {
                 changeHeader(currentMonth, currentYear)
+            }
+            // Month will be one the right month (furthest month) 
+            // if reload and on edge of two months
+            if(reload && Math.abs(week[0] - week[6]) > 7) {
+                currentMonth--
             }
             week.forEach(day => printWeek(day))
         }
