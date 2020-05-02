@@ -17,7 +17,7 @@ $('#by-week').click(event => {
     clear()
     $(".scale").show()
     $("#filter").show()
-    showWeekCalendar(undefined, true)
+    showWeekCalendar()
 })
 
 $('#by-month').click(event => {
@@ -200,21 +200,20 @@ function showWeekCalendar(positive, reload){
         }
         return
     }
-   console.log('inside func' + months[currentMonth]) 
 
     // If on today's week, keep first as this
     // ERROR: INCREMENTS MONTH
     let first = today.getDate() - today.getDay()
-    // if(first < 0){
-    //     if(currentMonth === 0){
-    //         currentMonth = 11
-    //         currentYear--
-    //         first = daysInMonth() + first
-    //     } else {
-    //         currentMonth--
-    //         first = daysInMonth() + first
-    //     }
-    // }
+    console.log(today.getDate() + " " + today.getDay() + " " + first + " " + months[currentMonth])
+    if(first < 0){
+        if(currentMonth === 0){
+            currentMonth = 11
+            currentYear--
+        } else {
+            currentMonth--
+        }
+        first = daysInMonth() + first
+    }
     
     // Check if 'prev' or 'next' has been clicked
     if(week[0] !== 0){
@@ -229,7 +228,7 @@ function showWeekCalendar(positive, reload){
         if(i !== 6){
             first = changeAndCheck(first, 1)
         }
-        console.log(months[currentMonth])
+        console.log(week[i] + " " + months[currentMonth])
     }
 
     // Update header
