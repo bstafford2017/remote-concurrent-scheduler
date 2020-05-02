@@ -203,6 +203,7 @@ function showWeekCalendar(positive, reload){
    console.log('inside func' + months[currentMonth]) 
 
     // If on today's week, keep first as this
+    // ERROR: INCREMENTS MONTH
     let first = today.getDate() - today.getDay()
     // if(first < 0){
     //     if(currentMonth === 0){
