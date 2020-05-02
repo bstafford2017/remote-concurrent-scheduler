@@ -201,22 +201,22 @@ function showWeekCalendar(positive, reload){
         return
     }
 
-    // If on today's week, keep first as this
-    // ERROR: INCREMENTS MONTH
-    let first = today.getDate() - today.getDay()
-    console.log(today.getDate() + " " + today.getDay() + " " + first + " " + months[currentMonth])
-    if(first < 0){
-        if(currentMonth === 0){
-            currentMonth = 11
-            currentYear--
-        } else {
-            currentMonth--
-        }
-        first = daysInMonth() + first
-    }
-    
     // Check if 'prev' or 'next' has been clicked
-    if(week[0] !== 0){
+    let first = 0
+    if(week[0] === 0){
+        // If on today's week, keep first as this
+        first = today.getDate() - today.getDay()
+        console.log(today.getDate() + " " + today.getDay() + " " + first + " " + months[currentMonth])
+        if(first < 0){
+            if(currentMonth === 0){
+                currentMonth = 11
+                currentYear--
+            } else {
+                currentMonth--
+            }
+            first = daysInMonth() + first
+        }
+    } else {
         first = (positive) ? changeAndCheck(week[6], 1) : changeAndCheck(week[0], -7)
     }
 
