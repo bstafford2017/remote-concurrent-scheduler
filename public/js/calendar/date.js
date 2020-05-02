@@ -61,7 +61,7 @@ function daysInPreviousMonth(){
 
 function next() {
     // Checks whether in weekly or monthly mode
-    if($('input[name=\'selector\']:checked').val() === "week"){
+    if($('#by-week').is(':checked')){
         showWeekCalendar(true)
     } else {
         clear()
@@ -183,7 +183,7 @@ function printWeek(date){
 function showWeekCalendar(positive, reload){
     $('.row').remove()
     $('.week-by-week').append("<div id=\"0\" class=\"row\">")
-
+    
     if(typeof positive === 'undefined'){
         // Make sure week has been populated at least once
         if(week[0] === 0){
@@ -196,52 +196,24 @@ function showWeekCalendar(positive, reload){
             } else {
                 changeHeader(currentMonth, currentYear)
             }
-            if(reload) {
-                // Since reload and edge month, month will be most recent month so
-                // need to decrement month
-                if(Math.abs(week[0] - week[6]) > 7) {
-                    if(currentMonth === 0) {
-                        currentMonth = 11
-                        currentYear--
-                    } else {
-                        currentMonth--
-                    }
-                }
-                let newMonth = false
-                for(let i = 0; i < 7; i++) {
-                    // Hit new month edge month, increment month
-                    if(week[i] - week[6] === (i - 6)) {
-                        if(!newMonth) {
-                            if(currentMonth === 11) {
-                                currentMonth = 0
-                                currentYear++
-                            } else {
-                                currentMonth++
-                            }
-                        }
-                        newMonth = true;
-                    }
-                    printWeek(week[i])
-                }
-                return
-            }
             week.forEach(day => printWeek(day))
         }
         return
     }
+   console.log('inside func' + months[currentMonth]) 
 
     // If on today's week, keep first as this
     let first = today.getDate() - today.getDay()
-    if(first < 0){
-        if(currentMonth === 0){
-            currentMonth = 11
-            currentYear--
-            first = daysInMonth() + first
-        } else {
-            currentMonth--
-            first = daysInMonth() + first
-        }
-    }
+    // if(first < 0){
+    //     if(currentMonth === 0){
+    //         currentMonth = 11
+    //         currentYear--
+    //         first = daysInMonth() + first
+    //     } else {
+    //         currentMonth--
+    //         first = daysInMonth() + first
+    //     }
+    // }
     
     // Check if 'prev' or 'next' has been clicked
     if(week[0] !== 0){
@@ -256,6 +228,7 @@ function showWeekCalendar(positive, reload){
         if(i !== 6){
             first = changeAndCheck(first, 1)
         }
+        console.log(months[currentMonth])
     }
 
     // Update header
