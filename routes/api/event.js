@@ -11,28 +11,22 @@ const router = express.Router()
 function getWeekString(day) {
     switch(day){
         case 0:
-            matchWeek = '1______'
-            break
+            return '1______'
         case 1:
-            matchWeek = '_1_____'
-            break
+            return '_1_____'
         case 2:
-            matchWeek = '__1____'
-            break
+            return '__1____'
         case 3:
-            matchWeek = '___1___'
-            break
+            return '___1___'
         case 4:
-            matchWeek = '____1__'
-            break
+            return '____1__'
         case 5:
-            matchWeek = '_____1_'
-            break
+            return '_____1_'
         case 6:
-            matchWeek = '______1'
-            break
+            return '______1'
+        default:
+            throw new Error()
     }
-    return matchWeek
 }
 
 // Get all events

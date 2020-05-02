@@ -249,8 +249,11 @@ function printMonth(active, valid, row, date){
     }
     $("#row-" + row).append("</div>")
     
-    let day = ("0" + date).slice(-2);
-    let month = ("0" + (currentMonth) % 12).slice(-2);
+    let day = ("0" + date).slice(-2)
+    let month = ("0" + (currentMonth) % 12).slice(-2)
+    if(week[0] === 0) {
+        month = ("0" + (currentMonth + 1) % 12).slice(-2)
+    }
 
     // Only call for valid dates
     if(valid){
