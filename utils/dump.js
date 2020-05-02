@@ -2,20 +2,18 @@ const mysqldump = require('mysqldump')
 const log = require('./log')
 
 function dump() {
-    try {
-        mysqldump({
-            connection: {
-                host     : '127.0.0.1',
-                user     : 'root',
-                password : 'root',
-                database : 'rcs'
-            },
-            dumpToFile: '/media/pi/*/full-datebase.sql.gz',
-            compressFile: true
-        })
-    } catch(err) {
-        log('error-log.txt', err)
-    }
+    mysqldump({
+        connection: {
+            host     : '127.0.0.1',
+            user     : 'root',
+            password : 'root',
+            database : 'rcs'
+        },
+        dumpToFile: 'logs/full-database.gz',
+        compressFile: true
+    }).catch(err => {
+        log('error-log', err)
+    })
 }
 
 module.exports = dump

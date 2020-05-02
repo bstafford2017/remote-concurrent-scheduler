@@ -26,7 +26,7 @@ create table rooms (
 
 create table recurs (
     id int not null,
-    day int not null,
+    weekdays varchar(7) not null,
     end date not null,
     primary key (id)
 );

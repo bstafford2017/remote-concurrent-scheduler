@@ -3,6 +3,7 @@ const parser = require('cookie-parser')
 const logger = require('./utils/logger')
 const verifyToken = require('./utils/verifyToken')
 const obfuscate = require('./utils/obfuscate')
+const dump = require('./utils/dump')
 
 const app = express()
 
@@ -14,6 +15,9 @@ app.use(express.json());
 
 // Middleware for logging requests
 app.use(logger)
+
+// Middleware for DB backup
+//app.use(dump)
 
 // Middleware for cookie passing
 app.use(parser())
