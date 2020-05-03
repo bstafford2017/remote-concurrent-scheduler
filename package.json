@@ -27,7 +27,7 @@
     "fs": "0.0.1-security",
     "husky": "^4.2.5",
     "javascript-obfuscator": "^0.27.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "mysqldump": "^3.1.0",
