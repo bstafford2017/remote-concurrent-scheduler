@@ -80,8 +80,9 @@ router.post('/login', async (req, res) => {
             password: filter(req.body.password)
         }
         const results = await select('users', where, 'AND')
-        if(results.length === 0)
-            return res.redirect('login.html')
+        if(results.length === 0) {
+            res.status(400).json({ msg: 'Invalid username or password' })            
+        }
 
         if(results[0].username === req.body.username && results[0].password === req.body.password) {
             jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
@@ -151,16 +152,5 @@ router.post('/delete', async (req, res) => {
         res.status(400).json({ msg: err })
     }
 })
-
-/*
-create table users (
-    id int not null auto_increment,
-    username varchar(55) not null unique,
-    password varchar(55) not null,
-    fname varchar(55) not null,
-    lname varchar(55) not null,
-    admin boolean not null,
-    primary key(id));
-*/
 
 module.exports = router

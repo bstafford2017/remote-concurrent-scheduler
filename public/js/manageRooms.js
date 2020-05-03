@@ -2,7 +2,7 @@ function alert(selector, text, success){
     if(success) {
         $(selector).addClass('alert-success')
     } else {
-        $(selector).addClass('alert-warning')
+        $(selector).addClass('alert-danger')
     }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)

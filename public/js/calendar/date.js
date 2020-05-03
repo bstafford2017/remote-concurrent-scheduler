@@ -12,6 +12,18 @@ if($('#by-week').is(':checked')) {
     showMonthCalendar()
 }
 
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-danger')
+    }
+    $(selector + '-text').empty()
+    $(selector + '-text').append(text)
+    $(selector).show()
+}
+
+
 // Handles click event for changing displays
 $('#by-week').click(event => {
     clear()
@@ -102,7 +114,6 @@ function addToHeader(monthToAdd, yearToAdd){
 }
 
 function changeAndCheck(valueToCheck, changeToValue){
-    //console.log("before increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     valueToCheck = valueToCheck + changeToValue
     // Handles if negative value
     if(valueToCheck < 0){
@@ -126,7 +137,6 @@ function changeAndCheck(valueToCheck, changeToValue){
         }
         addToHeader(currentMonth, currentYear)
     }
-    //console.log("after increment: " + valueToCheck + " " + currentMonth + " " + currentYear)
     return valueToCheck
 }
 
@@ -174,7 +184,7 @@ function printWeek(date){
             })    
         },
         error: function(response){
-            alert('#alert', response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
     $("#0").append("</div>")
@@ -206,7 +216,6 @@ function showWeekCalendar(positive, reload){
     if(week[0] === 0){
         // If on today's week, keep first as this
         first = today.getDate() - today.getDay()
-        console.log(today.getDate() + " " + today.getDay() + " " + first + " " + months[currentMonth])
         if(first < 0){
             if(currentMonth === 0){
                 currentMonth = 11
@@ -218,6 +227,17 @@ function showWeekCalendar(positive, reload){
         }
     } else {
         first = (positive) ? changeAndCheck(week[6], 1) : changeAndCheck(week[0], -7)
+        // If 0, then clicked previous
+        if(first === 0) {
+            first = daysInPreviousMonth()
+            if(currentMonth === 0){
+                currentMonth = 11
+                currentYear--
+            } else {
+                currentMonth--
+            }
+
+        }
     }
 
     // Set days for the week
@@ -276,7 +296,7 @@ function printMonth(active, valid, row, date){
                 }
             },
             error: function(response){
-                alert('#alert', response.responseJSON.msg)
+                alert('#alert', response.responseJSON.msg, false)
             }
         })
     }
@@ -565,8 +585,7 @@ $(document).on('click', '.valid', event => {
             })
         },
         error: function(response){
-            $('.alert').children().first().append(response.responseJSON.msg)
-            $('.alert').show()
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
     $('#date').val(currentYear + '-' + month + '-' + day)

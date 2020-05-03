@@ -1,3 +1,14 @@
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-danger')
+    }
+    $(selector + '-text').empty()
+    $(selector + '-text').append(text)
+    $(selector).show()
+}
+
 $('#create-event').click(event => {
     event.preventDefault()
     const title = $('#title').val()

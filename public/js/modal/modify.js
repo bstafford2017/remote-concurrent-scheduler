@@ -1,3 +1,14 @@
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-danger')
+    }
+    $(selector + '-text').empty()
+    $(selector + '-text').append(text)
+    $(selector).show()
+}
+
 $(document).on('click', '.update', event => {
     event.preventDefault()
     const parent = $(event.target).parents('.event')

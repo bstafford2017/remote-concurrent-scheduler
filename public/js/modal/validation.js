@@ -1,3 +1,14 @@
+function alert(selector, text, success){
+    if(success) {
+        $(selector).addClass('alert-success')
+    } else {
+        $(selector).addClass('alert-danger')
+    }
+    $(selector + '-text').empty()
+    $(selector + '-text').append(text)
+    $(selector).show()
+}
+
 /* On load add building to input */
 $($.ajax({
     type: "get",
@@ -8,8 +19,7 @@ $($.ajax({
         })
     },
     error: function(response){
-        $('#alert').empty()
-        $('#alert').append(response)
+        alert('#alert', response.responseJSON.msg, false)
     }
 }))
 
@@ -29,8 +39,7 @@ $(document).on('change', '#filter-building', event => {
             })
         },
         error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
@@ -52,8 +61,7 @@ $(document).on('change', '.building', event => {
             })
         },
         error: function(response){
-            $('#alert').empty()
-            $('#alert').append(response)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
@@ -98,5 +106,4 @@ $('#recur').change(() => {
         $('#friday').attr('disabled', 'disabled')
         $('#saturday').attr('disabled', 'disabled')
     }
-
 })
