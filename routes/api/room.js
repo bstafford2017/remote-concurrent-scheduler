@@ -84,15 +84,4 @@ router.post('/delete', async (req, res) => {
     }
 })
 
-/*
-create table rooms (
-    id int not null auto_increment,
-    number varchar(55) not null,
-    seats int not null,
-    projector boolean not null,
-    building integer not null,
-    primary key(id),
-    foreign key (building) references buildings(id));
-*/
-
 module.exports = router

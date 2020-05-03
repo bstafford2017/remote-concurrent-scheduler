@@ -383,20 +383,4 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-/*
-create table events (
-    id int not null auto_increment,
-    title varchar(55) not null,
-    date date not null,
-    startTime time not null,
-    endTime time not null,
-    recur int,
-    room int not null,
-    user int,
-    primary key (id),
-    foreign key (recur) references recurs(id),
-    foreign key (room) references rooms(id),
-    foreign key (user) references users(id));
-*/
-
 module.exports = router

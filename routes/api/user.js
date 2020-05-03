@@ -1,10 +1,10 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const filter = require('../../utils/filter')
 const insert = require('../../lib/insert')
 const remove = require('../../lib/remove')
 const select = require('../../lib/select')
 const update = require('../../lib/update')
+const filter = require('../../utils/filter')
 const log = require('../../utils/log')
 const router = express.Router()
 

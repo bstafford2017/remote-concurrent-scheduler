@@ -61,11 +61,4 @@ router.post('/delete', async (req, res) => {
     }
 })
 
-/*
-create table buildings(
-    id int not null auto_increment,
-    name varchar(55) not null unique,
-    primary key(id));
-*/
-
 module.exports = router

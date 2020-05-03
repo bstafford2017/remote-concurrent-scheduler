@@ -425,7 +425,7 @@ $(document).on('click', '.valid', event => {
                                         value="${event.title}" id="${event.id}-title" required>
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="${event.id}-date">${event.end ? 'Start Date' : 'Date'}Date</label>
+                                    <label for="${event.id}-date">${event.end ? 'Start Date' : 'Date'}</label>
                                     <input type="date" class="date form-control"
                                         value="${event.date.split("T")[0]}" id="${event.id}-date" required>
                                 </div>
