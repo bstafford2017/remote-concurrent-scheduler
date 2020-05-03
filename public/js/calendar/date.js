@@ -116,7 +116,7 @@ function addToHeader(monthToAdd, yearToAdd){
 function changeAndCheck(valueToCheck, changeToValue){
     valueToCheck = valueToCheck + changeToValue
     // Handles if negative value
-    if(valueToCheck < 0){
+    if(valueToCheck <= 0){
         changeHeader(currentMonth, currentYear)
         if(currentMonth === 0) {
             currentMonth = 11
@@ -227,17 +227,6 @@ function showWeekCalendar(positive, reload){
         }
     } else {
         first = (positive) ? changeAndCheck(week[6], 1) : changeAndCheck(week[0], -7)
-        // If 0, then clicked previous
-        if(first === 0) {
-            first = daysInPreviousMonth()
-            if(currentMonth === 0){
-                currentMonth = 11
-                currentYear--
-            } else {
-                currentMonth--
-            }
-
-        }
     }
 
     // Set days for the week
