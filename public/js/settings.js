@@ -60,6 +60,7 @@ $('.modal .btn-secondary').click(event => {
         },
         success: function(response) {
             $("#myModal").modal('hide')
+            alert('#alert', 'Updated settings', true)
         },
         error: function(response) {
             alert('#alert', response.responseJSON.msg, false)

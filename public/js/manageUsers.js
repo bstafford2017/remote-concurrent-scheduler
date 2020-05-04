@@ -59,6 +59,7 @@ $('#create-user').click((event) => {
             admin
         },
         success: function(response){
+            alert('#alert', `Created user '${response.results.username}'`, true)
             $('#user-list').append(
                 `<tr class="user" id="${response.results.id}"></td>
                     <td><input type="text" class="username form-control" value="${response.results.username}"></td>
@@ -123,6 +124,7 @@ $('.modal .btn-secondary').click((event) => {
                 id: deleteUser
             },
             success: function(response){
+                alert('#alert', 'Deleted user', true)
                 response.results.forEach(id => {
                     $('#' + id).remove()
                 })
@@ -150,7 +152,7 @@ $('.modal .btn-secondary').click((event) => {
                 admin
             },
             success: function(response) {
-                alert('#alert', response, true) 
+                alert('#alert', 'Updated user', true) 
             },
             error: function(response) {
                 alert('#alert', response.responseJSON.msg, false)

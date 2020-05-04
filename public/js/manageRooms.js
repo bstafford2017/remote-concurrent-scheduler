@@ -85,7 +85,7 @@ $('#create-room').click((event) => {
         },
         success: function(response) {
             const building = $('#selected-building option:selected').text()
-            console.log(building + response.results.name)
+            alert('#alert', `Created room '${response.results.number}'`, true)
             if(building === response.results.name){
                 $('#room-list').append(
                     `<tr id="${response.results.id}"></td>
@@ -149,6 +149,7 @@ $('.modal .btn-secondary').click((event) => {
                 id
             },
             success: function(response) {
+                alert('#alert', `Deleted room`, true)
                 $('#selected-building').trigger('change')
             },
             error: function(response) {
@@ -172,6 +173,7 @@ $('.modal .btn-secondary').click((event) => {
                 building
             },
             success: function(response) {
+                alert('#alert', `Updated room '${response.results[0].number}'`, true)
                 $('#selected-building').trigger('change')
             },
             error: function(response) {

@@ -45,7 +45,7 @@ $('#create-building').click((event) => {
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-10 d-inline" value="${response.results.name}">
                 </div>`)
-            alert('#alert', `Create building '${response.results.name}'`, true)
+            alert('#alert', `Created building '${response.results.name}'`, true)
             $('#building-name').val('')
         },
         error: function(response){
