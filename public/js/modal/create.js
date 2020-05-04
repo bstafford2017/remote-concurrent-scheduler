@@ -68,6 +68,7 @@ $('#create-event').click(event => {
             location.reload()
         },
         error: function(response) {
+            $('#myModal').modal('hide')
             alert('#alert', response.responseJSON.msg, false)
         }
     })

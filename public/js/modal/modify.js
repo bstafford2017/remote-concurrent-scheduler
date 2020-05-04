@@ -61,6 +61,7 @@ $(document).on('click', '.update', event => {
             location.reload()
         },
         error: function(response){
+            $('#myModal').modal('hide')
             alert('#alert', response.responseJSON.msg, false)
         }
     })
@@ -77,6 +78,7 @@ $(document).on('click', '.delete', event => {
             location.reload()
         },
         error: function(response){
+            $('#myModal').modal('hide')
             alert('#alert', response.responseJSON.msg, false)
         }
     })
