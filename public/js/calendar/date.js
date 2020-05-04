@@ -264,7 +264,7 @@ function printMonth(active, valid, row, date){
 
     // Only call for valid dates
     if(valid){
-        $.ajax({
+        /*$.ajax({
             type: "post",
             url: 'api/event/' + currentYear + '/' + month + '/' + day,
             success: (response) => {
@@ -289,15 +289,15 @@ function printMonth(active, valid, row, date){
                 $('#myModal').modal('hide')
                 alert('#alert', response.responseJSON.msg, false)
             }
-        })
+        })*/
     }
 }
 
 function showMonthCalendar() {
     changeHeader(currentMonth, currentYear)
-    /*
+    
     $.ajax({
-        type: "post",
+        type: "get",
         url: 'api/event/' + currentYear + '/' + (currentMonth + 1),
         success: (response) => {
                 // events = [
@@ -305,35 +305,21 @@ function showMonthCalendar() {
                 //         { ... }
                 //     ]
                 // ]
-            const events = [[]]
-            response.results.forEach(event => {
-                let date = event.date.split('T')[0]
-                let day = parseInt(date.substring(8,10))
-                if(typeof events[day] !== 'undefined'){
-                    events[day] = [...events[day], event]
-                } else {
-                    events[day] = [event]
-                }
-            })
-            events.forEach(dayEvents => {
+            response.results.forEach((dayEvents, day) => {
                 if(dayEvents.length > 3) {
                     for(let i = 0; i < 2; i++) {
                         const event = dayEvents[i]
-                        let date = event.date.split('T')[0]
-                        let day = parseInt(date.substring(8,10))
-                        $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                        $("#" + (day + 1)).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
                             title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`) 
                         if(i === 1) {
-                            $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                            $("#" + (day + 1)).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
                                 title=\"Tooltip on top\" class=\"month-event more\">See More</div>`) 
                         }     
                     }
                 } else {
                     dayEvents.forEach(event => {
-                        let date = event.date.split('T')[0]
-                        let day = parseInt(date.substring(8,10))
-                        $("#" + day).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
-                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)
+                        $("#" + (day + 1)).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
+                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`) 
                     })
                 }
             })
@@ -342,7 +328,7 @@ function showMonthCalendar() {
             alert('#alert', response.responseJSON.msg)
         }
     })
-    */
+    
     let firstDay = (new Date(currentYear, currentMonth)).getDay()
     let table = $('.month-by-month')
 

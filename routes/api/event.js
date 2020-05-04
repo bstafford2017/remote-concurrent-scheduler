@@ -83,11 +83,71 @@ router.get('/:search', async (req, res) => {
 // Get particular month's events
 router.get('/:year/:month', async (req, res) => {
     try {
-        const where = {
-            'YEAR(date)': filter(req.params.year),
-            'MONTH(date)': filter(req.params.month)
+        let results = [[]]
+        const date = new Date(req.params.year, req.params.month - 1, '01', '00', '00', '01')
+        for(let i = 0; i < date.getDate(); i++) {
+            results[i] = []
+            const formattedDate = date.toISOString().split('T')[0]
+            const cols = [
+                'events.id',
+                'events.title',
+                'events.date',
+                'events.startTime',
+                'events.endTime',
+                'buildings.name',
+                'rooms.number',
+                'events.room',
+                'recurs.end',
+                'recurs.weekdays',
+                'recurs.id AS recurId'
+            ]
+            const join = [
+                {
+                    'join': 'rooms',
+                    'events.room': 'rooms.id'
+                },
+                {
+                    'join': 'buildings',
+                    'rooms.building': 'buildings.id'
+                },
+                {
+                    'left join': 'recurs',
+                    'events.recur': 'recurs.id'
+                }
+            ]
+            const matchWeek = getWeekString(date.getDay())
+            let where = {}
+            if(req.body.room && req.body.building){
+                where = {
+                    'events.date': formattedDate,
+                    'recurs.weekdays': matchWeek,
+                    'recurs.end': formattedDate,
+                    'date': formattedDate,
+                    'buildings.name': filter(req.body.building),
+                    'rooms.number': filter(req.body.room)
+                }
+            } else {
+                where = {
+                    'events.date': formattedDate,
+                    'recurs.weekdays': matchWeek,
+                    'recurs.end': formattedDate,
+                    'date': formattedDate
+                }
+            }
+            const whereCompare = {
+                'recurs.end': '>=',
+                'date': '<='
+            }
+            const selectResults = await select('events', where, 'OR', cols, join, whereCompare, 'AND', true)
+            for(let j = 0; j < selectResults.length; j++) {
+                if(j == 0) {
+                    results[i] = [selectResults[j]]
+                } else {
+                    results[i] = [...results[i], selectResults[j]]
+                }
+            }
+            date.setDate(date.getDate() + 1)
         }
-        const results = await select('events', where, 'AND')
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
