@@ -44,8 +44,9 @@ $(document).on('click', '.update', event => {
     }
     $.ajax({
         type: "post",
-        url: "api/event/" + id,
+        url: "api/event/update",
         data: {
+            id,
             title,
             date,
             building,
@@ -71,8 +72,11 @@ $(document).on('click', '.delete', event => {
     event.preventDefault()
     const id = $(event.target).parents('.event').attr('id')
     $.ajax({
-        type: "delete",
-        url: "api/event/" + id,
+        type: "post",
+        url: "api/event/delete",
+        data: {
+            id
+        },
         success: function(response){
             $(event.target).parents('.event').remove()
             location.reload()

@@ -158,7 +158,7 @@ router.post('/:year/:month/:day', async (req, res) => {
 })
 
 // Create an event
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
     try {
         // Validate availibility
         const cols = [
@@ -265,7 +265,7 @@ router.post('/', async (req, res) => {
 })
 
 // Update an event
-router.post('/:id', async (req, res) => {
+router.post('/update', async (req, res) => {
     try {
         // Validate availibility
         const cols = [
@@ -314,7 +314,7 @@ router.post('/:id', async (req, res) => {
             'events.date': filter(req.body.date),
             'room': parseInt(filter(req.body.room)),
             'recurs.weekdays': filter(matchWeek),
-            'events.id': parseInt(filter(req.params.id)),
+            'events.id': parseInt(filter(req.body.id)),
             'recurs.end': filter(req.body.date),
             'date': filter(req.body.date),
             'startTime': filter(req.body.start),
@@ -355,7 +355,7 @@ router.post('/:id', async (req, res) => {
 
         // Update event
         const event = [{
-            'id': parseInt(filter(req.params.id)),
+            'id': parseInt(filter(req.body.id)),
             'title': filter(req.body.title),
             'date': filter(req.body.date),
             'startTime': filter(req.body.start),
@@ -373,9 +373,9 @@ router.post('/:id', async (req, res) => {
 })
 
 // Delete an event
-router.delete('/:id', async (req, res) => {
+router.post('/delete', async (req, res) => {
     try {
-        const results = await remove([parseInt(filter(req.params.id))], 'events', 'id')
+        const results = await remove([parseInt(filter(req.body.id))], 'events', 'id')
         res.json({ results })
     } catch(err) {
         log('error-log', err.toString() + '\n')

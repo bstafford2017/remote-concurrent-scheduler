@@ -42,7 +42,7 @@ $('#create-event').click(event => {
     }
     $.ajax({
         type: "post",
-        url: "api/event",
+        url: "api/event/create",
         data: {
             title,
             building,
