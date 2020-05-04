@@ -23,8 +23,8 @@ router.get('/:building', async (req, res) => {
         const results = await select('rooms', where, 'OR', columns, join)
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -51,8 +51,8 @@ router.post('/create', async (req, res) => {
         let selectResults = await select('rooms', where, 'AND', columns, join)
         res.json({ results: selectResults[0] })
     } catch (err){
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -68,8 +68,8 @@ router.post('/update', async (req, res) => {
         const results = await update(room, 'rooms')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -79,8 +79,8 @@ router.post('/delete', async (req, res) => {
         const results = await remove(room, 'rooms', 'id')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 

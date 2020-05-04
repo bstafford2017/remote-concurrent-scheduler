@@ -40,6 +40,7 @@ $('#create-building').click((event) => {
             name
         },
         success: function(response){
+            alert('#alert', `Create building '${building.name}'`)
             $('#building-list').append(
                 `<div class="building" id="${response.results.id}">
                     <input type="checkbox" class="checkbox col-1">
@@ -66,7 +67,7 @@ $('#update-building').click((event) => {
         names.push(updatedName)
     })
     if(names.length === 0) {
-        alert('#manage-alert', 'Please select a name(s) to delete')
+        alert('#alert', 'Please select a name(s) to delete', false)
     } else {
         $.ajax({
             type: 'post',
@@ -76,6 +77,7 @@ $('#update-building').click((event) => {
             },
             success: function(response) {
                 $('#manage-card').find('input:checkbox:checked').each(function() {
+                    alert('#alert', 'Updated building(s)', true)
                     $(this).prop('checked', false)
                 })
             },
@@ -105,6 +107,7 @@ $('#delete-building').click((event) => {
                 ids
             },
             success: function(response){
+                alert('#alert', 'Deleted building(s)', true)
                 response.results.forEach((id) => {
                     $('#' + id).remove()
                 })

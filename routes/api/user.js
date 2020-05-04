@@ -25,8 +25,8 @@ router.post('/', async (req, res) => {
         const results = await select('users', where)
         res.json({ results: results[0] })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -37,8 +37,8 @@ router.get('/', async (req, res) => {
         const results = await select('users')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -67,8 +67,8 @@ router.get('/admin', async (req, res) => {
             res.json({ admin: 'false'}) 
         }
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -97,8 +97,8 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ msg: 'Invalid username/password' })
         }
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -116,8 +116,8 @@ router.post('/create', async (req, res) => {
         const results = await insert(user, 'users')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -136,8 +136,8 @@ router.post('/update', async (req, res) => {
         const results = await update(user, 'users')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -148,8 +148,8 @@ router.post('/delete', async (req, res) => {
         const results = await remove(id, 'users', 'id')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 

@@ -75,8 +75,8 @@ router.get('/:search', async (req, res) => {
         })
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -90,8 +90,8 @@ router.get('/:year/:month', async (req, res) => {
         const results = await select('events', where, 'AND')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -152,8 +152,8 @@ router.post('/:year/:month/:day', async (req, res) => {
         const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND', true)
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -259,8 +259,8 @@ router.post('/', async (req, res) => {
         const insertResults = await insert(event, 'events', ['id', 'date', 'startTime', 'endTime'])
         res.json({ results: insertResults })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -367,8 +367,8 @@ router.post('/:id', async (req, res) => {
         const results = await update(event, 'events')
         res.json({ results })
     } catch(err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -378,8 +378,8 @@ router.delete('/:id', async (req, res) => {
         const results = await remove([parseInt(filter(req.params.id))], 'events', 'id')
         res.json({ results })
     } catch(err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 

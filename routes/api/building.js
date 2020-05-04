@@ -13,8 +13,8 @@ router.get('/', async (req, res) => {
         const results = await select('buildings')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -28,8 +28,8 @@ router.post('/create', async (req, res) => {
         const results = await insert(building, 'buildings')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -37,27 +37,30 @@ router.post('/create', async (req, res) => {
 router.post('/update', async (req, res) => {
     try {
         const names = req.body.names.map(name => {
-            return filter(name)
+            return {
+                id: parseInt(filter(name.id)),
+                name: filter(name.name)
+            }
         })
         const results = await update(names, 'buildings')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
 // Delete a building
 router.post('/delete', async (req, res) => {
     try {
-        const ids = req.body.map(id => {
+        const ids = req.body.ids.map(id => {
             return parseInt(filter(id))
         })
         const results = await remove(ids, 'buildings', 'id')
         res.json({ results })
     } catch (err) {
-        log('error-log', err + '\n')
-        res.status(400).json({ msg: err })
+        log('error-log', err.toString() + '\n')
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
