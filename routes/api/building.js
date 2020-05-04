@@ -10,7 +10,7 @@ const router = express.Router()
 // Get all buildings
 router.get('/', async (req, res) => {
     try {
-        const results = await select('building')
+        const results = await select('buildings')
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
