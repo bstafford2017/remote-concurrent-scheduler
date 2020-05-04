@@ -52,6 +52,7 @@ html, body {
 body {
   min-width: 1430px;
   margin: 0;
+  background-color: #000;
 }
 
 .main-content {
