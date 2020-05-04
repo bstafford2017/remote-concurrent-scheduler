@@ -58,9 +58,10 @@ $(document).on('click', '.update', event => {
         },
         success: function(response){
             $('#myModal').modal('hide')
+            location.reload()
         },
         error: function(response){
-            alert(response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })
@@ -73,9 +74,10 @@ $(document).on('click', '.delete', event => {
         url: "api/event/" + id,
         success: function(response){
             $(event.target).parents('.event').remove()
+            location.reload()
         },
         error: function(response){
-            alert(response.responseJSON.msg)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
 })

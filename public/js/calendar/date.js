@@ -184,6 +184,7 @@ function printWeek(date){
             })    
         },
         error: function(response){
+            $('#myModal').modal('hide')
             alert('#alert', response.responseJSON.msg, false)
         }
     })
@@ -285,6 +286,7 @@ function printMonth(active, valid, row, date){
                 }
             },
             error: function(response){
+                $('#myModal').modal('hide')
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
@@ -489,9 +491,6 @@ $(document).on('click', '.valid', event => {
                                     </select>
                                 </div>
                             </div>
-                            <!--  CANNOT USE RECUR VARIABLE IF NOT DEFINED
-                                FINISH RECUR UPDATE!!!
-                            -->
                             <div class="row parent recur-block" style="display: ${event.end ? 'block' : 'none'}" id="${event.recurId}">
                                 <div class="form-group col-6 offset-3">
                                     <label for="${event.id}-recur-end">End Recur Date</label>
@@ -574,6 +573,7 @@ $(document).on('click', '.valid', event => {
             })
         },
         error: function(response){
+            $('#myModal').modal('hide')
             alert('#alert', response.responseJSON.msg, false)
         }
     })

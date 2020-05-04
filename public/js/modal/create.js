@@ -65,10 +65,10 @@ $('#create-event').click(event => {
                     class=\"month-event\">${response.results.title}</div>`)
             }
             $('#myModal').modal('hide')
+            location.reload()
         },
         error: function(response) {
-            $('#alert').empty()
-            $('#alert').append(response)
+            alert('#alert', response.responseJSON.msg, false)
         }
     })
     
