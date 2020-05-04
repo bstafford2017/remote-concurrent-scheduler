@@ -1,6 +1,7 @@
 const fs = require('fs')
 const obfuscator = require('javascript-obfuscator')
 const { exec } = require('child_process');
+const log = require('./log')
 
 function shell(cmd) {
     return new Promise((resolve, reject) => {
@@ -18,12 +19,12 @@ async function obfuscate(req, res, next) {
         try {
             console.log(await shell('npm run obfuscate'))
         } catch(err) {
-            throw err
+            log('error-log', err.toString() + '\n')
         }
     }
     fs.readFile(__dirname + '/../obfuscate' + req.url, 'UTF-8', (err, data) => {
         if(err)
-            throw err
+            log('error-log', err.toString() + '\n')
         res.send(data)
     })*/
     // ONLY FOR DEV!!!
