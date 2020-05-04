@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
         res.json({ results: results[0] })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
@@ -68,7 +68,7 @@ router.get('/admin', async (req, res) => {
         }
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
             jwt.sign({username: where.username}, 'secret-key', { expiresIn: '24h' }, (err, token) => {
                 if(err) {
                     console.log(err)
-                    res.status(400).json({ msg: err.toString() })
+                    res.status(400).json({ msg: 'System Error:' + err.toString() })
                 } else {
                     res.json({ token })
                 }
@@ -98,7 +98,7 @@ router.post('/login', async (req, res) => {
         }
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
@@ -117,7 +117,7 @@ router.post('/create', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
@@ -137,7 +137,7 @@ router.post('/update', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
@@ -149,7 +149,7 @@ router.post('/delete', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: err.toString() })
+        res.status(400).json({ msg: 'System Error:' + err.toString() })
     }
 })
 
