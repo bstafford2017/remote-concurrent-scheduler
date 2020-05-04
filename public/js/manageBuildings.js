@@ -40,12 +40,12 @@ $('#create-building').click((event) => {
             name
         },
         success: function(response){
-            alert('#alert', `Create building '${building.name}'`)
             $('#building-list').append(
                 `<div class="building" id="${response.results.id}">
                     <input type="checkbox" class="checkbox col-1">
                     <input type="text" class="text form-control col-10 d-inline" value="${response.results.name}">
                 </div>`)
+            alert('#alert', `Create building '${response.results.name}'`, true)
             $('#building-name').val('')
         },
         error: function(response){
