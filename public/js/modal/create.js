@@ -32,10 +32,12 @@ $('#create-event').click(event => {
             }
         })
         if(!atLeastOne) {
-            alert('Select at least one weekday')
+            $('#myModal').modal('hide')
+            alert('#alert', 'Select at least one weekday', false)
         }
         if(!endRecur) {
-            alert('Select a date to end recurring event')
+            $('#myModal').modal('hide')
+            alert('#alert', 'Select a date to end recurring event', false)
         }
     }
     $.ajax({
