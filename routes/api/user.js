@@ -133,7 +133,6 @@ router.post('/create', async (req, res) => {
 })
 
 // Update a user
-// ** change to update function
 router.post('/update', async (req, res) => {
     try {
         // Input validation
@@ -151,6 +150,24 @@ router.post('/update', async (req, res) => {
             admin: parseInt(filter(req.body.admin)),
         }]
         const results = await update(user, 'users')
+
+        // If < 1 admin, create an admin
+        const adminWhere = {
+            'admin': '1'
+        }
+        const adminResults = await select('users', adminWhere)
+        if(adminResults.length < 1) {
+            const admin = {
+                id: null,
+                username: 'admin',
+                password: 'Scheduler2019',
+                fname: 'admin',
+                lname: 'admin',
+                admin: 1,
+            }
+            results = results.concat(await insert(admin, 'users'))
+        }
+
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
@@ -166,8 +183,57 @@ router.post('/delete', async (req, res) => {
             throw new Error('Please enter a valid user id to delete')
         }
 
+        // Check if deleting logged in account
+        const token = req.cookies.token
+        let tokenResults = {}
+        if(token){
+            const results = await jwt.verify(token, 'secret-key')
+            const userWhere = {
+                username: results.username
+            }
+            tokenResults = await select('users', userWhere)
+        }
+        if(req.body.id == tokenResults[0].id) {
+            throw new Error('Cannot delete logged in account')
+        }
+
+        // Check if user has create events
+        const eventsWhere = {
+            'users.id': parseInt(filter(req.body.id))
+        }
+        const eventsJoin = [
+            {
+                'join': 'events',
+                'events.user': 'users.id'
+            }
+        ]
+        const eventsResults = await select('users', eventsWhere, 'AND', ['users.id'], eventsJoin)
+        console.log(JSON.stringify(eventsResults) + ' ' + req.body.id)
+        if(eventsResults.length > 0) {
+            throw new Error('Cannot delete user with created events')
+        }
+
+
         const id = [parseInt(filter(req.body.id))]
         const results = await remove(id, 'users', 'id')
+
+        // If < 1 admin, create an admin
+        const adminWhere = {
+            'admin': '1'
+        }
+        const adminResults = await select('users', adminWhere)
+        if(adminResults.length < 1) {
+            const admin = {
+                id: null,
+                username: 'admin',
+                password: 'Scheduler2019',
+                fname: 'admin',
+                lname: 'admin',
+                admin: 1,
+            }
+            results = results.concat(await insert(admin, 'users'))
+        }
+
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
