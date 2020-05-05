@@ -15,6 +15,23 @@ function alert(selector, text, success){
 let updateRoom = {}
 let deleteRoom = ''
 
+// Admin navbar
+$.ajax({
+    type: "get",
+    url: "api/user/admin",
+    success: function(response){
+        if(response.admin === 'true'){
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageBuildings.html">Manage Buildings</a></li>')
+            $('#left-nav').append('<li class="nav-item active"><a class="nav-link" href="manageRooms.html">Manage Rooms</a></li>')
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageUsers.html">Manage Users</a></li>')
+        }
+    },
+    error: function(response) {
+        alert('#alert', response.responseJSON.msg, false)   
+    }
+})
+
+
 // Get all buildings
 $.ajax({
     type: 'get',

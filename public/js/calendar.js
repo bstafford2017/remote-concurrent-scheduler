@@ -12,6 +12,22 @@ if($('#by-week').is(':checked')) {
     showMonthCalendar()
 }
 
+// Admin navbar
+$.ajax({
+    type: "get",
+    url: "api/user/admin",
+    success: function(response){
+        if(response.admin === 'true'){
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageBuildings.html">Manage Buildings</a></li>')
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageRooms.html">Manage Rooms</a></li>')
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageUsers.html">Manage Users</a></li>')
+        }
+    },
+    error: function(response) {
+        alert('#alert', response.responseJSON.msg, false)   
+    }
+})
+
 function alert(selector, text, success){
     if(success) {
         $(selector).addClass('alert-success')
@@ -22,7 +38,6 @@ function alert(selector, text, success){
     $(selector + '-text').append(text)
     $(selector).show()
 }
-
 
 // Handles click event for changing displays
 $('#by-week').click(event => {

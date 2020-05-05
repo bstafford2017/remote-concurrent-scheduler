@@ -28,6 +28,23 @@ function timeConversion(time) {
 let updateRoom = {}
 let deleteRoom = ''
 
+// Admin navbar
+$.ajax({
+    type: "get",
+    url: "api/user/admin",
+    success: function(response){
+        if(response.admin === 'true'){
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageBuildings.html">Manage Buildings</a></li>')
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageRooms.html">Manage Rooms</a></li>')
+            $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageUsers.html">Manage Users</a></li>')
+        }
+    },
+    error: function(response) {
+        alert('#alert', response.responseJSON.msg, false)   
+    }
+})
+
+
 // Get rooms for building change
 $('#search-button').click(event => {
     event.preventDefault()
