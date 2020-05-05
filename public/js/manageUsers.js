@@ -73,6 +73,11 @@ $('#create-user').click((event) => {
                     <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
                     <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
                 </tr>`)
+            $('#user-username').val('')
+            $('#user-password').val('')
+            $('#user-fname').val('')
+            $('#user-lname').val('')
+            $('#user-admin').val('')
         },
         error: function(response){
             alert('#alert', response.responseJSON.msg, false)

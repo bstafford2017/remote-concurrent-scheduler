@@ -99,6 +99,11 @@ $('#create-room').click((event) => {
                         <td><button class="delete-room btn btn-secondary">Delete</button></td>
                     </tr>`)
             }
+            $("#building option:eq(0)").prop("selected", true)
+            $('#number').val('')
+            $('#seats').val('')
+            $('#projector').val('')
+            $("#projector option:eq(0)").prop("selected", true)
         },
         error: function(response) {
             alert('#alert', response.responseJSON.msg, false)
