@@ -1,10 +1,10 @@
 function alert(selector, text, success){
     if(success) {
-        $(selector).removeclass('alert-danger')
-        $(selector).addclass('alert-success')
+        $(selector).removeClass('alert-danger')
+        $(selector).addClass('alert-success')
     } else {
-        $(selector).removeclass('alert-success')
-        $(selector).addclass('alert-danger')
+        $(selector).removeClass('alert-success')
+        $(selector).addClass('alert-danger')
     }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
@@ -49,7 +49,7 @@ $.ajax({
     }
 })
 
-$('#manage-user').click(event => {
+$(document).on('click', '#manage-user', event => {
     event.preventDefault()
     $('.modal .btn-secondary').attr('id', 'delete')
     $('.modal-title').empty()
@@ -59,7 +59,7 @@ $('#manage-user').click(event => {
     $("#myModal").modal('show')
 })
 
-$('.modal .btn-secondary').click(event => {
+$(document).on('click', '.modal .btn-secondary', event => {
     const id = user.id
     const username = $('#username').val()
     const password = $('#password').val()

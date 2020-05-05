@@ -48,7 +48,7 @@ $.ajax({
 })
 
 // Create a building
-$('#create-building').click((event) => {
+$(document).on('click', '#create-building', event => {
     event.preventDefault()
     const name = $('#building-name').val()
     $.ajax({
@@ -73,7 +73,7 @@ $('#create-building').click((event) => {
 })
 
 // Update a building
-$('#update-building').click((event) => {
+$(document).on('click', '#update-building', event => {
     event.preventDefault()
 
     const names = []
@@ -103,7 +103,7 @@ $('#update-building').click((event) => {
 })
 
 // Delete a building
-$('#delete-building').click((event) => {
+$(document).on('click', '#delete-building', event => {
     event.preventDefault()
 
     const ids = []

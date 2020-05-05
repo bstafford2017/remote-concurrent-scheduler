@@ -24,7 +24,7 @@ $.ajax({
     }
 })
 
-$('#submit').click(function(event){
+$(document).on('click', '#submit', event => {
     event.preventDefault()
     $.ajax({
         type: "post",

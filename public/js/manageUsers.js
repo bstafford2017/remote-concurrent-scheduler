@@ -58,7 +58,7 @@ $.ajax({
 })
 
 // Create a user
-$('#create-user').click((event) => {
+$(document).on('click', '#create-user', event => {
     event.preventDefault()
     const username = $('#user-username').val()
     const password = $('#user-password').val()
@@ -104,7 +104,6 @@ $('#create-user').click((event) => {
 })
 
 // Update a user
-// NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.update-user', (event) => {
     event.preventDefault()
     updateUser.id = $(event.target).parents('tr').attr('id')
@@ -123,7 +122,6 @@ $(document).on('click', '.update-user', (event) => {
 })
 
 // Delete a building
-// NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
     deleteUser = $(event.target).parents('tr').attr('id')
@@ -136,7 +134,7 @@ $(document).on('click', '.delete-user', (event) => {
     $("#myModal").modal('show')
 })
 
-$('.modal .btn-secondary').click((event) => {
+$(document).on('click', '.modal .btn-secondary', event => {
     $("#myModal").modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){

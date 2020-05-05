@@ -46,7 +46,7 @@ $.ajax({
 
 
 // Get rooms for building change
-$('#search-button').click(event => {
+$(document).on('click', '#search-button', event => {
     event.preventDefault()
     $('#results').show()
     const search = $('#search').val()
@@ -146,7 +146,7 @@ $(document).on('click', '.delete-room', (event) => {
     $("#myModal").modal('show')
 })
 
-$('.modal .btn-secondary').click((event) => {
+$(document).on('click', '.modal .btn-secondary', event => {
     $("#myModal").modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){

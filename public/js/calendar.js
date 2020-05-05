@@ -1,6 +1,19 @@
 // For global variables
 const today = new Date()
-const months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+const months = [
+    "January",
+    "Febuary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+]
 let currentMonth = today.getMonth()
 let currentYear = today.getFullYear()
 let currentDate = today.getDate() - 1
@@ -30,8 +43,10 @@ $.ajax({
 
 function alert(selector, text, success){
     if(success) {
+        $(selector).removeClass('alert-danger')
         $(selector).addClass('alert-success')
     } else {
+        $(selector).removeClass('alert-success')
         $(selector).addClass('alert-danger')
     }
     $(selector + '-text').empty()
@@ -40,14 +55,14 @@ function alert(selector, text, success){
 }
 
 // Handles click event for changing displays
-$('#by-week').click(event => {
+$(document).on('click', '#by-week', event => {
     clear()
     $(".scale").show()
     $("#filter").show()
     showWeekCalendar()
 })
 
-$('#by-month').click(event => {
+$(document).on('click', '#by-month', event => {
     clear()
     $(".scale").hide()
     $("#filter").hide()

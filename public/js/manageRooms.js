@@ -50,7 +50,7 @@ $.ajax({
 })
 
 // Get rooms for building change
-$('#selected-building').change(event => {
+$(document).on('change', '#selected-building', event => {
     const building = $('#selected-building').val()
 
     $.ajax({
@@ -85,7 +85,7 @@ $('#selected-building').change(event => {
 })
 
 // Create a room
-$('#create-room').click((event) => {
+$(document).on('click', '#create-room', event => {
     event.preventDefault()
     const number = $('#number').val()
     const seats = $('#seats').val()
@@ -131,7 +131,6 @@ $('#create-room').click((event) => {
 })
 
 // Update a user
-// NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.update-room', (event) => {
     event.preventDefault()
     updateRoom.id = $(event.target).parents('tr').attr('id')
@@ -148,7 +147,6 @@ $(document).on('click', '.update-room', (event) => {
 })
 
 // Delete a user
-// NOTE: Need event delegation since button is placed onload
 $(document).on('click', '.delete-room', (event) => {
     event.preventDefault()
     deleteRoom = $(event.target).parents('tr').attr('id')
@@ -161,7 +159,7 @@ $(document).on('click', '.delete-room', (event) => {
     $("#myModal").modal('show')
 })
 
-$('.modal .btn-secondary').click((event) => {
+$(document).on('click', '.modal .btn-secondary', event => {
     $("#myModal").modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){
