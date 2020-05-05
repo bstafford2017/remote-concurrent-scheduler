@@ -17,11 +17,7 @@ html, body {
 
 /* For active tab */
 .active a {
-    color: #f36f21;
-}
-
-.active a:hover {
-    color: #f36f21;
+    border-bottom: solid #f36f21 2px;
 }
 
 nav {
