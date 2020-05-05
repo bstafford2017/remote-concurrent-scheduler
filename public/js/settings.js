@@ -1,8 +1,10 @@
 function alert(selector, text, success){
     if(success) {
-        $(selector).addClass('alert-success')
+        $(selector).removeclass('alert-danger')
+        $(selector).addclass('alert-success')
     } else {
-        $(selector).addClass('alert-danger')
+        $(selector).removeclass('alert-success')
+        $(selector).addclass('alert-danger')
     }
     $(selector + '-text').empty()
     $(selector + '-text').append(text)

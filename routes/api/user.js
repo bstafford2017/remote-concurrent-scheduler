@@ -75,6 +75,11 @@ router.get('/admin', async (req, res) => {
 // Get particular user
 router.post('/login', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.username || !req.body.password) {
+            throw new Error('Please fill out the entire login form')
+        }
+
         const where = {
             username: filter(req.body.username),
             password: filter(req.body.password)
@@ -105,6 +110,12 @@ router.post('/login', async (req, res) => {
 // Create a user
 router.post('/create', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.username || !req.body.password || !req.body.fname
+            || !req.body.lname || !req.body.admin) {
+            throw new Error('Please fill out the entire create user form')
+        }
+
         const user = {
             id: null,
             username: filter(req.body.username),
@@ -125,6 +136,12 @@ router.post('/create', async (req, res) => {
 // ** change to update function
 router.post('/update', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.id || !req.body.username || !req.body.password
+            || !req.body.fname || !req.body.lname || !req.body.admin) {
+            throw new Error('Please fill out the entire update user form')
+        }
+
         const user = [{
             id: parseInt(filter(req.body.id)),
             username: filter(req.body.username),
@@ -144,6 +161,11 @@ router.post('/update', async (req, res) => {
 // Delete a user
 router.post('/delete', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.id) {
+            throw new Error('Please enter a valid user id to delete')
+        }
+
         const id = [parseInt(filter(req.body.id))]
         const results = await remove(id, 'users', 'id')
         res.json({ results })

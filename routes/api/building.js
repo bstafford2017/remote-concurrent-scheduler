@@ -21,6 +21,11 @@ router.get('/', async (req, res) => {
 // Create a building
 router.post('/create', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.name) {
+            throw new Error('Please enter a valid building name')
+        }
+
         const building = {
             id: null,
             name: filter(req.body.name)
@@ -36,6 +41,11 @@ router.post('/create', async (req, res) => {
 // Update a building
 router.post('/update', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.names) {
+            throw new Error('Please select a building to modify')
+        }
+
         const names = req.body.names.map(name => {
             return {
                 id: parseInt(filter(name.id)),
@@ -53,6 +63,11 @@ router.post('/update', async (req, res) => {
 // Delete a building
 router.post('/delete', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.ids) {
+            throw new Error('Please select a building to modify')
+        }
+
         const ids = req.body.ids.map(id => {
             return parseInt(filter(id))
         })

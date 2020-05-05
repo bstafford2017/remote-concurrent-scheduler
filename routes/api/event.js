@@ -32,6 +32,11 @@ function getWeekString(day) {
 // Get all events
 router.get('/:search', async (req, res) => {
     try {
+        // Input validation
+        if(!req.params.search) {
+            throw new Error('Please enter a valid search')
+        }
+
         const cols = [
             'events.id',
             'events.title',
@@ -83,6 +88,11 @@ router.get('/:search', async (req, res) => {
 // Get particular month's events
 router.get('/:year/:month', async (req, res) => {
     try {
+        // Input validation
+        if(!req.params.year || !req.params.month) {
+            throw new Error('Please enter a valid year and month')
+        }
+
         let results = [[]]
         const date = new Date(req.params.year, req.params.month - 1, '01', '00', '00', '01')
         for(let i = 0; i < date.getDate(); i++) {
@@ -158,6 +168,11 @@ router.get('/:year/:month', async (req, res) => {
 // Get particular day's events
 router.post('/:year/:month/:day', async (req, res) => {
     try {
+        // Input validation
+        if(!req.params.year || !req.params.month || !req.params.day) {
+            throw new Error('Please enter a valid year, month and day')
+        }
+
         const cols = [
             'events.id',
             'events.title',
@@ -220,6 +235,12 @@ router.post('/:year/:month/:day', async (req, res) => {
 // Create an event
 router.post('/create', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.title || !req.body.date || !req.body.start
+            || !req.body.end || !req.body.room) {
+                throw new Error('Please fill out entire create event form')
+        } 
+
         // Validate availibility
         const cols = [
             'events.id',
@@ -327,6 +348,12 @@ router.post('/create', async (req, res) => {
 // Update an event
 router.post('/update', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.id || !req.body.title || !req.body.date
+            || !req.body.start || !req.body.end || !req.body.room) {
+                throw new Error('Please fill out the entire update event form')
+        } 
+
         // Validate availibility
         const cols = [
             'events.id',
@@ -365,6 +392,7 @@ router.post('/update', async (req, res) => {
             'endTime': filter(req.body.start),
         }
         const whereCompare1 = {
+            'room': '!=',
             'startTime': '<',
             'endTime': '>'
         }
@@ -435,6 +463,11 @@ router.post('/update', async (req, res) => {
 // Delete an event
 router.post('/delete', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.id) {
+            throw new Error('Please enter a valid event id to delete')
+        }
+
         const results = await remove([parseInt(filter(req.body.id))], 'events', 'id')
         res.json({ results })
     } catch(err) {

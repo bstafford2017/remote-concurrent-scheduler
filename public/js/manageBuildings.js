@@ -1,7 +1,9 @@
 function alert(selector, text, success){
     if(success) {
+        $(selector).removeClass('alert-danger')
         $(selector).addClass('alert-success')
     } else {
+        $(selector).removeClass('alert-success')
         $(selector).addClass('alert-danger')
     }
     $(selector + '-text').empty()
@@ -66,26 +68,22 @@ $('#update-building').click((event) => {
         }
         names.push(updatedName)
     })
-    if(names.length === 0) {
-        alert('#alert', 'Please select a name(s) to delete', false)
-    } else {
-        $.ajax({
-            type: 'post',
-            url: '/api/building/update',
-            data: {
-                names
-            },
-            success: function(response) {
-                $('#manage-card').find('input:checkbox:checked').each(function() {
-                    alert('#alert', 'Updated building(s)', true)
-                    $(this).prop('checked', false)
-                })
-            },
-            error: function(response) {
-                alert('#alert', response.responseJSON.msg, false)
-            }
-        })
-    }
+    $.ajax({
+        type: 'post',
+        url: '/api/building/update',
+        data: {
+            names
+        },
+        success: function(response) {
+            $('#manage-card').find('input:checkbox:checked').each(function() {
+                alert('#alert', 'Updated building(s)', true)
+                $(this).prop('checked', false)
+            })
+        },
+        error: function(response) {
+            alert('#alert', response.responseJSON.msg, false)
+        }
+    })
 })
 
 // Delete a building
@@ -96,25 +94,20 @@ $('#delete-building').click((event) => {
     $('#manage-card').find('input:checkbox:checked').each(function() {
         ids.push($(this).parent().attr('id'))
     })
-
-    if(ids.length === 0) {
-        alert('#alert', 'Please select a name(s) to delete', false)
-    } else {
-        $.ajax({
-            type: 'post',
-            url: '/api/building/delete',
-            data: {
-                ids
-            },
-            success: function(response){
-                alert('#alert', 'Deleted building(s)', true)
-                response.results.forEach((id) => {
-                    $('#' + id).remove()
-                })
-            },
-            error: function(response){
-                alert('#alert', response.responseJSON.msg, false)
-            }
-        })
-    }
+    $.ajax({
+        type: 'post',
+        url: '/api/building/delete',
+        data: {
+            ids
+        },
+        success: function(response){
+            alert('#alert', 'Deleted building(s)', true)
+            response.results.forEach((id) => {
+                $('#' + id).remove()
+            })
+        },
+        error: function(response){
+            alert('#alert', response.responseJSON.msg, false)
+        }
+    })
 })

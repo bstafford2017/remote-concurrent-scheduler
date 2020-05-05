@@ -10,6 +10,11 @@ const router = express.Router()
 // Get particular building's rooms
 router.get('/:building', async (req, res) => {
     try {
+        // Input validation
+        if(!req.params.building) {
+            throw new Error('Please enter a valid building id')
+        }
+
         const columns = ['rooms.id', 'number', 'seats', 'projector', 'name']
         const join = [
             {
@@ -30,6 +35,12 @@ router.get('/:building', async (req, res) => {
 
 router.post('/create', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.number || !req.body.seats || !req.body.projector
+            || !req.body.building) {
+            throw new Error('Please fill out the entire create room form')
+        }
+
         const room = {
             id: null,
             number: parseInt(filter(req.body.number)),
@@ -58,6 +69,12 @@ router.post('/create', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.number || !req.body.seats || !req.body.seats
+            || !req.body.projector || !req.body.building) {
+            throw new Error('Please fill out the entire update form')
+        }
+
         const room = [{
             id: parseInt(filter(req.body.id)),
             number: parseInt(filter(req.body.number)),
@@ -75,6 +92,11 @@ router.post('/update', async (req, res) => {
 
 router.post('/delete', async (req, res) => {
     try {
+        // Input validation
+        if(!req.body.id) {
+            throw new Error('Please enter a valid room id to delete')
+        }
+
         const room = [parseInt(filter(req.body.id))]
         const results = await remove(room, 'rooms', 'id')
         res.json({ results })
