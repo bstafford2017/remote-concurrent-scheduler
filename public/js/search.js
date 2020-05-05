@@ -1,15 +1,11 @@
 function alert(selector, text, success){
-    if(success) {
-        $(selector).removeClass('alert-danger')
-        $(selector).addClass('alert-success')
-    } else {
-        $(selector).removeClass('alert-success')
-        $(selector).addClass('alert-danger')
-    }
+    $(selector).removeclass(success ? 'alert-danger' : 'alert-success')
+    $(selector).addclass(success ? 'alert-success' : 'alert-danger')
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
     $(selector).show()
 }
+
 
 function formatDate(date) {
     const unformatted = date.split('T')[0].split('-')

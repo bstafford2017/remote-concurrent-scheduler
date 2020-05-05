@@ -42,13 +42,8 @@ $.ajax({
 })
 
 function alert(selector, text, success){
-    if(success) {
-        $(selector).removeClass('alert-danger')
-        $(selector).addClass('alert-success')
-    } else {
-        $(selector).removeClass('alert-success')
-        $(selector).addClass('alert-danger')
-    }
+    $(selector).removeClass(success ? 'alert-danger' : 'alert-success')
+    $(selector).addClass(success ? 'alert-success' : 'alert-danger')
     $(selector + '-text').empty()
     $(selector + '-text').append(text)
     $(selector).show()
@@ -268,7 +263,6 @@ function showWeekCalendar(positive, reload){
         if(i !== 6){
             first = changeAndCheck(first, 1)
         }
-        console.log(week[i] + " " + months[currentMonth])
     }
 
     // Update header
@@ -288,39 +282,6 @@ function printMonth(active, valid, row, date){
         $("#row-" + row).append("<div class=\"invalid\">" + date)
     }
     $("#row-" + row).append("</div>")
-    
-    let day = ("0" + date).slice(-2)
-    let month = ("0" + (currentMonth + 1) % 12).slice(-2)
-
-    // Only call for valid dates
-    if(valid){
-        /*$.ajax({
-            type: "post",
-            url: 'api/event/' + currentYear + '/' + month + '/' + day,
-            success: (response) => {
-                if(response.results.length >= 3) {
-                    for(let i = 0; i < 2; i++) {
-                        const event = response.results[i]
-                        $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
-                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`) 
-                        if(i === 1) {
-                            $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
-                                title=\"Tooltip on top\" class=\"month-event more\">See More</div>`) 
-                        }     
-                    }
-                } else {
-                    response.results.forEach(event => {
-                        $("#" + date).append(`<div data-toggle=\"tooltip\" data-placement=\"top\"
-                            title=\"Tooltip on top\" class=\"month-event\">${event.title}</div>`)
-                    })
-                }
-            },
-            error: function(response){
-                $('#myModal').modal('hide')
-                alert('#alert', response.responseJSON.msg, false)
-            }
-        })*/
-    }
 }
 
 function showMonthCalendar() {
@@ -330,11 +291,11 @@ function showMonthCalendar() {
         type: "get",
         url: 'api/event/' + currentYear + '/' + (currentMonth + 1),
         success: (response) => {
-                // events = [
-                //     dayEvents: [
-                //         { ... }
-                //     ]
-                // ]
+            // events = [
+            //     dayEvents: [
+            //         { ... }
+            //     ]
+            // ]
             response.results.forEach((dayEvents, day) => {
                 if(dayEvents.length > 3) {
                     for(let i = 0; i < 2; i++) {
