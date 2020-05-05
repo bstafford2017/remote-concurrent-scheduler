@@ -28,7 +28,8 @@ app.use(
      '/manageBuildings.html',
      '/manageRooms.html',
      '/manageUsers.html',
-     '/settings.html'
+     '/settings.html',
+     '/search.html'
     ], verifyToken)
 
 // Middleware for obfuscating javascript

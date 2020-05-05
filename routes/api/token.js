@@ -3,18 +3,17 @@ const express = require('express')
 const log = require('../../utils/log')
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    const token = req.cookies.token
-    if(token){
-        jwt.verify(token, 'secret-key', (err, authData) => {
-            if(err) {
-                log('error-log', err.toString() + '\n')
-                res.json({ token: false })
-            } else {
-                res.json({ token: true })
-            }
-        })
-    } else {
+router.get('/', async (req, res) => {
+    try {
+        const token = req.cookies.token
+        if(token){
+            const result = await jwt.verify(token, 'secret-key')
+            res.json({ token: true })
+        } else {
+            res.json({ token: false })
+        }
+    } catch (err) {
+        log('error-log', err.tostring() + '\n')
         res.json({ token: false })
     }
 })

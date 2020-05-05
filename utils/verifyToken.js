@@ -1,18 +1,17 @@
 const jwt = require('jsonwebtoken')
 const log = require('./log')
 
-function verifyToken(req, res, next) {
-    const token = req.cookies.token
-    if(token){
-        jwt.verify(token, 'secret-key', (err, authData) => {
-            if(err) {
-                log('error-log', err.toString())
-                res.redirect('/login.html')
-            } else {
-                next()
-            }
-        })
-    } else {
+async function verifyToken(req, res, next) {
+    try {
+        const token = req.cookies.token
+        if(token){
+            await jwt.verify(token, 'secret-key')
+            next()
+        } else {
+            res.redirect('/login.html')
+        }
+    } catch (err) {
+        log('error-log', err.toString())
         res.redirect('/login.html')
     }
 }
