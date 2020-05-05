@@ -81,7 +81,7 @@ router.get('/:search', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: 'System Error:' + err.toString() })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -161,7 +161,7 @@ router.get('/:year/:month', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: 'System Error:' + err.toString() })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -228,7 +228,7 @@ router.post('/:year/:month/:day', async (req, res) => {
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: 'System Error:' + err.toString() })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -341,7 +341,7 @@ router.post('/create', async (req, res) => {
         res.json({ results: insertResults })
     } catch (err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: 'System Error:' + err.toString() })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -456,7 +456,7 @@ router.post('/update', async (req, res) => {
         res.json({ results })
     } catch(err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: 'System Error:' + err.toString() })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
@@ -472,7 +472,7 @@ router.post('/delete', async (req, res) => {
         res.json({ results })
     } catch(err) {
         log('error-log', err.toString() + '\n')
-        res.status(400).json({ msg: 'System Error:' + err.toString() })
+        res.status(400).json({ msg: err.toString() })
     }
 })
 
