@@ -34,8 +34,10 @@ $.ajax({
             $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageRooms.html">Manage Rooms</a></li>')
             $('#left-nav').append('<li class="nav-item"><a class="nav-link" href="manageUsers.html">Manage Users</a></li>')
         }
+        $('#spinner').hide()
     },
     error: function(response) {
+        $('#spinner').hide()
         alert('#alert', response.responseJSON.msg, false)   
     }
 })
@@ -44,6 +46,7 @@ $.ajax({
 // Get rooms for building change
 $(document).on('click', '#search-button', event => {
     event.preventDefault()
+    $('#spinner').show()
     $('#results').show()
     const search = $('#search').val()
 
@@ -104,8 +107,10 @@ $(document).on('click', '#search-button', event => {
             } else {
                 $('.response-text').hide()
             }
+            $('#spinner').hide()
         },
         error: function(response) {
+            $('#spinner').hide()
             alert('#alert', response.responseJSON.msg, false)
         }
     })

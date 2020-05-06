@@ -22,6 +22,7 @@
         <script type="text/javascript" src="js/settings.js"></script>
     </head>
     <body>
+
         <!-- Navbar -->
         <div class="navbar-header">
             <a href="./calendar.html">
@@ -51,8 +52,10 @@
                 </ul>
             </div>
         </nav>
-
+        <!-- Content -->
         <div class="content">
+
+            <!-- Alert -->
             <div class="alert alert-dismissible fade show col-12" style="display: none"
                 role="alert" id="alert">
                 <span id="alert-text"></span>
@@ -60,7 +63,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card col-lg-4 offset-lg-4 shadow mb-5 rounded" id="create-card">
+
+            <!-- Spinner -->
+            <div class="text-center" id="spinner">
+                <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+                <span class="sr-only">loading...</span>
+                </div>
+            </div>
+
+            <!-- Setting Card -->
+            <div class="card col-lg-4 offset-lg-4 shadow mb-5 rounded">
                 <div>
                     <h2 style="text-align: center;">User Settings</h2>
                     <small class="form-text text-muted text-center">Note: All special characters will be removed</small>

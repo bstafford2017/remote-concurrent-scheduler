@@ -314,8 +314,10 @@ function showMonthCalendar() {
                     })
                 }
             })
+            $('#spinner').hide()
         },
         error: function(response){
+            $('#spinner').hide()
             alert('#alert', response.responseJSON.msg)
         }
     })

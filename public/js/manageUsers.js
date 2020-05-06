@@ -46,8 +46,10 @@ $.ajax({
                     <td><button class="delete-user btn btn-secondary">Delete</button></td>
                 </tr>`)
         })
+        $('#spinner').hide()
     },
     error: function(response) {
+        $('#spinner').hide()
         alert('#alert', response.responseJSON.msg, false)
     }
 })

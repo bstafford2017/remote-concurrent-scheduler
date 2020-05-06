@@ -36,8 +36,10 @@ $.ajax({
                     <input type="text" class="text form-control col-10 d-inline" value="${building.name}">
                 </div>`)
         })
+        $('#spinner').hide()
     },
     error: function(response) {
+        $('#spinner').hide()
         alert('#alert', response.responseJSON.msg, false)
     }
 })

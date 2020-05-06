@@ -38,8 +38,10 @@ $.ajax({
             $('#selected-building').append(
                 `<option value="${building.id}">${building.name}</option>`)
         })
+        $('#spinner').hide()
     },
     error: function(response) {
+        $('#spinner').hide()
         alert('#alert', response.responseJSON.msg, false)
     }
 })

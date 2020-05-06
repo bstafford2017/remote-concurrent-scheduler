@@ -82,12 +82,19 @@
                 </select>
             </div>
         </div>
+        <!-- Alert -->
         <div class="alert alert-dismissible fade show" 
             style="display: none;" role="alert" id="alert">
             <span id="alert-text"></span>
             <button type="button" class="close" onClick="$('#alert').hide()" aria-label="close">
                 <span aria-hidden="true">&times;</span>
             </button>
+        </div>
+        <!-- Spinner -->
+        <div class="text-center" id="spinner">
+            <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+              <span class="sr-only">loading...</span>
+            </div>
         </div>
         <div class="table">
             <div class="scale">

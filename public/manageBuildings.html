@@ -22,6 +22,7 @@
         <script type="text/javascript" src="js/manageBuildings.js"></script>
     </head>
     <body>
+
         <!-- Navbar -->
         <div class="navbar-header">
             <a href="./calendar.html">
@@ -54,7 +55,10 @@
             </div>
         </nav>
 
+        <!-- Content -->
         <div class="content row">
+
+            <!-- Alert -->
             <div class="alert alert-dismissible fade show col-12" style="display: none"
                 role="alert" id="alert">
                 <span id="alert-text"></span>
@@ -62,6 +66,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <!-- Spinner -->
+            <div class="text-center" id="spinner">
+                <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+                <span class="sr-only">loading...</span>
+                </div>
+            </div>
+
+            <!-- Create Building Card -->
             <div class="card col-lg-4 offset-lg-1 shadow mb-5 rounded" id="create-card">
                 <div>
                     <h2 style="text-align: center;">Create Building</h2>
@@ -83,6 +96,8 @@
                     </form>
                 </div> 
             </div>
+
+            <!-- Manage Building Card -->
             <div class="card col-lg-5 offset-lg-1 shadow mb-5 rounded" id="manage-card">
                 <div class="card-header">
                     <h2 style="text-align: center;">Manage Buildings</h2>

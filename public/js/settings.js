@@ -38,8 +38,10 @@ $.ajax({
         $('#fname').val(response.results.fname)
         $('#lname').val(response.results.lname)
         $('#admin').append(response.results.admin ? 'Yes' : 'No')
+        $('#spinner').hide()
     },
     error: function(response) {
+        $('#spinner').hide()
         alert('#alert', response.responseJSON.msg, false)
     }
 })

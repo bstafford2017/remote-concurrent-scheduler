@@ -22,6 +22,7 @@
         <script type="text/javascript" src="js/manageRooms.js"></script>
     </head>
     <body>
+
         <!-- Navbar -->
         <div class="navbar-header">
             <a href="./calendar.html">
@@ -53,8 +54,10 @@
                 </ul>
             </div>
         </nav>
-
+        <!-- Content -->
         <div class="content">
+
+            <!-- Alert -->
             <div class="alert alert-dismissible fade show col-12" style="display: none"
                 role="alert" id="alert">
                 <span id="alert-text"></span>
@@ -62,6 +65,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <!-- Spinner -->
+            <div class="text-center" id="spinner">
+                <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+                <span class="sr-only">loading...</span>
+                </div>
+            </div>
+
+            <!-- Create Room Card -->
             <div class="card col-lg-8 offset-lg-2 shadow mb-5 rounded" id="create-card">
                 <div>
                     <h2 style="text-align: center;">Create Room</h2>
@@ -102,6 +114,7 @@
                 </div> 
             </div>
 
+            <!-- Manage Room Card -->
             <div class="card col-lg-6 offset-lg-3 shadow mb-5 rounded" id="manage-card">
                 <div class="card-body table-responsive">
                     <h2 style="text-align: center;">Manage Rooms</h2>
