@@ -24,6 +24,7 @@
         <script type="text/javascript" src="js/calendar.js" defer></script>
     </head>
     <body>
+
         <!-- Navbar -->
         <div class="navbar-header">
             <a href="./calendar.html">
@@ -68,6 +69,8 @@
                 </ul>
             </div>
         </nav>
+
+        <!-- Filter -->
         <div id="filter" class="form-row pb-3" style="display: none; margin: 0;">
             <div class="form-group col-3 offset-3">
                 <label for="filter-building" style="color: white">Building</label>
@@ -82,6 +85,7 @@
                 </select>
             </div>
         </div>
+
         <!-- Alert -->
         <div class="alert alert-dismissible fade show" 
             style="display: none;" role="alert" id="alert">
@@ -90,12 +94,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+
         <!-- Spinner -->
-        <div class="text-center" id="spinner">
+        <div class="text-center col-12" id="spinner">
             <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
               <span class="sr-only">loading...</span>
             </div>
         </div>
+
+        <!-- Calendar Table -->
         <div class="table">
             <div class="scale">
                 <div>6a</div>

@@ -27,6 +27,7 @@
         <script type="text/javascript" src="js/calendar.js" defer></script>
     </head>
     <body>
+
         <!-- Navbar -->
         <div class="navbar-header">
             <a href="./calendar.html">
@@ -55,6 +56,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
             </div>
         </nav>
+
+        <!-- Alert -->
         <div class="alert alert-dismissible fade show" style="display: none"
             role="alert" id="alert">
             <span id="alert-text"></span>
@@ -62,6 +65,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        
+        <!-- Spinner -->
+        <div class="text-center col-12" id="spinner">
+            <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+            <span class="sr-only">loading...</span>
+            </div>
+        </div>
+
+        <!-- Calendar Table -->
         <div class="table">
             <div class="scale">
                 <div>6a</div>
