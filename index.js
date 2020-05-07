@@ -16,21 +16,18 @@ app.use(express.json());
 // Middleware for logging requests
 app.use(logger)
 
-// Middleware for DB backup
-//app.use(dump)
-
 // Middleware for cookie passing
 app.use(parser())
 
 // Middleware for verifying token
 app.use(
     ['/calendar.html',
-     '/manageBuildings.html',
-     '/manageRooms.html',
-     '/manageUsers.html',
+     '/managebuildings.html',
+     '/managerooms.html',
+     '/manageusers.html',
      '/settings.html',
      '/search.html'
-    ], verifyToken)
+    ], verifytoken)
 
 // Middleware for obfuscating javascript
 //app.use('/js', obfuscate)
@@ -54,6 +51,9 @@ app.use('/jquery',
     express.static(__dirname + '/node_modules/jquery/dist/'))
 app.use('/popper', 
     express.static(__dirname + '/node_modules/popper.js/dist/'))
+
+// Middleware for DB backup
+app.use('/api', dump)
 
 // Routes for API
 app.use('/api/token', require('./routes/api/token'))

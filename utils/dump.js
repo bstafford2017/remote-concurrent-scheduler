@@ -9,10 +9,10 @@ function dump() {
             password : 'root',
             database : 'rcs'
         },
-        dumpToFile: 'logs/full-database.gz',
+        dumpToFile: 'media/pi/*/full-database.gz',
         compressFile: true
     }).catch(err => {
-        log('error-log', err)
+        log('error-log', err.toString())
     })
 }
 
