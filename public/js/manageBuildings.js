@@ -6,6 +6,10 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+// Global variable
+let updateBuilding = []
+let deleteBuilding = []
+
 // Admin navbar
 $.ajax({
     type: "get",
@@ -72,55 +76,89 @@ $(document).on('click', '#create-building', event => {
 // Update a building
 $(document).on('click', '#update-building', event => {
     event.preventDefault()
-
-    const names = []
+    let buildingNames = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        const updatedName = {
-            id: $(this).parent().attr('id'),
-            name: $(this).parent().children('.text').val()
-        }
-        names.push(updatedName)
+        buildingNames.push($(this).parent().find('.text').val())
     })
-    $.ajax({
-        type: 'post',
-        url: '/api/building/update',
-        data: {
-            names
-        },
-        success: function(response) {
-            $('#manage-card').find('input:checkbox:checked').each(function() {
-                alert('#alert', 'Updated building(s)', true)
-                $(this).prop('checked', false)
-            })
-        },
-        error: function(response) {
-            alert('#alert', response.responseJSON.msg, false)
-        }
+    $('.modal .btn-secondary').attr('id', 'update')
+    $('.modal-title').empty()
+    let formattedNames = ''
+    buildingNames.forEach((name, index, arr) => {
+        formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
+    $('.modal-title').append(`Update ${formattedNames}?`)
+    $('.modal-text').empty()
+    $('.modal-text').append(`Are you sure you want to update <b>${formattedNames}</b>?`)
+    $("#myModal").modal('show')
 })
 
 // Delete a building
 $(document).on('click', '#delete-building', event => {
     event.preventDefault()
-
-    const ids = []
+    let buildingNames = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        ids.push($(this).parent().attr('id'))
+        buildingNames.push($(this).parent().find('.text').val())
     })
-    $.ajax({
-        type: 'post',
-        url: '/api/building/delete',
-        data: {
-            ids
-        },
-        success: function(response){
-            alert('#alert', 'Deleted building(s)', true)
-            response.results.forEach((id) => {
-                $('#' + id).remove()
-            })
-        },
-        error: function(response){
-            alert('#alert', response.responseJSON.msg, false)
-        }
+    $('.modal .btn-secondary').attr('id', 'delete')
+    $('.modal-title').empty()
+    let formattedNames = ''
+    buildingNames.forEach((name, index, arr) => {
+        formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
+    $('.modal-title').append(`Delete ${formattedNames}?`)
+    $('.modal-text').empty()
+    $('.modal-text').append(`Are you sure you want to delete <b>${formattedNames}</b>?`)
+    $("#myModal").modal('show')
+})
+
+$(document).on('click', '.modal .btn-secondary', event => {
+    $("#myModal").modal('hide')
+    const operation = $(event.target).attr('id')
+    if(operation === 'delete'){
+        const ids = []
+        $('#manage-card').find('input:checkbox:checked').each(function() {
+            ids.push($(this).parent().attr('id'))
+        })
+        $.ajax({
+            type: 'post',
+            url: '/api/building/delete',
+            data: {
+                ids
+            },
+            success: function(response){
+                alert('#alert', 'Deleted building(s)', true)
+                response.results.forEach((id) => {
+                    $('#' + id).remove()
+                })
+            },
+            error: function(response){
+                alert('#alert', response.responseJSON.msg, false)
+            }
+        })
+    } else {
+        const names = []
+        $('#manage-card').find('input:checkbox:checked').each(function() {
+            const updatedName = {
+                id: $(this).parent().attr('id'),
+                name: $(this).parent().children('.text').val()
+            }
+            names.push(updatedName)
+        })
+        $.ajax({
+            type: 'post',
+            url: '/api/building/update',
+            data: {
+                names
+            },
+            success: function(response) {
+                $('#manage-card').find('input:checkbox:checked').each(function() {
+                    alert('#alert', 'Updated building(s)', true)
+                    $(this).prop('checked', false)
+                })
+            },
+            error: function(response) {
+                alert('#alert', response.responseJSON.msg, false)
+            }
+        })
+    }
 })

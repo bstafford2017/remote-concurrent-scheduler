@@ -121,7 +121,7 @@ $(document).on('click', '.update-user', (event) => {
 // Delete a building
 $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
-    deleteUser = $(event.target).parents('tr').attr('id')
+    deleteUser = $(event.target).parents('div').attr('id')
     const username = $(event.target).parents('tr').find('.username').val()
     $('.modal .btn-secondary').attr('id', 'delete')
     $('.modal-title').empty()
