@@ -27,7 +27,7 @@ app.use(
      '/manageusers.html',
      '/settings.html',
      '/search.html'
-    ], verifytoken)
+    ], verifyToken)
 
 // Middleware for obfuscating javascript
 //app.use('/js', obfuscate)
