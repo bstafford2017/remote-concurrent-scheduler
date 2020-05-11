@@ -1,4 +1,4 @@
-.modal-body {
+#myModal .modal-body {
     min-height: 410px;
 }
 
@@ -7,12 +7,15 @@
 }
 
 .view-item {
-    height: 30px;
-    font-size: 20px;
     background-color: #009a44;
     color: white;
-    border-radius: 5px;
 }
+
+.view-item:hover {
+    background-color: #009a44;
+    color: white;
+}
+
 
 .view-item-header {
     color: #009a44;
@@ -38,19 +41,42 @@
     color: #aaa;
 }
 
-.btn {
+.btn-primary {
     color: white;
     background-color: #009a44;
     border: none;
 }
 
-.btn:hover {
+.btn-primary:hover {
     color: white;
     background-color: #009a43b7;
     border: none;
 }
 
-.btn-secondary:focus, .btn-secondary:active {
+.btn-primary:focus, .btn-primary:active {
     background-color: #009a44;
+    border: none;
+}
+
+.btn-secondary {
+    color: white;
+    background-color: #f36f21;
+    border: none;
+}
+
+.btn-secondary:hover {
+    color: white;
+    background-color: #f36f21;
+    border: none;
+}
+
+.btn-secondary:focus, .btn-primary:active {
+    background-color: #f36f21;
+    border: none;
+}
+
+.btn-cancel, .btn-cancel:hover {
+    color: white;
+    background-color: #aaa;
     border: none;
 }

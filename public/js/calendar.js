@@ -384,7 +384,7 @@ $(document).on('click', '.valid', event => {
                     (event.endTime.charAt(0) === '0') ? 1 : 0, event.endTime.length - 3)
                 $('#event-list').append(
                     `<div class="event" id="${event.id}">
-                        <button class="btn col-12" type="button"
+                        <button class="btn view-item col-12" type="button"
                             data-toggle="collapse" data-target="#modal-${event.id}"
                             aria-expanded="false" aria-controls="modal-${event.id}">
                             ${event.title}
