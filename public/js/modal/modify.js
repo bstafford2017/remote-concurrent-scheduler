@@ -18,23 +18,23 @@ function modal(id, title, body, update) {
 
 $(document).on('click', '.update', event => {
     event.preventDefault()
-    deleteRoom = $(event.target).parents('tr').attr('id')
-    const number = $(event.target).parents('tr').find('.number').val()
-    modal('#innerModal', ``, ``, true)
+    const title = $(event.target).parents('.card').find('.title').val()
+
+    modal('#innerModal', `Update '${title}'?`,
+        `Are you sure you want to update the event '${title}'`, false)
 })
 
 $(document).on('click', '.delete', event => {
     event.preventDefault()
-    updateRoom.id = $(event.target).parents('tr').attr('id')
-    updateRoom.number = $(event.target).parents('tr').find('.number').val()
-    updateRoom.seats = $(event.target).parents('tr').find('.seats').val()
-    updateRoom.projector = $(event.target).parents('tr').find('.projector').val()
+    const title = $(event.target).parents('.card').find('.title').val()
 
-    modal('#innerModal', ``, ``, false)
+    modal('#innerModal', `Update '${title}'?`,
+        `Are you sure you want to update the event '${title}'`, false)
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {
     $("#innerModal").modal('hide')
+    $('#myModal').modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){
         const id = $(event.target).parents('.event').attr('id')

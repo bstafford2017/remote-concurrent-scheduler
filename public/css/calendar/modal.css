@@ -38,12 +38,14 @@
     color: #aaa;
 }
 
-.btn-secondary {
+.btn {
+    color: white;
     background-color: #009a44;
     border: none;
 }
 
-.btn-secondary:hover {
+.btn:hover {
+    color: white;
     background-color: #009a43b7;
     border: none;
 }

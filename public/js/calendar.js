@@ -384,7 +384,7 @@ $(document).on('click', '.valid', event => {
                     (event.endTime.charAt(0) === '0') ? 1 : 0, event.endTime.length - 3)
                 $('#event-list').append(
                     `<div class="event" id="${event.id}">
-                        <button class="btn btn-secondary col-12" type="button"
+                        <button class="btn col-12" type="button"
                             data-toggle="collapse" data-target="#modal-${event.id}"
                             aria-expanded="false" aria-controls="modal-${event.id}">
                             ${event.title}
@@ -514,8 +514,8 @@ $(document).on('click', '.valid', event => {
                                 </div>`: ''}
                             </div>
                             <div class="row parent">
-                                <button class="update btn btn-secondary col-3 offset-2">${(event.end) ? 'Update All' : 'Update'}</button>
-                                <button class="delete btn btn-secondary col-3 offset-2">${(event.end) ? 'Delete All' : 'Delete'}</button>
+                                <button class="update btn btn-primary col-3 offset-2">${(event.end) ? 'Update All' : 'Update'}</button>
+                                <button class="delete btn btn-primary col-3 offset-2">${(event.end) ? 'Delete All' : 'Delete'}</button>
                             </div>
                         </div>
                     </div>`)
