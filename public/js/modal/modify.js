@@ -6,16 +6,21 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    $(id).find('.modal .btn-secondary').attr('id', 
+        (update) ? 'update' : 'delete')
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
+
 $(document).on('click', '.update', event => {
     event.preventDefault()
     deleteRoom = $(event.target).parents('tr').attr('id')
     const number = $(event.target).parents('tr').find('.number').val()
-    $('#innerModal > .modal .btn-secondary').attr('id', 'delete')
-    $('#innerModal > .modal-title').empty()
-    $('#innerModal > .modal-title').append(`Delete '${number}'?`)
-    $('#innerModal > .modal-text').empty()
-    $('#innerModal > .modal-text').append(`Are you sure you want to delete username '<b>${number}</b>'?`)
-    $("#innerModal").modal('show')
+    modal('#innerModal', ``, ``, true)
 })
 
 $(document).on('click', '.delete', event => {
@@ -25,13 +30,7 @@ $(document).on('click', '.delete', event => {
     updateRoom.seats = $(event.target).parents('tr').find('.seats').val()
     updateRoom.projector = $(event.target).parents('tr').find('.projector').val()
 
-    $('#innerModal > .modal .btn-secondary').attr('id', 'update')
-    $('#innerModal > .modal-title').empty()
-    $('#innerModal > .modal-title').append(`Update '${updateRoom.number}'?`)
-    $('#innerModal > .modal-text').empty()
-    $('#innerModal > .modal-text').append(`Are you sure you want to update username '<b>${updateRoom.number}</b>'?`)
-    $("#innerModal").modal('show')
-
+    modal('#innerModal', ``, ``, false)
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {

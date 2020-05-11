@@ -6,6 +6,16 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    $(id).find('.modal .btn-secondary').attr('id', 
+        (update) ? 'update' : 'delete')
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
+
 // Global variable
 let updateUser = {}
 let deleteUser = ''
@@ -110,12 +120,9 @@ $(document).on('click', '.update-user', (event) => {
     updateUser.lname = $(event.target).parents('tr').find('.lname').val()
     updateUser.admin = $(event.target).parents('tr').find('.admin').val()
 
-    $('.modal .btn-secondary').attr('id', 'update')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Update '${updateUser.username}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to update username '<b>${updateUser.username}</b>'?`)
-    $("#myModal").modal('show')
+    modal('#myModal', `Update '${updateUser.username}'?`,
+        `Are you sure you want to update username '<b>${updateUser.username}</b>'?`,    
+        true)
 })
 
 // Delete a building
@@ -123,12 +130,11 @@ $(document).on('click', '.delete-user', (event) => {
     event.preventDefault()
     deleteUser = $(event.target).parents('div').attr('id')
     const username = $(event.target).parents('tr').find('.username').val()
-    $('.modal .btn-secondary').attr('id', 'delete')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Delete '${username}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to delete username '<b>${username}</b>'?`)
-    $("#myModal").modal('show')
+
+    modal('#myModal', `Delete '${username}'?`,
+        `Are you sure you want to delete username '<b>${username}</b>'?`,    
+        false)
+
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {

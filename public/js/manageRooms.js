@@ -6,6 +6,16 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    $(id).find('.modal .btn-secondary').attr('id', 
+        (update) ? 'update' : 'delete')
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
+
 // Global variables
 let updateRoom = {}
 let deleteRoom = ''
@@ -135,12 +145,9 @@ $(document).on('click', '.update-room', (event) => {
     updateRoom.seats = $(event.target).parents('tr').find('.seats').val()
     updateRoom.projector = $(event.target).parents('tr').find('.projector').val()
 
-    $('.modal .btn-secondary').attr('id', 'update')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Update '${updateRoom.number}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to update username '<b>${updateRoom.number}</b>'?`)
-    $("#myModal").modal('show')
+    modal('#myModal', `Update '${updateRoom.number}'?`, 
+    `Are you sure you want to update the room '<b>${updateRoom.number}</b>'?`,
+        true)
 })
 
 // Delete a user
@@ -148,12 +155,10 @@ $(document).on('click', '.delete-room', (event) => {
     event.preventDefault()
     deleteRoom = $(event.target).parents('tr').attr('id')
     const number = $(event.target).parents('tr').find('.number').val()
-    $('.modal .btn-secondary').attr('id', 'delete')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Delete '${number}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to delete username '<b>${number}</b>'?`)
-    $("#myModal").modal('show')
+
+    modal('#myModal', `Delete '${number}'?`, 
+    `Are you sure you want to delete the room '<b>${number}</b>'?`,
+        false)
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {

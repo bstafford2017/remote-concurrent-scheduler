@@ -6,6 +6,16 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    $(id).find('.modal .btn-secondary').attr('id', 
+        (update) ? 'update' : 'delete')
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
+
 // Global variable
 let updateBuilding = []
 let deleteBuilding = []
@@ -80,16 +90,14 @@ $(document).on('click', '#update-building', event => {
     $('#manage-card').find('input:checkbox:checked').each(function() {
         buildingNames.push($(this).parent().find('.text').val())
     })
-    $('.modal .btn-secondary').attr('id', 'update')
-    $('.modal-title').empty()
     let formattedNames = ''
     buildingNames.forEach((name, index, arr) => {
         formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
-    $('.modal-title').append(`Update ${formattedNames}?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to update <b>${formattedNames}</b>?`)
-    $("#myModal").modal('show')
+
+    modal('#myModal', `Update ${formattedNames}?`,
+        `Are you sure you want to update the building <b>${formattedNames}</b>?`,
+        true)
 })
 
 // Delete a building
@@ -99,16 +107,14 @@ $(document).on('click', '#delete-building', event => {
     $('#manage-card').find('input:checkbox:checked').each(function() {
         buildingNames.push($(this).parent().find('.text').val())
     })
-    $('.modal .btn-secondary').attr('id', 'delete')
-    $('.modal-title').empty()
     let formattedNames = ''
     buildingNames.forEach((name, index, arr) => {
         formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
-    $('.modal-title').append(`Delete ${formattedNames}?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to delete <b>${formattedNames}</b>?`)
-    $("#myModal").modal('show')
+
+    modal('#myModal', `Delete ${formattedNames}?`,
+        `Are you sure you want to delete the building <b>${formattedNames}</b>?`,
+        true)
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {

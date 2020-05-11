@@ -6,6 +6,16 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    $(id).find('.modal .btn-secondary').attr('id', 
+        (update) ? 'update' : 'delete')
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
+
 // Global values
 let user = {}
 
@@ -48,12 +58,10 @@ $.ajax({
 
 $(document).on('click', '#manage-user', event => {
     event.preventDefault()
-    $('.modal .btn-secondary').attr('id', 'delete')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Update '${user.username}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to update username '<b>${user.username}</b>'?`)
-    $("#myModal").modal('show')
+
+    modal('#myModal', `Update '${user.username}'?`,
+        `Are you sure you want to update username '<b>${user.username}</b>'?`,
+        true) 
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {
