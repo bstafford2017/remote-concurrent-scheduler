@@ -10,7 +10,9 @@ const logger = (req, res, next) => {
     if(fs.existsSync(targetPath)){
         fs.appendFile(targetPath, content + '\n', (err) => {if(err) throw err})
     } else {
-        fs.mkdirSync('./logs')
+        if(!fs.existsSync('./logs')) {
+            fs.mkdirSync('./logs')
+        }
         fs.writeFile(targetPath, content, (err) => {if(err) throw err})
     }
     next()
