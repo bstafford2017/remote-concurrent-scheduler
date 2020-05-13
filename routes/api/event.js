@@ -25,7 +25,7 @@ function getWeekString(day) {
         case 6:
             return '______1'
         default:
-            throw new Error()
+            throw new Error('Please enter valid input')
     }
 }
 
