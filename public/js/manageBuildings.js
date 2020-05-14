@@ -26,7 +26,7 @@ function isInvalid(str){
 }
 
 // Global variable
-let createBuilding = ''
+let createBuilding = {}
 let updateBuilding = []
 let deleteBuilding = []
 
@@ -74,11 +74,14 @@ $(document).on('click', '#create-building', event => {
     createBuilding.name = $('#building-name').val()
     
     // Check for special characters
-    if(isInvalid(name)) {
+    if(Object.values(createBuilding).some(field => isInvalid(field))) {
         modal('#myModal', 'Fields contain special characters',
             'These special characters will be remove. Are you sure you want to continue?')
         return
     }
+
+    modal('#myModal', `Create ${createBuilding.name}?`,
+    `Are you sure you want to update the building <b>${createBuilding.name}</b>?`)
 })
 
 // Update a building
@@ -92,6 +95,13 @@ $(document).on('click', '#update-building', event => {
     buildingNames.forEach((name, index, arr) => {
         formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
+
+    // Check for special characters
+    if(buildingNames.some(field => isInvalid(field))) {
+        modal('#myModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
 
     modal('#myModal', `Update ${formattedNames}?`,
         `Are you sure you want to update the building <b>${formattedNames}</b>?`,
@@ -169,7 +179,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
             type: 'post',
             url: '/api/building/create',
             data: {
-                name: createBuilding
+                name: createBuilding.name
             },
             success: function(response){
                 $('#building-list').append(

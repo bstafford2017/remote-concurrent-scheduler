@@ -85,10 +85,14 @@ $(document).on('click', '#create-user', event => {
 
     // Check for special characters
     if(Object.values(createUser).some(field => isInvalid(field))) {
-        modal('#innerModal', 'Fields contain special characters',
+        modal('#myModal', 'Fields contain special characters',
             'These special characters will be remove. Are you sure you want to continue?')
         return
     }
+
+    modal('#myModal', `Create ${createUser.username}?`,
+    `Are you sure you want to create the user <b>${createUser.username}</b>?`)
+
 })
 
 // Update a user
@@ -100,6 +104,13 @@ $(document).on('click', '.update-user', (event) => {
     updateUser.fname = $(event.target).parents('tr').find('.fname').val()
     updateUser.lname = $(event.target).parents('tr').find('.lname').val()
     updateUser.admin = $(event.target).parents('tr').find('.admin').val()
+
+    // Check for special characters
+    if(Object.values(updateUser).some(field => isInvalid(field))) {
+        modal('#myModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
 
     modal('#myModal', `Update '${updateUser.username}'?`,
         `Are you sure you want to update username '<b>${updateUser.username}</b>'?`,    

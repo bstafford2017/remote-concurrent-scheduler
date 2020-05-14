@@ -116,6 +116,9 @@ $(document).on('click', '#create-room', event => {
             'These special characters will be remove. Are you sure you want to continue?')
         return
     }
+
+    modal('#myModal', `Create ${createRoom.number}?`,
+    `Are you sure you want to create the room <b>${createRoom.number}</b>?`)
 })
 
 // Update a user
@@ -125,6 +128,13 @@ $(document).on('click', '.update-room', (event) => {
     updateRoom.number = $(event.target).parents('tr').find('.number').val()
     updateRoom.seats = $(event.target).parents('tr').find('.seats').val()
     updateRoom.projector = $(event.target).parents('tr').find('.projector').val()
+
+    // Check for special characters
+    if(Object.values(updateRoom).some(field => isInvalid(field))) {
+        modal('#myModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
 
     modal('#myModal', `Update '${updateRoom.number}'?`, 
     `Are you sure you want to update the room '<b>${updateRoom.number}</b>'?`,
