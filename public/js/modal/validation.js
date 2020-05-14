@@ -52,7 +52,7 @@ $(document).on('change', '.building', event => {
         success: function(response){
             const element = $(event.target).parents('.parent').find('.room')
             element.empty()
-            element.append('<option selected disabled hidden>All Rooms</option>')
+            element.append('<option selected disabled hidden>Select</option>')
             response.results.forEach(room => {
                 element.append(`<option value="${room.id}">${room.number}</option>`)
             })

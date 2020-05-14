@@ -7,8 +7,13 @@ function alert(selector, text, success){
 }
 
 function modal(id, title, body, update) {
-    $(id).find('.btn-secondary').attr('id', 
-        (update) ? 'update' : 'delete')
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
     $(id).find('.modal-title').empty()
     $(id).find('.modal-title').append(title)
     $(id).find('.modal-text').empty()
@@ -16,7 +21,13 @@ function modal(id, title, body, update) {
     $(id).modal('show')
 }
 
-// Global variables
+function isInvalid(str){
+    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+}
+
+
+// Global variable
+let createRoom = {}
 let updateRoom = {}
 let deleteRoom = ''
 
@@ -94,47 +105,17 @@ $(document).on('change', '#selected-building', event => {
 // Create a room
 $(document).on('click', '#create-room', event => {
     event.preventDefault()
-    const number = $('#number').val()
-    const seats = $('#seats').val()
-    const projector = $('#projector').val()
-    const building = $('#building').val()
+    createRoom.number = $('#number').val()
+    createRoom.seats = $('#seats').val()
+    createRoom.projector = $('#projector').val()
+    createRoom.building = $('#building').val()
 
-    $.ajax({
-        type: 'post',
-        url: '/api/room/create',
-        data: {
-            id: null,
-            number,
-            seats,
-            projector,
-            building
-        },
-        success: function(response) {
-            const building = $('#selected-building option:selected').text()
-            alert('#alert', `Created room '${response.results.number}'`, true)
-            if(building === response.results.name){
-                $('#room-list').append(
-                    `<tr id="${response.results.id}"></td>
-                        <td><input type="text" class="number form-control" value="${response.results.number}"></td>
-                        <td><input type="text" class="seats form-control" value="${response.results.seats}"></td>
-                        <td><select class="projector form-control">
-                            <option value="0" ${(response.results.projector === 0) ? 'selected' : ''}>False</option>
-                            <option value="1" ${(response.results.projector === 1) ? 'selected' : ''}>True</option>
-                        </select></td>
-                        <td><button class="update-room btn btn-secondary">Update</button></td>
-                        <td><button class="delete-room btn btn-secondary">Delete</button></td>
-                    </tr>`)
-            }
-            $("#building option:eq(0)").prop("selected", true)
-            $('#number').val('')
-            $('#seats').val('')
-            $('#projector').val('')
-            $("#projector option:eq(0)").prop("selected", true)
-        },
-        error: function(response) {
-            alert('#alert', response.responseJSON.msg, false)
-        }
-    })
+    // Check for special characters
+    if(Object.values(createRoom).some(field => isInvalid(field))) {
+        modal('#innerModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
 })
 
 // Update a user
@@ -180,7 +161,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else {
+    } else if(operation === 'delete') {
         const id = updateRoom.id
         const number = updateRoom.number
         const seats = updateRoom.seats
@@ -204,5 +185,43 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '/api/room/create',
+            data: {
+                id: null,
+                number: createRoom.number,
+                seats: createRoom.seats,
+                projector: createRoom.projector,
+                building: createRoom.building
+            },
+            success: function(response) {
+                const building = $('#selected-building option:selected').text()
+                alert('#alert', `Created room '${response.results.number}'`, true)
+                if(building === response.results.name){
+                    $('#room-list').append(
+                        `<tr id="${response.results.id}"></td>
+                            <td><input type="text" class="number form-control" value="${response.results.number}"></td>
+                            <td><input type="text" class="seats form-control" value="${response.results.seats}"></td>
+                            <td><select class="projector form-control">
+                                <option value="0" ${(response.results.projector === 0) ? 'selected' : ''}>False</option>
+                                <option value="1" ${(response.results.projector === 1) ? 'selected' : ''}>True</option>
+                            </select></td>
+                            <td><button class="update-room btn btn-secondary">Update</button></td>
+                            <td><button class="delete-room btn btn-secondary">Delete</button></td>
+                        </tr>`)
+                }
+                $("#building option:eq(0)").prop("selected", true)
+                $('#number').val('')
+                $('#seats').val('')
+                $('#projector').val('')
+                $("#projector option:eq(0)").prop("selected", true)
+            },
+            error: function(response) {
+                alert('#alert', response.responseJSON.msg, false)
+            }
+        })
+
     }
 })

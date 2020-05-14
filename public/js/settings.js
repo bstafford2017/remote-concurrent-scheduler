@@ -7,13 +7,22 @@ function alert(selector, text, success){
 }
 
 function modal(id, title, body, update) {
-    $(id).find('.btn-secondary').attr('id', 
-        (update) ? 'update' : 'delete')
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
     $(id).find('.modal-title').empty()
     $(id).find('.modal-title').append(title)
     $(id).find('.modal-text').empty()
     $(id).find('.modal-text').append(body)
     $(id).modal('show')
+}
+
+function isInvalid(str){
+    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
 }
 
 // Global values
@@ -59,12 +68,31 @@ $.ajax({
 $(document).on('click', '#manage-user', event => {
     event.preventDefault()
 
+    user.username = $('#username').val()
+    user.password = $('#password').val()
+    user.fname = $('#fname').val()
+    user.lname = $('#lname').val()
+    user.admin = $('#admin').val()
+    
+    if(user.password !== $('#confirm-password').val()) {
+        alert('#alert', 'Passwords do not match', false)
+        return
+    }
+
+    // Check for special characters
+    if(Object.values(user).some(field => isInvalid(field))) {
+        modal('#innerModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
+
     modal('#myModal', `Update '${user.username}'?`,
         `Are you sure you want to update username '<b>${user.username}</b>'?`,
         true) 
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {
+    $("#myModal").modal('hide')
     const id = user.id
     const username = $('#username').val()
     const password = $('#password').val()

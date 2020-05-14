@@ -7,8 +7,13 @@ function alert(selector, text, success){
 }
 
 function modal(id, title, body, update) {
-    $(id).find('.btn-secondary').attr('id', 
-        (update) ? 'update' : 'delete')
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
     $(id).find('.modal-title').empty()
     $(id).find('.modal-title').append(title)
     $(id).find('.modal-text').empty()
@@ -16,7 +21,12 @@ function modal(id, title, body, update) {
     $(id).modal('show')
 }
 
+function isInvalid(str){
+    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+}
+
 // Global variable
+let createUser = {}
 let updateUser = {}
 let deleteUser = ''
 
@@ -67,47 +77,18 @@ $.ajax({
 // Create a user
 $(document).on('click', '#create-user', event => {
     event.preventDefault()
-    const username = $('#user-username').val()
-    const password = $('#user-password').val()
-    const fname = $('#user-fname').val()
-    const lname = $('#user-lname').val()
-    const admin = $('#user-admin').val()
+    createUser.username = $('#user-username').val()
+    createUser.password = $('#user-password').val()
+    createUser.fname = $('#user-fname').val()
+    createUser.lname = $('#user-lname').val()
+    createUser.admin = $('#user-admin').val()
 
-    $.ajax({
-        type: 'post',
-        url: '/api/user/create',
-        data: {
-            username,
-            password,
-            fname,
-            lname,
-            admin
-        },
-        success: function(response){
-            alert('#alert', `Created user '${response.results.username}'`, true)
-            $('#user-list').append(
-                `<tr class="user" id="${response.results.id}"></td>
-                    <td><input type="text" class="username form-control" value="${response.results.username}"></td>
-                    <td><input type="password" class="password form-control" value="${response.results.password}"></td>
-                    <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
-                    <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
-                    <td><select class="admin user-cell form-control" id="manage-admin">
-                        <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
-                        <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
-                    </select></td>
-                    <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
-                    <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
-                </tr>`)
-            $('#user-username').val('')
-            $('#user-password').val('')
-            $('#user-fname').val('')
-            $('#user-lname').val('')
-            $('#user-admin').val('')
-        },
-        error: function(response){
-            alert('#alert', response.responseJSON.msg, false)
-        }
-    })
+    // Check for special characters
+    if(Object.values(createUser).some(field => isInvalid(field))) {
+        modal('#innerModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
 })
 
 // Update a user
@@ -157,7 +138,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else {
+    } else if(operation === 'delete') {
         const id = updateUser.id
         const username = updateUser.username
         const password = updateUser.password
@@ -182,5 +163,42 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '/api/user/create',
+            data: {
+                username: createUser.username,
+                password: createUser.password,
+                fname: createUser.fname,
+                lname: createUser.lname,
+                admin: createUser.admin
+            },
+            success: function(response){
+                alert('#alert', `Created user '${response.results.username}'`, true)
+                $('#user-list').append(
+                    `<tr class="user" id="${response.results.id}"></td>
+                        <td><input type="text" class="username form-control" value="${response.results.username}"></td>
+                        <td><input type="password" class="password form-control" value="${response.results.password}"></td>
+                        <td><input type="text" class="fname form-control" value="${response.results.fname}"></td>
+                        <td><input type="text" class="lname form-control" value="${response.results.lname}"></td>
+                        <td><select class="admin user-cell form-control" id="manage-admin">
+                            <option value="0" ${(response.results.admin === 0) ? 'selected' : ''}>False</option>
+                            <option value="1" ${(response.results.admin === 1) ? 'selected' : ''}>True</option>
+                        </select></td>
+                        <td><button type="button" class="update-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Update</button></td>
+                        <td><button type="button" class="delete-user btn btn-secondary" data-toggle="modal" data-target="#myModal">Delete</button></td>
+                    </tr>`)
+                $('#user-username').val('')
+                $('#user-password').val('')
+                $('#user-fname').val('')
+                $('#user-lname').val('')
+                $('#user-admin').val('')
+            },
+            error: function(response){
+                alert('#alert', response.responseJSON.msg, false)
+            }
+        })
+
     }
 })

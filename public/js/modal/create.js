@@ -6,6 +6,25 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
+
+function isInvalid(str){
+    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+}
+
 $('#create-event').click(event => {
     event.preventDefault()
     const title = $('#title').val()
@@ -21,6 +40,14 @@ $('#create-event').click(event => {
     if(String(title).length > 15) {
         $('#myModal').modal('hide')
         alert('#alert', 'Please enter an event title less than 15 characters', false)
+        return
+    }
+
+    // Check for special characters
+    if(isInvalid(title) || isInvalid(building) || isInvalid(room) ||
+        isInvalid(date) || isInvalid(start) || isInvalid(end)) {
+        modal('#innerModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
         return
     }
 
@@ -79,5 +106,4 @@ $('#create-event').click(event => {
             alert('#alert', response.responseJSON.msg, false)
         }
     })
-    
 })

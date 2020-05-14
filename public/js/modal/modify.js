@@ -7,8 +7,13 @@ function alert(selector, text, success){
 }
 
 function modal(id, title, body, update) {
-    $(id).find('.btn-secondary').attr('id', 
-        (update) ? 'update' : 'delete')
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
     $(id).find('.modal-title').empty()
     $(id).find('.modal-title').append(title)
     $(id).find('.modal-text').empty()
@@ -16,7 +21,12 @@ function modal(id, title, body, update) {
     $(id).modal('show')
 }
 
+function isInvalid(str){
+    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+}
+
 // Global variable
+let createEvent = {}
 let updateEvent = {}
 let deleteEvent = ''
 
@@ -36,6 +46,13 @@ $(document).on('click', '.update', event => {
     if(String(updateEvent.title).length > 15) {
         $('#myModal').modal('hide')
         alert('#alert', 'Please enter an event title less than 15 characters', false)
+        return
+    }
+
+    // Check for special characters
+    if(Object.values(updateEvent).some(field => isInvalid(field))) {
+        modal('#innerModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
         return
     }
 
@@ -97,7 +114,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else {
+    } else if(operation === 'delete') {
         $.ajax({
             type: "post",
             url: "api/event/update",
@@ -122,5 +139,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
+    } else {
+
     }
 })

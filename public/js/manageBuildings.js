@@ -7,8 +7,13 @@ function alert(selector, text, success){
 }
 
 function modal(id, title, body, update) {
-    $(id).find('.btn-secondary').attr('id', 
-        (update) ? 'update' : 'delete')
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
     $(id).find('.modal-title').empty()
     $(id).find('.modal-title').append(title)
     $(id).find('.modal-text').empty()
@@ -16,7 +21,12 @@ function modal(id, title, body, update) {
     $(id).modal('show')
 }
 
+function isInvalid(str){
+    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+}
+
 // Global variable
+let createBuilding = ''
 let updateBuilding = []
 let deleteBuilding = []
 
@@ -61,26 +71,14 @@ $.ajax({
 // Create a building
 $(document).on('click', '#create-building', event => {
     event.preventDefault()
-    const name = $('#building-name').val()
-    $.ajax({
-        type: 'post',
-        url: '/api/building/create',
-        data: {
-            name
-        },
-        success: function(response){
-            $('#building-list').append(
-                `<div class="building" id="${response.results.id}">
-                    <input type="checkbox" class="checkbox col-1">
-                    <input type="text" class="text form-control col-10 d-inline" value="${response.results.name}">
-                </div>`)
-            alert('#alert', `Created building '${response.results.name}'`, true)
-            $('#building-name').val('')
-        },
-        error: function(response){
-            alert('#alert', response.responseJSON.msg, false)
-        }
-    })
+    createBuilding.name = $('#building-name').val()
+    
+    // Check for special characters
+    if(isInvalid(name)) {
+        modal('#myModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
 })
 
 // Update a building
@@ -141,7 +139,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else {
+    } else if(operation === 'delete') {
         const names = []
         $('#manage-card').find('input:checkbox:checked').each(function() {
             const updatedName = {
@@ -163,6 +161,26 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 })
             },
             error: function(response) {
+                alert('#alert', response.responseJSON.msg, false)
+            }
+        })
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '/api/building/create',
+            data: {
+                name: createBuilding
+            },
+            success: function(response){
+                $('#building-list').append(
+                    `<div class="building" id="${response.results.id}">
+                        <input type="checkbox" class="checkbox col-1">
+                        <input type="text" class="text form-control col-10 d-inline" value="${response.results.name}">
+                    </div>`)
+                alert('#alert', `Created building '${response.results.name}'`, true)
+                $('#building-name').val('')
+            },
+            error: function(response){
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
