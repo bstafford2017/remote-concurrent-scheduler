@@ -7,7 +7,7 @@ function alert(selector, text, success){
 }
 
 function modal(id, title, body, update) {
-    $(id).find('.modal .btn-secondary').attr('id', 
+    $(id).find('.btn-secondary').attr('id', 
         (update) ? 'update' : 'delete')
     $(id).find('.modal-title').empty()
     $(id).find('.modal-title').append(title)

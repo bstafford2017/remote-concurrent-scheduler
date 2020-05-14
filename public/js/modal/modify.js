@@ -57,7 +57,7 @@ $(document).on('click', '.update', event => {
         if(!atLeastOne) {
             alert('Select at least one weekday')
         }
-        if(!endRecur) {
+        if(!updateEvent.endRecur) {
             alert('Select a date to end recurring event')
         }
     }
