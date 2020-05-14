@@ -43,7 +43,7 @@ router.post('/create', async (req, res) => {
 
         const room = {
             id: null,
-            number: parseInt(filter(req.body.number)),
+            number: filter(req.body.number),
             seats: parseInt(filter(req.body.seats)),
             projector: parseInt(filter(req.body.projector)),
             building: parseInt(filter(req.body.building))
@@ -77,7 +77,7 @@ router.post('/update', async (req, res) => {
 
         const room = [{
             id: parseInt(filter(req.body.id)),
-            number: parseInt(filter(req.body.number)),
+            number: filter(req.body.number),
             seats: parseInt(filter(req.body.seats)),
             projector: parseInt(filter(req.body.projector)),
             building: parseInt(filter(req.body.building))

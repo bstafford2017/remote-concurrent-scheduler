@@ -74,7 +74,8 @@ router.get('/:search', async (req, res) => {
             'users.username': filter(req.params.search),
             date: filter(req.params.search)
         }
-        const results = await select('events', where, 'OR', cols, join)
+        const results = await select('events', where, 'OR', cols, join,
+            null, null, null, true)
         results.sort((a, b) => {
             return a.date - b.date;
         })
