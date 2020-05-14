@@ -203,29 +203,23 @@ router.post('/:year/:month/:day', async (req, res) => {
         ]
         const date = new Date(`${req.params.year}-${req.params.month}-${req.params.day}T00:00:01`)
         const matchWeek = getWeekString(date.getDay())
-        let where = {}
-        if(req.body.room && req.body.building){
-            where = {
-                'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
-                'recurs.weekdays': matchWeek,
-                'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
-                'date': `${req.params.year}-${req.params.month}-${req.params.day}`,
-                'buildings.name': filter(req.body.building),
-                'rooms.number': filter(req.body.room)
-            }
-        } else {
-            where = {
-                'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
-                'recurs.weekdays': matchWeek,
-                'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
-                'date': `${req.params.year}-${req.params.month}-${req.params.day}`
-            }
+        let where = {
+            'events.date': `${req.params.year}-${req.params.month}-${req.params.day}`,
+            'recurs.weekdays': matchWeek,
+            'recurs.end': `${req.params.year}-${req.params.month}-${req.params.day}`,
+            'date': `${req.params.year}-${req.params.month}-${req.params.day}`
         }
         const whereCompare = {
             'recurs.end': '>=',
             'date': '<='
         }
-        const results = await select('events', where, 'OR', cols, join, whereCompare, 'AND', true)
+        let results = await select('events', where, 'OR', cols, join, whereCompare, 'AND', true)
+
+        // Filter out results because of complex query
+        if(req.body.room && req.body.building) {
+            results = results.filter(row => row.name === req.body.building && 
+                row.number === req.body.room)
+        }
         res.json({ results })
     } catch (err) {
         log('error-log', err.toString() + '\n')
