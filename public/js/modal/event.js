@@ -22,12 +22,63 @@ function modal(id, title, body, update) {
 }
 
 function isInvalid(str){
-    return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+    return /[`~!@#$%^&*()|+=?;'",.<>\{\}\[\]\\]/g.test(str);
 }
 
 // Global variable
+let createEvent = {}
 let updateEvent = {}
 let deleteEvent = ''
+
+$('#create-event').click(event => {
+    event.preventDefault()
+    createEvent.title = $('#title').val()
+    createEvent.building = $('#building').val()
+    createEvent.room = $('#room').val()
+    createEvent.date = $('#date').val()
+    createEvent.start = $('#start-time option:selected').val()
+    createEvent.end = $('#end-time option:selected').val()
+    createEvent.endRecur = $('#recur-end').val()
+    let weekString = ''
+
+    // Check if title is > 15 characters
+    if(String(createEvent.title).length > 15) {
+        $('#myModal').modal('hide')
+        alert('#alert', 'Please enter an event title less than 15 characters', false)
+        return
+    }
+
+    // Check for special characters
+    if(Object.values(createEvent).some(field => isInvalid(field))) {
+        modal('#innerModal', 'Fields contain special characters',
+            'These special characters will be remove. Are you sure you want to continue?')
+        return
+    }
+
+    if($('#recur').is(':checked')) {
+        $('.form-row').find('.form-check-input').each(function() {
+            if($(this).attr('id') !== 'recur') {
+                if($(this).is(':checked')) {
+                    weekString += '1'
+                } else {
+                    weekString += '0'
+                }
+            }
+        })
+        if(weekString === '0000000') {
+            $('#myModal').modal('hide')
+            alert('#alert', 'Select at least one weekday', false)
+        }
+        if(!endRecur) {
+            $('#myModal').modal('hide')
+            alert('#alert', 'Select a date to end recurring event', false)
+        }
+    }
+    createEvent.weekString = weekString
+
+    modal('#innerModal', `Create '${createEvent.title}'?`,
+        `Are you sure you want to create the event '${createEvent.title}'`)
+})
 
 $(document).on('click', '.update', event => {
     event.preventDefault()
@@ -113,7 +164,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else if(operation === 'delete') {
+    } else if(operation === 'update') {
         $.ajax({
             type: "post",
             url: "api/event/update",
@@ -139,6 +190,26 @@ $(document).on('click', '.modal .btn-secondary', event => {
             }
         })
     } else {
-
+        $.ajax({
+            type: "post",
+            url: "api/event/create",
+            data: {
+                title : createEvent.title,
+                building: createEvent.building,
+                room: createEvent.room,
+                date: createEvent.date,
+                start: createEvent.start,
+                end: createEvent.end,
+                weekString: createEvent.weekString,
+                endRecur: createEvent.endRecur
+            },
+            success: function(response) {
+                location.reload()
+            },
+            error: function(response) {
+                $('#myModal').modal('hide')
+                alert('#alert', response.responseJSON.msg, false)
+            }
+        })
     }
 })
