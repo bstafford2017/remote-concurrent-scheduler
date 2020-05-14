@@ -17,4 +17,4 @@ echo 'Setting up server...'
 npm run dev --silent
 
 echo 'Openning web app'
-x-www-browser http://localhost:5000/live.html
+chromium-browser --start-fullscreen http://localhost:5000/live.html&building=Upson%20II&room=125
