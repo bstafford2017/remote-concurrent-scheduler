@@ -87,17 +87,21 @@ $(document).on('click', '#create-building', event => {
 // Update a building
 $(document).on('click', '#update-building', event => {
     event.preventDefault()
-    let buildingNames = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        buildingNames.push($(this).parent().find('.text').val())
+        const updatedName = {
+            id: $(this).parent().attr('id'),
+            name: $(this).parent().children('.text').val()
+        }
+        updateBuilding.push(updatedName)
     })
+
     let formattedNames = ''
-    buildingNames.forEach((name, index, arr) => {
-        formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
+    updateBuilding.forEach((building, index, arr) => {
+        formattedNames += (index === arr.length - 1) ? `'${building.name}'` : `'${building.name}', `
     })
 
     // Check for special characters
-    if(buildingNames.some(field => isInvalid(field))) {
+    if(updateBuilding.some(field => isInvalid(field.name))) {
         modal('#myModal', 'Fields contain special characters',
             'These special characters will be remove. Are you sure you want to continue?')
         return
@@ -111,12 +115,12 @@ $(document).on('click', '#update-building', event => {
 // Delete a building
 $(document).on('click', '#delete-building', event => {
     event.preventDefault()
-    let buildingNames = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        buildingNames.push($(this).parent().find('.text').val())
+        deleteBuilding.push($(this).parent().find('.text').val())
     })
+
     let formattedNames = ''
-    buildingNames.forEach((name, index, arr) => {
+    deleteBuilding.forEach((name, index, arr) => {
         formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
 
@@ -129,15 +133,11 @@ $(document).on('click', '.modal .btn-secondary', event => {
     $("#myModal").modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){
-        const ids = []
-        $('#manage-card').find('input:checkbox:checked').each(function() {
-            ids.push($(this).parent().attr('id'))
-        })
         $.ajax({
             type: 'post',
             url: '/api/building/delete',
             data: {
-                ids
+                ids: deleteBuilding
             },
             success: function(response){
                 alert('#alert', 'Deleted building(s)', true)
@@ -149,20 +149,12 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else if(operation === 'delete') {
-        const names = []
-        $('#manage-card').find('input:checkbox:checked').each(function() {
-            const updatedName = {
-                id: $(this).parent().attr('id'),
-                name: $(this).parent().children('.text').val()
-            }
-            names.push(updatedName)
-        })
+    } else if(operation === 'update') {
         $.ajax({
             type: 'post',
             url: '/api/building/update',
             data: {
-                names
+                names: updateBuilding
             },
             success: function(response) {
                 $('#manage-card').find('input:checkbox:checked').each(function() {
