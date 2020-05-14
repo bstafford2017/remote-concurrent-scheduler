@@ -168,7 +168,7 @@ $(document).on('click', '.modal .btn-secondary', event => {
                 alert('#alert', response.responseJSON.msg, false)
             }
         })
-    } else if(operation === 'delete') {
+    } else if(operation === 'update') {
         $.ajax({
             type: 'post',
             url: '/api/room/update',
