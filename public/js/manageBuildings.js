@@ -115,12 +115,14 @@ $(document).on('click', '#update-building', event => {
 // Delete a building
 $(document).on('click', '#delete-building', event => {
     event.preventDefault()
+    let checkedNames = []
     $('#manage-card').find('input:checkbox:checked').each(function() {
-        deleteBuilding.push($(this).parent().find('.text').val())
+        checkedNames.push($(this).parent().find('.text').val())
+        deleteBuilding.push($(this).parent().attr('id'))
     })
 
     let formattedNames = ''
-    deleteBuilding.forEach((name, index, arr) => {
+    checkedNames.forEach((name, index, arr) => {
         formattedNames += (index === arr.length - 1) ? `'${name}'` : `'${name}', `
     })
 
