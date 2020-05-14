@@ -30,10 +30,14 @@ $(document).on('change', '#filter-building', event => {
         success: function(response){
             const element = $('#filter-room')
             element.empty()
-            element.append('<option selected disabled hidden>All Rooms</option>')
-            response.results.forEach(room => {
-                element.append(`<option value="${room.id}">${room.number}</option>`)
-            })
+            if(response.results.length === 0) {
+                element.append('<option selected disabled hidden>No Rooms</option>')
+            } else {
+                element.append('<option selected disabled hidden>Select</option>')
+                response.results.forEach(room => {
+                    element.append(`<option value="${room.id}">${room.number}</option>`)
+                })
+            }
         },
         error: function(response){
             alert('#alert', response.responseJSON.msg, false)
