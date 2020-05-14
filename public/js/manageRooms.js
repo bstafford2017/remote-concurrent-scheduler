@@ -25,7 +25,6 @@ function isInvalid(str){
     return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
 }
 
-
 // Global variable
 let createRoom = {}
 let updateRoom = {}
@@ -70,7 +69,6 @@ $.ajax({
 // Get rooms for building change
 $(document).on('change', '#selected-building', event => {
     const building = $('#selected-building').val()
-
     $.ajax({
         type: 'get',
         url: '/api/room/' + building,
@@ -156,12 +154,11 @@ $(document).on('click', '.modal .btn-secondary', event => {
     $("#myModal").modal('hide')
     const operation = $(event.target).attr('id')
     if(operation === 'delete'){
-        const id = deleteRoom
         $.ajax({
             type: 'post',
             url: '/api/room/delete',
             data: {
-                id
+                id: deleteRoom
             },
             success: function(response) {
                 alert('#alert', `Deleted room`, true)
@@ -172,20 +169,15 @@ $(document).on('click', '.modal .btn-secondary', event => {
             }
         })
     } else if(operation === 'delete') {
-        const id = updateRoom.id
-        const number = updateRoom.number
-        const seats = updateRoom.seats
-        const projector = updateRoom.projector
-        const building = $('#selected-building').val()
         $.ajax({
             type: 'post',
             url: '/api/room/update',
             data: {
-                id,
-                number,
-                seats,
-                projector,
-                building
+                id: updateRoom.id,
+                number: updateRoom.number,
+                seats: updateRoom.seats,
+                projector: updateRoom.projector,
+                building: $('selected-building').val()
             },
             success: function(response) {
                 alert('#alert', `Updated room '${response.results[0].number}'`, true)

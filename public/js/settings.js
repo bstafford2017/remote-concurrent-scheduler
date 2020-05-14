@@ -67,7 +67,6 @@ $.ajax({
 
 $(document).on('click', '#manage-user', event => {
     event.preventDefault()
-
     user.username = $('#username').val()
     user.password = $('#password').val()
     user.fname = $('#fname').val()
@@ -93,22 +92,16 @@ $(document).on('click', '#manage-user', event => {
 
 $(document).on('click', '.modal .btn-secondary', event => {
     $("#myModal").modal('hide')
-    const id = user.id
-    const username = $('#username').val()
-    const password = $('#password').val()
-    const fname = $('#fname').val()
-    const lname = $('#lname').val()
-    const admin = user.admin
     $.ajax({
         type: 'post',
         url: 'api/user/update',
         data: {
-            id,
-            username,
-            password,
-            fname,
-            lname,
-            admin
+            id: user.id,
+            username: user.username,
+            password: user.password,
+            fname: user.fname,
+            lname: user.lname,
+            admin: user.admin
         },
         success: function(response) {
             $("#myModal").modal('hide')

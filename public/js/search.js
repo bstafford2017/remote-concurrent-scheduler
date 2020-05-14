@@ -6,6 +6,20 @@ function alert(selector, text, success){
     $(selector).show()
 }
 
+function modal(id, title, body, update) {
+    if(typeof update === 'undefined') {
+        $(id).find('.btn-secondary').attr('id', 'create')
+    } else if(update) {
+        $(id).find('.btn-secondary').attr('id', 'update')
+    } else {
+        $(id).find('.btn-secondary').attr('id', 'delete')
+    }
+    $(id).find('.modal-title').empty()
+    $(id).find('.modal-title').append(title)
+    $(id).find('.modal-text').empty()
+    $(id).find('.modal-text').append(body)
+    $(id).modal('show')
+}
 
 function formatDate(date) {
     const unformatted = date.split('T')[0].split('-')
@@ -20,9 +34,26 @@ function timeConversion(time) {
     return hours + ':' + minutes + AmOrPm
 }
 
-// Global variables
-let updateRoom = {}
-let deleteRoom = ''
+function getWeekDay(index) {
+    switch(index) {
+        case 0:
+            return 'Sun '
+        case 1:
+            return 'Mon '
+        case 2:
+            return 'Tues '
+        case 3:
+            return 'Wed '
+        case 4:
+            return 'Thur '
+        case 5:
+            return 'Fri '
+        case 6:
+            return 'Sat '
+        default:
+            return ''
+    }
+}
 
 // Admin navbar
 $.ajax({
@@ -42,8 +73,6 @@ $.ajax({
     }
 })
 
-
-// Get rooms for building change
 $(document).on('click', '#search-button', event => {
     event.preventDefault()
     $('#spinner').show()
@@ -60,29 +89,7 @@ $(document).on('click', '#search-button', event => {
                 if(event.weekdays) {
                     for(let i = 0; i < 7; i++) {
                         if(event.weekdays.charAt(i) === '1'){
-                            switch(i){
-                                case 0:
-                                    weekdaysString += 'Sun '
-                                    break
-                                case 1:
-                                    weekdaysString += 'Mon '
-                                    break
-                                case 2:
-                                    weekdaysString += 'Tues '
-                                    break
-                                case 3:
-                                    weekdaysString += ' Wed'
-                                    break
-                                case 4:
-                                    weekdaysString += ' Thur'
-                                    break
-                                case 5:
-                                    weekdaysString += ' Fri'
-                                    break
-                                case 6:
-                                    weekdaysString += ' Sat'
-                                    break
-                            }
+                            weekdaysString += getWeekDay(i)
                         }
                     }
                 } else {
@@ -114,79 +121,4 @@ $(document).on('click', '#search-button', event => {
             alert('#alert', response.responseJSON.msg, false)
         }
     })
-})
-
-// Update a user
-// NOTE: Need event delegation since button is placed onload
-$(document).on('click', '.update-room', (event) => {
-    event.preventDefault()
-    updateRoom.id = $(event.target).parents('tr').attr('id')
-    updateRoom.number = $(event.target).parents('tr').find('.number').val()
-    updateRoom.seats = $(event.target).parents('tr').find('.seats').val()
-    updateRoom.projector = $(event.target).parents('tr').find('.projector').val()
-
-    $('.modal .btn-secondary').attr('id', 'update')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Update '${updateRoom.number}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to update username '<b>${updateRoom.number}</b>'?`)
-    $("#myModal").modal('show')
-})
-
-// Delete a user
-// NOTE: Need event delegation since button is placed onload
-$(document).on('click', '.delete-room', (event) => {
-    event.preventDefault()
-    deleteRoom = $(event.target).parents('tr').attr('id')
-    const number = $(event.target).parents('tr').find('.number').val()
-    $('.modal .btn-secondary').attr('id', 'delete')
-    $('.modal-title').empty()
-    $('.modal-title').append(`Delete '${number}'?`)
-    $('.modal-text').empty()
-    $('.modal-text').append(`Are you sure you want to delete username '<b>${number}</b>'?`)
-    $("#myModal").modal('show')
-})
-
-$(document).on('click', '.modal .btn-secondary', event => {
-    $("#myModal").modal('hide')
-    const operation = $(event.target).attr('id')
-    if(operation === 'delete'){
-        const id = deleteRoom
-        $.ajax({
-            type: 'post',
-            url: '/api/room/delete',
-            data: {
-                id
-            },
-            success: function(response) {
-                $('#selected-building').trigger('change')
-            },
-            error: function(response) {
-                alert('#alert', response.responseJSON.msg, false)
-            }
-        })
-    } else {
-        const id = updateRoom.id
-        const number = updateRoom.number
-        const seats = updateRoom.seats
-        const projector = updateRoom.projector
-        const building = $('#selected-building').val()
-        $.ajax({
-            type: 'post',
-            url: '/api/room/update',
-            data: {
-                id,
-                number,
-                seats,
-                projector,
-                building
-            },
-            success: function(response) {
-                $('#selected-building').trigger('change')
-            },
-            error: function(response) {
-                alert('#alert', response.responseJSON.msg, false)
-            }
-        })
-    }
 })

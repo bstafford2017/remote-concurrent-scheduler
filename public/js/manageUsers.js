@@ -150,22 +150,16 @@ $(document).on('click', '.modal .btn-secondary', event => {
             }
         })
     } else if(operation === 'delete') {
-        const id = updateUser.id
-        const username = updateUser.username
-        const password = updateUser.password
-        const fname = updateUser.fname
-        const lname = updateUser.lname
-        const admin = updateUser.admin
         $.ajax({
             type: 'post',
             url: '/api/user/update',
             data: {
-                id,
-                username,
-                password,
-                fname,
-                lname,
-                admin
+                id: updateUser.id,
+                username: updateUser.username,
+                password: updateUser.password,
+                fname: updateUser.fname,
+                lname: updateUser.lname,
+                admin: updateUser.admin
             },
             success: function(response) {
                 alert('#alert', 'Updated user', true) 
