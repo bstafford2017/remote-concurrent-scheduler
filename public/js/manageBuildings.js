@@ -114,7 +114,7 @@ $(document).on('click', '#delete-building', event => {
 
     modal('#myModal', `Delete ${formattedNames}?`,
         `Are you sure you want to delete the building <b>${formattedNames}</b>?`,
-        true)
+        false)
 })
 
 $(document).on('click', '.modal .btn-secondary', event => {
