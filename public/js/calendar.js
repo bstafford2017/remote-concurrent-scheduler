@@ -206,10 +206,11 @@ function printWeek(date){
                     $('.scale div').outerHeight() + "px; height: " + diff * 
                     $('.scale div').outerHeight() + "px; width: " + $('.valid').width() + 
                     "px;position: absolute;\">" + event.title + "</div>")
-            })    
+            })
+            $('#spinner').hide()
         },
         error: function(response){
-            $('#myModal').modal('hide')
+            $('#spinner').hide()
             alert('#alert', response.responseJSON.msg, false)
         }
     })

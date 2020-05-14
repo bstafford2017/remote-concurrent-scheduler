@@ -26,7 +26,6 @@ function isInvalid(str){
 }
 
 // Global variable
-let createEvent = {}
 let updateEvent = {}
 let deleteEvent = ''
 
