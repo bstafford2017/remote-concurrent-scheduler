@@ -16,6 +16,14 @@ $('#create-event').click(event => {
     const end = $('#end-time option:selected').val()
     const endRecur = $('#recur-end').val()
     let weekString = ''
+
+    // Check if title is > 15 characters
+    if(String(title).length > 15) {
+        $('#myModal').modal('hide')
+        alert('#alert', 'Please enter an event title less than 15 characters', false)
+        return
+    }
+
     if($('#recur').is(':checked')) {
         let atLeastOne = false
         $('.form-row').find('.form-check-input').each(function() {

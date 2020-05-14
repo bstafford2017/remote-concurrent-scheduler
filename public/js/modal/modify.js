@@ -31,6 +31,14 @@ $(document).on('click', '.update', event => {
     updateEvent.start = parent.find('.start-time option:selected').val()
     updateEvent.end = parent.find('.end-time option:selected').val()
     updateEvent.endRecur = parent.find('.recur-end').val()
+
+    // Check if title is > 15 characters
+    if(String(updateEvent.title).length > 15) {
+        $('#myModal').modal('hide')
+        alert('#alert', 'Please enter an event title less than 15 characters', false)
+        return
+    }
+
     let weekString = ''
     let atLeastOne = false
     let recurId = ''
