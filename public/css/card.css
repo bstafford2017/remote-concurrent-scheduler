@@ -19,16 +19,32 @@
     background-color: #eee;
 }
 
-.btn {
+.btn-primary, .btn-primary:focus, .btn-primary:active  {
+    color: white;
+    background-color: #009a44;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: white;
+    background-color: #009a43b7;
+    border: none;
+}
+
+.btn-secondary, .btn-secondary:focus, .btn-primary:active {
+    color: white;
     background-color: #f36f21;
     border: none;
 }
 
-.btn:hover {
-    background-color: #f36f21;
-    opacity: 0.7;
+.btn-secondary:hover {
+    color: white;
+    background-color: #f36e21b7;
+    border: none;
 }
 
-.btn:focus {
-    background-color: #f36f21;
+.btn-cancel, .btn-cancel:hover {
+    color: white;
+    background-color: #aaa;
+    border: none;
 }
