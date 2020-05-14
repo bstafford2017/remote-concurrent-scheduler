@@ -5,6 +5,7 @@
  In order to run this web app, you must have the following:
  - Node JS
  - MySQL Server
+  
   The configuration file for the MySQL database can be found in *utils/database.js*. The database schema for this project is located in the *schema.txt* file.
   In order to login, it requires you to create a user in the database using the MySQL client or MySQL Workbench on the first startup of the system.
 
