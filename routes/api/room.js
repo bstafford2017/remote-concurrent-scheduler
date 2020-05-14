@@ -71,7 +71,7 @@ router.post('/update', async (req, res) => {
     try {
         // Input validation
         if(!req.body.number || !req.body.seats || !req.body.seats
-            || !req.body.projector || !req.body.building) {
+            || !req.body.projector) {
             throw new Error('Please fill out the entire update form')
         }
 
@@ -79,8 +79,7 @@ router.post('/update', async (req, res) => {
             id: parseInt(filter(req.body.id)),
             number: filter(req.body.number),
             seats: parseInt(filter(req.body.seats)),
-            projector: parseInt(filter(req.body.projector)),
-            building: parseInt(filter(req.body.building))
+            projector: parseInt(filter(req.body.projector))
         }]
         const results = await update(room, 'rooms')
         res.json({ results })
