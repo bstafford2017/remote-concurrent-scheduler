@@ -81,7 +81,7 @@ $(document).on('click', '#manage-user', event => {
 
     // Check for special characters
     if(Object.values(user).some(field => isInvalid(field))) {
-        modal('#innerModal', 'Fields contain special characters',
+        modal('#myModal', 'Fields contain special characters',
             'These special characters will be remove. Are you sure you want to continue?')
         return
     }
