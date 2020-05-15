@@ -137,7 +137,7 @@ router.post('/update', async (req, res) => {
     try {
         // Input validation
         if(!req.body.id || !req.body.username || !req.body.password
-            || !req.body.fname || !req.body.lname || !req.body.admin) {
+            || !req.body.fname || !req.body.lname) {
             throw new Error('Please fill out the entire update user form')
         }
 
@@ -146,8 +146,7 @@ router.post('/update', async (req, res) => {
             username: filter(req.body.username),
             password: filter(req.body.password),
             fname: filter(req.body.fname),
-            lname: filter(req.body.lname),
-            admin: parseInt(filter(req.body.admin)),
+            lname: filter(req.body.lname)
         }]
         const results = await update(user, 'users')
 
