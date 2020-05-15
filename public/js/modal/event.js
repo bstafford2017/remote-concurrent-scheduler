@@ -69,7 +69,7 @@ $('#create-event').click(event => {
             $('#myModal').modal('hide')
             alert('#alert', 'Select at least one weekday', false)
         }
-        if(!endRecur) {
+        if(!createEvent.endRecur) {
             $('#myModal').modal('hide')
             alert('#alert', 'Select a date to end recurring event', false)
         }
