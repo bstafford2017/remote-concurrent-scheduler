@@ -1,7 +1,8 @@
 const fs = require('fs')
 const path = require('path')
+const dump = require('./dump')
 
-function log(file, content) {
+function log(file, content, noDump) {
     const timeString = `[${new Date().toISOString().slice(0, 10)} @ ${new Date().toLocaleTimeString()}] : `
     const targetPath = path.join('./logs', file)
     // Save to log file
@@ -12,6 +13,11 @@ function log(file, content) {
             fs.mkdirSync('./logs')
         }
         fs.writeFile(targetPath, timeString + content + '\n', (err) => {if(err) throw err})
+    }
+
+    // If dump function has an error and logs it 
+    if(typeof noDump === 'undefined') {
+        dump()
     }
 }
 

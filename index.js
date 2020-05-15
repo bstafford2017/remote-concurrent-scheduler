@@ -52,9 +52,6 @@ app.use('/jquery',
 app.use('/popper', 
     express.static(__dirname + '/node_modules/popper.js/dist/'))
 
-// Middleware for DB backup
-//app.use('/api', dump)
-
 // Routes for API
 app.use('/api/token', require('./routes/api/token'))
 app.use('/api/event', require('./routes/api/event'))

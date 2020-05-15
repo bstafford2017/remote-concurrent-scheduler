@@ -16,7 +16,7 @@ async function dump() {
             compressFile: true
         })
     } catch(err) {
-        log('error-log', err.toString())
+        log('error-log', err.toString(), true)
     }
 }
 
