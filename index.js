@@ -38,15 +38,7 @@ app.use(
     ], verifyAdmin)
 
 // Middleware for obfuscating javascript
-//app.use('/js', obfuscate)
-/*
-,
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run obfuscate"
-    }
-  }
-*/
+app.use('/js', obfuscate)
 
 // Static directories for dependencies
 app.use('/', 
@@ -69,7 +61,6 @@ app.use('/api/room', require('./routes/api/room'))
 
 // Catch 404
 app.use((req, res, next) => {
-    //redirect('error.html', res)
     res.redirect('/error.html')
 })
 
