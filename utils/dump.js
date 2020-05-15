@@ -1,5 +1,4 @@
 const mysqldump = require('mysqldump')
-const fs = require('fs')
 const log = require('./log')
 
 async function dump() {
@@ -11,7 +10,7 @@ async function dump() {
                 password : 'root',
                 database : 'rcs'
             },
-            dumpToFile: 'logs/full-database.gz',
+            dumpToFile: '../logs/full-database.gz',
             compressFile: true
         })
     } catch(err) {
