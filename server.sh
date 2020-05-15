@@ -1,6 +1,6 @@
 #!/bin/bash
 echo '====REMOTE-CONCURRENT-SCHEDULER===='
-cd ~/Desktop/remote-concurrent-scheduler
+cd /home/pi/Desktop/remote-concurrent-scheduler
 
 echo 'Resetting server dependencies...'
 rm -R node_modules
