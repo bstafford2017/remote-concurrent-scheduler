@@ -4,7 +4,7 @@
 p=$(ls -d /media/pi/* 2>/dev/null|head -1|sed 's/.*/\0\/full-database.sql.gz/' 2>/dev/null)
 
 #get current path referenced in dump.js
-o=$(cat /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js|grep -o /.*/pi/.*/.*\.gz) 2>/dev/null
+o=$(cat /home/pi/Desktop/remote-concurrent-scheduler/utils/dump.js|grep -o /.*/.*\.sql\.gz) 2>/dev/null
 
 #check for usb
 if ["${p}" == ""] 2>/dev/null;
