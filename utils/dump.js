@@ -9,7 +9,7 @@ function dump() {
             password : 'root',
             database : 'rcs'
         },
-        dumpToFile: 'logs/full-database.gz',
+        dumpToFile: 'logs/full-database.sql.gz',
         compressFile: true
     }).catch(err => {
         console.error(err)
