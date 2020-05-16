@@ -108,7 +108,7 @@ country=US
 network={
 	ssid="rcs"
 	scan_ssid=1
-	psk="cs455rcs2019"
+	psk="cs493rcs2019"
 	key_mgmt=WPA-PSK
 }
 
