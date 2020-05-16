@@ -59,7 +59,7 @@ will be 'cs455rcs2019'.
 	auth_algs=1
 	ignore_broadcast_ssid=0
 	wpa=2
-	wpa_passphrase=cs455rcs2019
+	wpa_passphrase=cs493rcs2019
 	wpa_key_mgmt=WPA-PSK
 	wpa_pairwise=TKIP
 	rsn_pairwise=CCMP
