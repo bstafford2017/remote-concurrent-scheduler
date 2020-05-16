@@ -1,0 +1,104 @@
+These are the instructions for making the server pi a wifi access point, ie. have it broadcast its own wifi network.
+This should be the last to be installed as it prevents the pi from accessing the internet via wifi.
+
+Run the following commands to get started.
+
+~$ sudo install dnsmasq
+~$ sudo install hostapd
+
+~$ sudo systemctl stop dnsmasq
+~$ sudo systemctl stop hostapd
+====================================================================================
+
+Assign static IP address pool to wireless port by modifying the dhcpcd.conf file.
+
+~$ nano /etc/dhcpcd.conf
+
+#Add the following to the end of the file.
+
+interface wlan0
+	static ip_address=192.168.4.1/24
+	nohook wpa_supplicant
+
+Then restart the dhcpcd service.
+~$ service dhcpcd restart
+====================================================================================
+
+The current dnsmasq.conf has more settings then required so it will be renamed 
+and a new config file will be created.
+
+~$ rename /etc/dnsmasq.conf to /etc/dnsmasq.conf.orig
+
+Enter the following commands to create a file that will provide IP addresses 
+between 192.168.4.2 and 192.168.4.20 w/ lease time of 24hr.
+
+~$ nano /etc/dnsmasq.conf
+
+#Enter the following.
+
+	interface=wlan0
+	dhcp-range=192.168.4.2,192.168.4.20, 255.255.255.0,24h
+
+~$ systemctl start dnsmasq
+====================================================================================
+
+Next setup the wifi broadcast and connection settings. The following will require 
+a 8-64 character password. Note that the wifi will appear as 'rcs' and the password 
+will be 'cs455rcs2019'.
+
+~$ nano /etc/hostapd/hostapd.conf
+
+#Now enter the following.
+
+	interface=wlan0
+	driver=nl80211
+	ssid=rcs
+	hw_mode=g
+	channel=7
+	macaddr_acl=0
+	auth_algs=1
+	ignore_broadcast_ssid=0
+	wpa=2
+	wpa_passphrase=cs455rcs2019
+	wpa_key_mgmt=WPA-PSK
+	wpa_pairwise=TKIP
+	rsn_pairwise=CCMP
+
+**Note that ignore_broadcast_ssid=1 will hide the wifi name, making the network more secure.
+
+Next tell the system where to find config file 
+~$ nano /etc/default/hostapd
+
+# Change the line #DAEMON_CONF... to the following.
+ DAEMON_CONF="/etc/hostapd/hostapd.conf
+====================================================================================
+
+Then enable and start hostapd.
+~$ systemctl unmask hostapd
+~$ systemctl enable hostapd
+~$ systemctl start hostapd
+
+Check their status to make sure they are running/active.
+~$ systemctl status hostapd
+~$ systemctl status dnsmasq
+====================================================================================
+
+Now do the following for proper network traffic routing.
+~$ nano /etc/sysctl.conf
+
+Uncomment this line so that it looks like this.
+~$ net.ipv4.ip_forward=1
+
+Add masquerade for outbound traffic on eht0.
+~$ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+Save iptables rule.
+~$ sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+
+Install the rules on boot.
+~$ ipatbles-restore < /etc/iptables.ipv4.nat
+
+Reboot the pi.
+~$ sudo reboot
+
+With this the server pi will now be broadcasting.

@@ -1,0 +1,80 @@
+This is the documentation for installing mysql-server-5.7 on a raspberry pi. 
+
+========================================================================================================
+Updating the libc6 Dependency
+-----------------------------
+
+In order to install it the libc6 of ver. 2.29+ is required. Enter the following commands to get the
+latest version of libc6.
+
+	sudo nano /etc/apt/sources.list
+
+Add/replace the first line with the following:
+
+	deb [trusted=true] http://raspbian.rasberrypi.org/raspbian/ bullseye main contrib non-free rpi
+
+Press 'ctrl+x' to stop, 'Y' to save, and then [enter] to confirm file name.
+
+
+**During the following commands the pi must be connected to the internet.
+**If asked during a sudo command the default password on a raspberry pi is 'raspberry'.
+
+Get the latest updates from the bullseye distribution's repository
+
+	sudo apt update -y
+	sudo apt-get upgrade -y
+	sudo apt autoremove -y
+
+Check to confirm that libc6 version is at least 2.29 with the following command.
+
+	sudo apt-cache policy libc6
+
+Now you can change the rasbian distribution back to what it was, which should be in the comment section.
+To clarify, you can simply replace the word 'bullseye' with the name from the commented lines below,
+possibly 'jessie', 'stretch', or 'buster'.
+
+	sudo nano /etc/apt/sources.list
+
+===========================================================================================================
+Installing the Core MySQL Packages
+----------------------------------
+
+Move the mysql folder contained inside the remote-concurrent-scheduler directory to the pi's Desktop.
+
+Then in the command shell install the remaining dependencies.
+
+	cd ~/Desktop/mysql
+	sudo apt install libaio1 libaio-dev libhtml-template-perl libevent-core-2.0-5 -y
+
+Next install the packages included in the mysql folder in the following order.
+
+	sudo dpkg -i libmecab2_0.996-6_armhf.deb
+	sudo dpkg -i liblz4-1_0.0~r131-2+b1_armhf.deb
+
+	sudo dpkg -i mysql-common_5.8+1.0.5_all.deb
+	sudo dpkg -i mysql-client-core-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-client-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-server-core-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-server-5.7_5.7.26-1+b1_armhf.deb
+
+Then restart the pi.
+
+	sudo reboot
+
+Lastly have the MySQL upgrade and rebuild the database schemas.
+
+	mysql_upgrade -u root -p --force
+	sudo service mysql restart
+
+At this point MySQL has been installed.
+========================================================================================================
+Setting Up MySQL for the Server Pi
+----------------------------------
+
+These are the few commands that will modify the users and build the system's database.
+
+	mysql -u root -e "alter user 'root'@'localhost' identified by 'root'"
+	mysql -u root -proot -e "create user 'root'@'%' identified by 'root'"
+	mysql -u root -proot -e "grant all privileges on rcs.* to 'root'@'%'"
+
+	mysql -u root -proot -e "source /home/pi/Desktop/remote-concurrent-scheduler/schema.sql"
