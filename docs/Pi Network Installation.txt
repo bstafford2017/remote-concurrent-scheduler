@@ -21,7 +21,7 @@ interface wlan0
 	nohook wpa_supplicant
 
 Then restart the dhcpcd service.
-~$ service dhcpcd restart
+~$ sudo service dhcpcd restart
 ====================================================================================
 
 The current dnsmasq.conf has more settings then required so it will be renamed 
@@ -39,7 +39,7 @@ between 192.168.4.2 and 192.168.4.20 w/ lease time of 24hr.
 	interface=wlan0
 	dhcp-range=192.168.4.2,192.168.4.20, 255.255.255.0,24h
 
-~$ systemctl start dnsmasq
+~$ sudo systemctl start dnsmasq
 ====================================================================================
 
 Next setup the wifi broadcast and connection settings. The following will require 
@@ -74,13 +74,13 @@ Next tell the system where to find config file
 ====================================================================================
 
 Then enable and start hostapd.
-~$ systemctl unmask hostapd
-~$ systemctl enable hostapd
-~$ systemctl start hostapd
+~$ sudo systemctl unmask hostapd
+~$ sudo systemctl enable hostapd
+~$ sudo systemctl start hostapd
 
 Check their status to make sure they are running/active.
-~$ systemctl status hostapd
-~$ systemctl status dnsmasq
+~$ sudo systemctl status hostapd
+~$ sudo systemctl status dnsmasq
 ====================================================================================
 
 Now do the following for proper network traffic routing.
