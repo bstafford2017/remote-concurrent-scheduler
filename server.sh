@@ -18,4 +18,4 @@ echo 'Setting up server...'
 npm run dev --silent
 
 echo 'Openning web app'
-chromium-browser --start-fullscreen http://localhost:5000/live.html&building=Upson%20II&room=125
+sudo -u pi chromium-browser --start-fullscreen http://localhost:5000/live.html&building=Upson%20II&room=125
