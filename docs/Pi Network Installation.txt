@@ -96,7 +96,7 @@ Save iptables rule.
 ~$ sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 
 Install the rules on boot.
-~$ sudo ipatbles-restore < /etc/iptables.ipv4.nat
+~$ sudo iptables-restore < /etc/iptables.ipv4.nat
 
 Reboot the pi.
 ~$ sudo reboot
