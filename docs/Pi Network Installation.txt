@@ -46,7 +46,7 @@ Next setup the wifi broadcast and connection settings. The following will requir
 a 8-64 character password. Note that the wifi will appear as 'rcs' and the password 
 will be 'cs455rcs2019'.
 
-~$ nano /etc/hostapd/hostapd.conf
+~$ sudo nano /etc/hostapd/hostapd.conf
 
 #Now enter the following.
 
