@@ -3,8 +3,8 @@ This should be the last to be installed as it prevents the pi from accessing the
 
 Run the following commands to get started.
 
-~$ sudo install dnsmasq
-~$ sudo install hostapd
+~$ sudo apt install dnsmasq -y
+~$ sudo apt install hostapd -y
 
 ~$ sudo systemctl stop dnsmasq
 ~$ sudo systemctl stop hostapd
