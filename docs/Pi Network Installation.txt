@@ -27,7 +27,7 @@ Then restart the dhcpcd service.
 The current dnsmasq.conf has more settings then required so it will be renamed 
 and a new config file will be created.
 
-~$ rename /etc/dnsmasq.conf to /etc/dnsmasq.conf.orig
+~$ sudo mv /etc/dnsmasq.conf to /etc/dnsmasq.conf.orig
 
 Enter the following commands to create a file that will provide IP addresses 
 between 192.168.4.2 and 192.168.4.20 w/ lease time of 24hr.
