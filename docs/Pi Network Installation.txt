@@ -84,7 +84,7 @@ Check their status to make sure they are running/active.
 ====================================================================================
 
 Now do the following for proper network traffic routing.
-~$ nano /etc/sysctl.conf
+~$ sudo nano /etc/sysctl.conf
 
 Uncomment this line so that it looks like this.
 ~$ net.ipv4.ip_forward=1
