@@ -67,7 +67,7 @@ will be 'cs455rcs2019'.
 **Note that ignore_broadcast_ssid=1 will hide the wifi name, making the network more secure.
 
 Next tell the system where to find config file 
-~$ nano /etc/default/hostapd
+~$ sudo nano /etc/default/hostapd
 
 # Change the line #DAEMON_CONF... to the following.
  DAEMON_CONF="/etc/hostapd/hostapd.conf
