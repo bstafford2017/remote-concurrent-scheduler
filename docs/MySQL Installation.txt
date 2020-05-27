@@ -11,7 +11,7 @@ latest version of libc6.
 
 Add/replace the first line with the following:
 
-	deb [trusted=true] http://raspbian.rasberrypi.org/raspbian/ bullseye main contrib non-free rpi
+	deb [trusted=true] http://raspbian.raspberrypi.org/raspbian/ bullseye main contrib non-free rpi
 
 Press 'ctrl+x' to stop, 'Y' to save, and then [enter] to confirm file name.
 
