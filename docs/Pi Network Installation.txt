@@ -102,3 +102,18 @@ Reboot the pi.
 ~$ sudo reboot
 
 With this the server pi will now be broadcasting.
+======================================================================================
+
+To temporarily change the pi back to normal (have it connect to a network via wifi), 
+comment out your last 3 lines in its /etc/dhcpcd.conf file.
+~$ nano /etc/dhcpcd.conf
+
+	...
+	#interface wlan0
+	#	static ip_address=a92.168.4.1/24
+	#	nohook wpa_supplicant
+
+Then reboot the pi to properly restart the network
+~$ sudo reboot
+
+When finished, uncomment those lines and reboot the pi again.
