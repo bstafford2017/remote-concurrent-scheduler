@@ -44,7 +44,7 @@ between 192.168.4.2 and 192.168.4.20 w/ lease time of 24hr.
 
 Next setup the wifi broadcast and connection settings. The following will require 
 a 8-64 character password. Note that the wifi will appear as 'rcs' and the password 
-will be 'cs455rcs2019'.
+will be 'cs493rcs2019'.
 
 ~$ sudo nano /etc/hostapd/hostapd.conf
 
