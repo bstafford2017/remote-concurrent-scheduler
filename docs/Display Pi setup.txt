@@ -114,3 +114,5 @@ network={
 
 The sudo reboot and the Display Pi should connect to the Server Pi. If this does not work, double check
 the .conf to make sure the changes saved. If not re-enter the lines and reboot the system a second time.
+
+**The line 'scan_ssid=1' is required to connect to a hidden network.
