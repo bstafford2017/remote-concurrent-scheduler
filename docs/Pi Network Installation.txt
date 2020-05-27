@@ -70,7 +70,7 @@ Next tell the system where to find config file
 ~$ sudo nano /etc/default/hostapd
 
 # Change the line #DAEMON_CONF... to the following.
- DAEMON_CONF="/etc/hostapd/hostapd.conf
+ DAEMON_CONF="/etc/hostapd/hostapd.conf"
 ====================================================================================
 
 Then enable and start hostapd.
