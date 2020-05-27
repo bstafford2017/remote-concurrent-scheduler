@@ -29,7 +29,7 @@ Check to confirm that libc6 version is at least 2.29 with the following command.
 
 	sudo apt-cache policy libc6
 
-Now you can change the rasbian distribution back to what it was, which should be in the comment section.
+Now you can change the raspbian distribution back to what it was, which should be in the comment section.
 To clarify, you can simply replace the word 'bullseye' with the name from the commented lines below,
 possibly 'jessie', 'stretch', or 'buster'.
 
