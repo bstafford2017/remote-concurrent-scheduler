@@ -5,6 +5,7 @@ automatic login for the user 'pi'. These setting can be changed using the comman
 sudo raspi-config
 
 If you ever are prompted for a password, the default for a pi is 'raspberry'.
+The FIRST step to take on either Raspberry Pi is to turn off Bluetooth.
 
 For Server Pi's use the following documents in order:
 Server Pi setup.txt
