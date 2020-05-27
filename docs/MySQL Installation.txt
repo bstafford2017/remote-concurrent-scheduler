@@ -49,7 +49,7 @@ Then in the command shell install the remaining dependencies.
 Next install the packages included in the mysql folder in the following order.
 
 	sudo dpkg -i libmecab2_0.996-6_armhf.deb
-	sudo dpkg -i liblz4-1_0.0~r131-2+b1_armhf.deb
+	sudo dpkg -i liblz4-1_0.0_r131-2+b1_armhf.deb
 
 	sudo dpkg -i mysql-common_5.8+1.0.5_all.deb
 	sudo dpkg -i mysql-client-core-5.7_5.7.26-1+b1_armhf.deb
