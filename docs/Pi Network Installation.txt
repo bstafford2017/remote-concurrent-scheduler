@@ -57,7 +57,7 @@ will be 'cs493rcs2019'.
 	channel=7
 	macaddr_acl=0
 	auth_algs=1
-	ignore_broadcast_ssid=0
+	ignore_broadcast_ssid=1
 	wpa=2
 	wpa_passphrase=cs493rcs2019
 	wpa_key_mgmt=WPA-PSK
