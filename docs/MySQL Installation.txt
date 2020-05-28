@@ -61,7 +61,7 @@ Then restart the pi.
 
 Lastly have the MySQL upgrade and rebuild the database schemas.
 
-	mysql_upgrade -u root -p --force
+	sudo mysql_upgrade -u root --force
 	sudo service mysql restart
 
 At this point MySQL has been installed.
