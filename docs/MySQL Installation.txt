@@ -21,8 +21,9 @@ Press 'ctrl+x' to stop, 'Y' to save, and then [enter] to confirm file name.
 
 Get the latest updates from the bullseye distribution's repository
 
-	sudo apt update -y
-	sudo apt-get upgrade -y
+	sudo apt update
+	sudo apt install libc6 -y
+	#sudo apt-get upgrade -y
 	sudo apt autoremove -y
 
 Check to confirm that libc6 version is at least 2.29 with the following command.
@@ -38,7 +39,10 @@ Move the mysql folder contained inside the remote-concurrent-scheduler directory
 Then in the command shell install the remaining dependencies.
 
 	cd ~/Desktop/mysql
-	sudo apt install libaio1 libaio-dev libhtml-template-perl libevent-core-2.1-7 -y
+	sudo apt install libaio1 
+	sudo apt install libaio-dev 
+	#sudo apt install libhtml-template-perl 
+	sudo apt install libevent-core-2.1-7 -y
 
 **libevent-core-2.1-7 may be depreciated and no longer available for raspbian OS releases.
 **If this happens install all but libevent-core, then follow the steps below. Once you get
@@ -46,14 +50,14 @@ Then in the command shell install the remaining dependencies.
 **sudo apt install that version instead.
 Next install the packages included in the mysql folder in the following order.
 
-	sudo dpkg -i libmecab2_0.996-6_armhf.deb
-	sudo dpkg -i liblz4-1_0.0_r131-2+b1_armhf.deb
+	dpkg -i libmecab2_0.996-6_armhf.deb
+	dpkg -i liblz4-1_0.0_r131-2+b1_armhf.deb
 
-	sudo dpkg -i mysql-common_5.8+1.0.5_all.deb
-	sudo dpkg -i mysql-client-core-5.7_5.7.26-1+b1_armhf.deb
-	sudo dpkg -i mysql-client-5.7_5.7.26-1+b1_armhf.deb
-	sudo dpkg -i mysql-server-core-5.7_5.7.26-1+b1_armhf.deb
-	sudo dpkg -i mysql-server-5.7_5.7.26-1+b1_armhf.deb
+	dpkg -i mysql-common_5.8+1.0.5_all.deb
+	dpkg -i mysql-client-core-5.7_5.7.26-1+b1_armhf.deb
+	dpkg -i mysql-client-5.7_5.7.26-1+b1_armhf.deb
+	dpkg -i mysql-server-core-5.7_5.7.26-1+b1_armhf.deb
+	dpkg -i mysql-server-5.7_5.7.26-1+b1_armhf.deb
 
 Then restart the pi.
 
@@ -61,7 +65,7 @@ Then restart the pi.
 
 Lastly have the MySQL upgrade and rebuild the database schemas.
 
-	sudo mysql_upgrade -u root --force
+	mysql_upgrade -u root --force
 	sudo service mysql restart
 
 At this point MySQL has been installed.
