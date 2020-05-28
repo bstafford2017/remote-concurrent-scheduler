@@ -29,12 +29,6 @@ Check to confirm that libc6 version is at least 2.29 with the following command.
 
 	sudo apt-cache policy libc6
 
-Now you can change the raspbian distribution back to what it was, which should be in the comment section.
-To clarify, you can simply replace the word 'bullseye' with the name from the commented lines below,
-possibly 'jessie', 'stretch', or 'buster'.
-
-	sudo nano /etc/apt/sources.list
-
 ===========================================================================================================
 Installing the Core MySQL Packages
 ----------------------------------
@@ -44,8 +38,12 @@ Move the mysql folder contained inside the remote-concurrent-scheduler directory
 Then in the command shell install the remaining dependencies.
 
 	cd ~/Desktop/mysql
-	sudo apt install libaio1 libaio-dev libhtml-template-perl libevent-core-2.0-5 -y
+	sudo apt install libaio1 libaio-dev libhtml-template-perl libevent-core-2.1-7 -y
 
+**libevent-core-2.1-7 may be depreciated and no longer available for raspbian OS releases.
+**If this happens install all but libevent-core, then follow the steps below. Once you get
+**to the mysql-server-5.7... package it should list the latest version in an error message.
+**sudo apt install that version instead.
 Next install the packages included in the mysql folder in the following order.
 
 	sudo dpkg -i libmecab2_0.996-6_armhf.deb
@@ -78,3 +76,11 @@ These are the few commands that will modify the users and build the system's dat
 	mysql -u root -proot -e "grant all privileges on rcs.* to 'root'@'%'"
 
 	mysql -u root -proot -e "source /home/pi/Desktop/remote-concurrent-scheduler/schema.sql"
+
+***
+Now you can change the raspbian distribution back to what it was, which should be in the comment section.
+To clarify, you can simply replace the word 'bullseye' with the name from the commented lines below,
+possibly 'jessie', 'stretch', or 'buster'.
+
+	sudo nano /etc/apt/sources.list
+***
