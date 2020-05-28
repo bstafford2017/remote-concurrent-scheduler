@@ -77,11 +77,13 @@ _____________________________________________________________________
 _____________________________________________________________________
 [Source] - https://github.com/bstafford2017/remote-concurrent-scheduler
 
-First test to make sure the pi has git installed.
+First test to make sure the pi has git and npm are installed.
 git --version
+npm --version
 
-If it is not then run this command.
+If either is not then run the respective commands.
 sudo apt-get install git -y
+sudo apt-get install npm -y
 
 Then move to desktop and download the system repository.
 
