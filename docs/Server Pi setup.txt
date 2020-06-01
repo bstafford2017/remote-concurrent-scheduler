@@ -78,6 +78,10 @@ In the selection menu choose the 4th option for 'Desktop Autologin'.
 
 Lastly make sure to select <Finish> and allow it to reboot.
 
+The last step will be to free up space on the pi by running
+   sudo apt autoremove -y
+   sudo reboot
+
 ____________________________________________________________________
 ================= Running scripts on Boot ==========================
 ____________________________________________________________________
