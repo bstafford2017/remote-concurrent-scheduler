@@ -1,33 +1,46 @@
 This is the documentation for installing mysql-server-5.7 on a raspberry pi. 
-
+(Continued from Server Pi Setup.txt)
 ===========================================================================================================
 Installing the Core MySQL Packages
 ----------------------------------
+In the command shell install the remaining dependencies for mysql 5.7.
 
-Move the mysql folder contained inside the remote-concurrent-scheduler directory to the pi's Desktop.
-
-Then in the command shell install the remaining dependencies.
-
+	cd ~/Desktop
+	mv remote-concurrent-scheduler/mysql/ mysql/
 	cd ~/Desktop/mysql
-	sudo apt install libaio1 
+	sudo nano /etc/apt/sources.list
+	#modify the first line to show:
+		deb http://raspbian.raspberrypi.org/raspbian/ bullseye main contrib non-free rpi
+	
+	sudo apt update
+	sudo apt install libevent-core-2.1-7
+	sudo apt install libstdc++6
+	sudo nano /etc/apt/sources.list
+	#modify the first line to show:
+		deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi
+	
+	sudo apt update
 	sudo apt install libaio-dev 
-	#sudo apt install libhtml-template-perl 
-	sudo apt install libevent-core-2.1-7 -y
+	sudo apt install libhtml-template-perl -y
+	
+**Note: libaio1 is also a required dependency for the mysql-5.7, however it is automatically
+  installed with raspbian buster.
 
 **libevent-core-2.1-7 may be depreciated and no longer available for raspbian OS releases.
-**If this happens install all but libevent-core, then follow the steps below. Once you get
-**to the mysql-server-5.7... package it should list the latest version in an error message.
-**sudo apt install that version instead.
+  If this happens install all but libevent-core, then follow the steps below. Once you get
+  to the mysql-server-5.7... package it should list the latest version in an error message.
+  sudo apt install that version instead.
+
 Next install the packages included in the mysql folder in the following order.
 
-	dpkg -i libmecab2_0.996-6_armhf.deb
-	dpkg -i liblz4-1_0.0_r131-2+b1_armhf.deb
+	sudo dpkg -i libmecab2_0.996-6_armhf.deb
+	sudo dpkg -i liblz4-1_0.0_r131-2+b1_armhf.deb
 
-	dpkg -i mysql-common_5.8+1.0.5_all.deb
-	dpkg -i mysql-client-core-5.7_5.7.26-1+b1_armhf.deb
-	dpkg -i mysql-client-5.7_5.7.26-1+b1_armhf.deb
-	dpkg -i mysql-server-core-5.7_5.7.26-1+b1_armhf.deb
-	dpkg -i mysql-server-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-common_5.8+1.0.5_all.deb
+	sudo dpkg -i mysql-client-core-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-client-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-server-core-5.7_5.7.26-1+b1_armhf.deb
+	sudo dpkg -i mysql-server-5.7_5.7.26-1+b1_armhf.deb
 
 Then restart the pi.
 
@@ -51,10 +64,5 @@ These are the few commands that will modify the users and build the system's dat
 
 	mysql -u root -proot -e "source /home/pi/Desktop/remote-concurrent-scheduler/schema.sql"
 
-***
-Now you can change the raspbian distribution back to what it was, which should be in the comment section.
-To clarify, you can simply replace the word 'bullseye' with the name from the commented lines below,
-possibly 'jessie', 'stretch', or 'buster'.
-
-	sudo nano /etc/apt/sources.list
-***
+********************************************
+  At this point MySQL-5.7 has been set up.
