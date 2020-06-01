@@ -60,9 +60,10 @@ These are the few commands that will modify the users and build the system's dat
 
 	mysql -u root -e "alter user 'root'@'localhost' identified by 'root'"
 	mysql -u root -proot -e "create user 'root'@'%' identified by 'root'"
+	mysql -u root -proot -e "create database rcs"
 	mysql -u root -proot -e "grant all privileges on rcs.* to 'root'@'%'"
 
-	mysql -u root -proot -e "source /home/pi/Desktop/remote-concurrent-scheduler/schema.sql"
+	mysql -u root -proot -e "use rcs; source /home/pi/Desktop/remote-concurrent-scheduler/schema.sql;"
 
 ********************************************
   At this point MySQL-5.7 has been set up.
