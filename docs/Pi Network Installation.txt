@@ -117,3 +117,5 @@ Then reboot the pi to properly restart the network
 ~$ sudo reboot
 
 When finished, uncomment those lines and reboot the pi again.
+
+Note: If you haven't already, make sure bluetooth is disabled.
