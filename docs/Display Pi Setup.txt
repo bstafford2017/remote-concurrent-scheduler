@@ -29,7 +29,7 @@ WantedBy=graphical.target
 **You can download this single file using the following commands.
 
 cd /home/pi
-wget https://raw.githubusercontent.com/bstafford2017/remote-concurrent-scheduler/master/server.sh
+wget https://raw.githubusercontent.com/bstafford2017/remote-concurrent-scheduler/master/browser.sh
 
 ___________________________________________________________________________________
 Description can be any text you want to help you remember what this service does.
