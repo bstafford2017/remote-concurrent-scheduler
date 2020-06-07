@@ -84,6 +84,20 @@ The last step will be to free up space on the pi by running
    sudo apt autoremove -y
    sudo reboot
 
+_____________________________________________________________________
+===================== Download RCS System ===========================
+_____________________________________________________________________
+[Source] - https://github.com/bstafford2017/remote-concurrent-scheduler
+
+At this point the raspberry pi will have both git and npm already installed.
+
+Then move to desktop and download the system repository.
+
+  cd /home/pi/Desktop
+  git clone https://github.com/bstafford2017/remote-concurrent-scheduler.git
+  cd remote-concurrent-scheduler
+  npm install
+
 ____________________________________________________________________
 ================= Running scripts on Boot ==========================
 ____________________________________________________________________
@@ -137,18 +151,4 @@ sudo systemctl enable server.service
 
 #verify that the program works
 sudo reboot
-
-_____________________________________________________________________
-===================== Download RCS System ===========================
-_____________________________________________________________________
-[Source] - https://github.com/bstafford2017/remote-concurrent-scheduler
-
-At this point the raspberry pi will have both git and npm already installed.
-
-Then move to desktop and download the system repository.
-
-  cd /home/pi/Desktop
-  git clone https://github.com/bstafford2017/remote-concurrent-scheduler.git
-  cd remote-concurrent-scheduler
-  npm install
 
