@@ -28,6 +28,8 @@ WantedBy=graphical.target
 **This requires the browser.sh from the github repository.
 **You can download this single file using the following commands.
 
+Save and exit with ctrl + x, followed by y when prompted to save, and then enter.
+
 cd /home/pi
 wget https://raw.githubusercontent.com/bstafford2017/remote-concurrent-scheduler/master/browser.sh
 
@@ -44,8 +46,6 @@ program if the service fails (or exits), and TimeoutSec=infinity means that we d
 ever want to stop trying to execute our program.
 _____________________________________________________________________________________
  
-
-Save and exit with ctrl + x, followed by y when prompted to save, and then enter.
 
 #Make systemd recognize the service. Rebooting also works.
 sudo systemctl daemon-reload
