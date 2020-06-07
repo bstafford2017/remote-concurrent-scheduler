@@ -14,9 +14,9 @@ If your Pi is newer, the file you'll need to change may be:
 sudo nano .config/lxsession/LXDE-pi/autostart
 
 Add these lines:
-@xset s noblank
-@xset s off
-@xset -dpms
+   @xset s noblank
+   @xset s off
+   @xset -dpms
 
 ____________________________________________________________________
 =================== Distribution Upgrade ===========================
@@ -32,6 +32,7 @@ sudo nano /etc/apt/sources.list
 
 sudo apt update
 sudo apt install libc6 -y
+**Choose <yes> at the prompt for restarting services
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In order to install MySQL 5.7 without any security issues the pi will
