@@ -12,7 +12,7 @@ Run the following commands to get started.
 
 Assign static IP address pool to wireless port by modifying the dhcpcd.conf file.
 
-~$ nano /etc/dhcpcd.conf
+~$ sudo nano /etc/dhcpcd.conf
 
 #Add the following to the end of the file.
 
@@ -32,12 +32,12 @@ and a new config file will be created.
 Enter the following commands to create a file that will provide IP addresses 
 between 192.168.4.2 and 192.168.4.20 w/ lease time of 24hr.
 
-~$ nano /etc/dnsmasq.conf
+~$ sudo nano /etc/dnsmasq.conf
 
 #Enter the following.
 
 	interface=wlan0
-	dhcp-range=192.168.4.2,192.168.4.20, 255.255.255.0,24h
+	dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
 
 ~$ sudo systemctl start dnsmasq
 ====================================================================================
