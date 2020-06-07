@@ -25,13 +25,7 @@ TimeoutSec=infinity
 [Install]
 WantedBy=graphical.target
 
-**This requires the browser.sh from the github repository.
-**You can download this single file using the following commands.
-
 Save and exit with ctrl + x, followed by y when prompted to save, and then enter.
-
-cd /home/pi
-wget https://raw.githubusercontent.com/bstafford2017/remote-concurrent-scheduler/master/browser.sh
 
 ___________________________________________________________________________________
 Description can be any text you want to help you remember what this service does.
@@ -46,12 +40,18 @@ program if the service fails (or exits), and TimeoutSec=infinity means that we d
 ever want to stop trying to execute our program.
 _____________________________________________________________________________________
  
+**This requires the browser.sh from the github repository.
+**You can download this single file using the following commands.
+
+cd /home/pi
+wget https://raw.githubusercontent.com/bstafford2017/remote-concurrent-scheduler/master/browser.sh
+
 
 #Make systemd recognize the service. Rebooting also works.
 sudo systemctl daemon-reload
 
 **If the server.service file is modified, this command will have to be re-ran 
-or the system must be rebooted.
+  or the system must be rebooted.
 
 #Tell systemd to start the service on boot.
 sudo systemctl enable server.service
@@ -59,6 +59,7 @@ sudo systemctl enable server.service
 #verify that the program works
 sudo reboot
 
+Once verified Alt+F4 and continue with the following steps.
 ____________________________________________________________________
 ==================== Disable Screen Sleep ==========================
 ____________________________________________________________________
@@ -68,10 +69,10 @@ lxde configuration - Xsession blanking
 This method should prevent your screen saver from coming on in the GUI.
 
 Open up your lxde autostart file:
-sudo nano /etc/xdg/lxsession/LXDE/autostart
-
-If your Pi is newer, the file you'll need to change may be:
 sudo nano .config/lxsession/LXDE-pi/autostart
+
+If your Pi is older, the file you'll need to change may be:
+sudo nano /etc/xdg/lxsession/LXDE/autostart
 
 Add these lines:
 @xset s noblank
