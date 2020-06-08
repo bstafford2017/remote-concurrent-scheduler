@@ -69,7 +69,7 @@ lxde configuration - Xsession blanking
 This method should prevent your screen saver from coming on in the GUI.
 
 Open up your lxde autostart file:
-sudo nano .config/lxsession/LXDE-pi/autostart
+sudo nano ~/.config/lxsession/LXDE-pi/autostart
 
 If your Pi is older, the file you'll need to change may be:
 sudo nano /etc/xdg/lxsession/LXDE/autostart
