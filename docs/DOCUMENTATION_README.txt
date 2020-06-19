@@ -14,7 +14,7 @@ Server Pi(3)-LAN.txt
 
 
 For Display Pi's simply refer to:
-Display Pi Setup.txt
+Display Pi.txt
 _________________________________________________________________________________
 Also included in docs you will see the folder pi-case. This contains the two final
 designs for Server Pi and Display Pi. The is also a standard case that has all
