@@ -8,13 +8,13 @@ If you ever are prompted for a password, the default for a pi is 'raspberry'.
 The FIRST step to take on either Raspberry Pi is to turn off Bluetooth.
 
 For Server Pi's use the following documents in order:
-Server Pi setup.txt
-MySQL Installation.txt
-Pi Network Installation.txt
+Server Pi(1).txt
+Server Pi(2)-MySQL.txt
+Server Pi(3)-LAN.txt
 
 
 For Display Pi's simply refer to:
-Display Pi setup.txt
+Display Pi Setup.txt
 _________________________________________________________________________________
 Also included in docs you will see the folder pi-case. This contains the two final
 designs for Server Pi and Display Pi. The is also a standard case that has all
