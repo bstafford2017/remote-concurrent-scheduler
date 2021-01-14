@@ -33,7 +33,10 @@ sudo nano /etc/apt/sources.list
 
 sudo apt update
 sudo apt install libc6 -y
-**Choose <yes> at the prompt for restarting services
+***At this point libc6 is at version 2.31-6... you may need to run the following line TWICE instead.
+sudo apt install gcc-8-base --fix-missing
+**Choose Y to install
+**Choose <yes> at the prompt for restarting services on the 2nd attempt
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In order to install MySQL 5.7 without any security issues the pi will
