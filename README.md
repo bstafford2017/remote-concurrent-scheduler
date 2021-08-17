@@ -26,5 +26,5 @@
   to schedule events and update your account information as need be.
 
 ## Credits
-  Huge thanks to Nancy Nattum, Kathie Jonke, and Professor John Nordlie for 
+  Huge thanks to Nancy Nattum, Kathie Johnke, and Professor John Nordlie for 
   all the help and encouragement along the way!
