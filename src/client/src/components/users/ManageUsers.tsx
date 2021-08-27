@@ -5,9 +5,10 @@ import CreateUser from './CreateUser'
 import User from './User'
 import { IUser } from '../../types'
 import { loadUsers } from '../../actions/user'
+import { Store } from '../../reducers'
 
 interface IProps {
-  users: []
+  users: Array<IUser>
   loadUsers: Function
 }
 
@@ -50,7 +51,7 @@ const ManageUsers = ({ users, loadUsers }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   users: state.user.users
 })
 

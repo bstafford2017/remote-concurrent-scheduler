@@ -5,6 +5,7 @@ import CreateBuilding from './CreateBuilding'
 import Building from './Building'
 import { IBuilding } from '../../types'
 import { loadBuildings } from '../../actions/building'
+import { Store } from '../../reducers'
 
 interface IProps {
   buildings: Array<IBuilding>
@@ -47,7 +48,7 @@ const ManageBuildings = ({ buildings, loadBuildings }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   buildings: state.building.buildings
 })
 

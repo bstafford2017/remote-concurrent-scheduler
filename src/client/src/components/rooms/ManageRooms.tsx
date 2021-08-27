@@ -16,6 +16,7 @@ import CreateRoom from '../rooms/CreateRoom'
 import Room from '../rooms/Room'
 import { IRoom, IBuilding } from '../../types'
 import { loadRooms } from '../../actions/room'
+import { Store } from '../../reducers'
 
 interface IProps {
   rooms: Array<IRoom>
@@ -72,7 +73,7 @@ const ManageRooms = ({ rooms, loadRooms }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   rooms: state.room.rooms
 })
 

@@ -4,7 +4,11 @@ import {
   UPDATE_BUILDING,
   DELETE_BUILDING
 } from '../actions'
-import { IAction } from '../types'
+import { IAction, IBuilding } from '../types'
+
+export interface BuildingState {
+  buildings: Array<IBuilding>
+}
 
 const initialState = {
   buildings: []

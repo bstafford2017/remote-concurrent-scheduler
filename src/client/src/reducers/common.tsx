@@ -1,6 +1,10 @@
 import { LOADING, LOADED } from '../actions'
 import { IAction } from '../types'
 
+export interface CommonState {
+  isLoading: boolean
+}
+
 const initialState = {
   isLoading: false
 }

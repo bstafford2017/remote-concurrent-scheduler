@@ -7,6 +7,7 @@ import { IEvent } from '../../types'
 import Event from './Event'
 import MenuModal from './MenuModal'
 import { setHeader } from '../../actions/select'
+import { Store } from '../../reducers'
 
 interface IProps {
   events: IEvent[]
@@ -20,6 +21,7 @@ interface IProps {
 
 const Table = ({ events, byMonth, dates, loadEvents, setHeader }: IProps) => {
   const [displayModal, setDisplayModal]: [boolean, Function] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   useEffect(() => {
     const start = dates[0]
@@ -49,6 +51,7 @@ const Table = ({ events, byMonth, dates, loadEvents, setHeader }: IProps) => {
 
   const toggleModal = (e: React.MouseEvent) => {
     setDisplayModal(!displayModal)
+    // setSelectedDate(e.target.)
   }
 
   const monthlyView = (
@@ -104,7 +107,11 @@ const Table = ({ events, byMonth, dates, loadEvents, setHeader }: IProps) => {
 
   return (
     <>
-      <MenuModal display={displayModal} toggle={toggleModal} />
+      <MenuModal
+        display={displayModal}
+        toggle={toggleModal}
+        selectedDate={selectedDate}
+      />
       <div className='calendar-table'>
         {!byMonth && (
           <div className='scale'>
@@ -141,7 +148,7 @@ const Table = ({ events, byMonth, dates, loadEvents, setHeader }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   events: state.event.events,
   building: state.select.building,
   room: state.select.room,

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { IBuilding, IRoom } from '../../types'
 import { loadBuildings } from '../../actions/building'
 import { loadRooms } from '../../actions/room'
+import { Store } from '../../reducers'
 
 interface IProps {
   loadBuildings: Function
@@ -73,7 +74,7 @@ const Filter = ({ loadBuildings, buildings, loadRooms, rooms }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   buildings: state.building.buildings,
   rooms: state.room.rooms
 })

@@ -16,6 +16,7 @@ import {
 import SearchResult from './SearchResult'
 import { IEvent } from '../../types'
 import { searchEvent } from '../../actions/search'
+import { Store } from '../../reducers'
 
 interface IProps {
   results: IEvent[]
@@ -94,7 +95,7 @@ const Search = ({ results, searchEvent }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   results: state.search
 })
 

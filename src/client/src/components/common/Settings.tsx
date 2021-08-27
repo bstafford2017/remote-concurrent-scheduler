@@ -13,6 +13,7 @@ import {
   Button
 } from 'reactstrap'
 import { IUser } from '../../types'
+import { Store } from '../../reducers'
 
 interface IProps {
   loggedUser: IUser
@@ -125,7 +126,7 @@ const Settings = ({ loggedUser }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   loggedUser: state.user.user
 })
 

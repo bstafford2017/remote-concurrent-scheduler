@@ -15,6 +15,7 @@ import { ILogin, IUser } from '../../types'
 import { login, authenticated } from '../../actions/user'
 import { useHistory } from 'react-router-dom'
 import { setErrors, clearErrors } from '../../actions/error'
+import { Store } from '../../reducers'
 
 const initialState: ILogin = {
   username: '',
@@ -23,7 +24,7 @@ const initialState: ILogin = {
 
 interface IProps {
   login: Function
-  errors: string
+  errors: string | null
   setErrors: Function
   authenticated: Function
   tokenUser: IUser
@@ -81,6 +82,7 @@ const Login = ({
 
   return (
     <Col
+      xs={{ size: 12 }}
       sm={{ size: 10, offset: 1 }}
       md={{ size: 6, offset: 3 }}
       lg={{ size: 4, offset: 4 }}
@@ -96,11 +98,11 @@ const Login = ({
             {errors}
           </Alert>
           <Form>
-            <FormGroup>
+            <FormGroup row>
               <Label for='username'>Username</Label>
               <Input type='text' id='username' onChange={onChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup row>
               <Label for='password'>Password</Label>
               <Input type='password' id='password' onChange={onChange} />
             </FormGroup>
@@ -116,7 +118,7 @@ const Login = ({
 
 Login.propTypes = {}
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   errors: state.error.msg,
   tokenUser: state.user.user
 })

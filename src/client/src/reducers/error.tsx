@@ -1,6 +1,10 @@
 import { GET_ERRORS, CLEAR_ERRORS } from '../actions'
 import { IAction } from '../types'
 
+export interface ErrorState {
+  msg: string | null
+}
+
 const initialState = {
   msg: null
 }

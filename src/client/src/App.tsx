@@ -37,6 +37,7 @@ import {
   USERS_URL,
   LIVE_URL
 } from './components/routes'
+import { Store } from './reducers'
 
 interface IProps {
   isAuthenticated: boolean
@@ -81,7 +82,7 @@ const App = ({ isAuthenticated, isAdmin, isLoading }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   isAuthenticated: state.user.isAuthenticated,
   isAdmin: state.user.isAdmin,
   isLoading: state.common.isLoading

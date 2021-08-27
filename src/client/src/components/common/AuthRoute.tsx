@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { LOGIN_URL } from '../routes'
 // import { loadUser } from '../../actions/user'
 import { hasToken } from '../../utils'
+import { Store } from '../../reducers'
 
 interface IProps {
   loadUser: Function
@@ -41,7 +42,7 @@ AuthRoute.propTypes = {
   isLoading: PropTypes.bool.isRequired
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   isLoading: state.common.isLoading,
   isAuthenticated: state.user.isAuthenticated
 })

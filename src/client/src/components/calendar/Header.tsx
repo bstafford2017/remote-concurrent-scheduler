@@ -9,6 +9,7 @@ import {
   nextDates
 } from '../../actions/select'
 import Filter from '../calendar/Filter'
+import { Store } from '../../reducers'
 
 interface IProps {
   selectByMonth: Function
@@ -92,7 +93,7 @@ const Header = ({
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   month: state.select.month,
   byMonth: state.select.byMonth
 })

@@ -8,7 +8,14 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS
 } from '../actions'
-import { IAction } from '../types'
+import { IAction, IUser } from '../types'
+
+export interface UserState {
+  isAuthenticated: boolean
+  isAdmin: boolean
+  user: IUser
+  users: Array<IUser>
+}
 
 const initialState = {
   token: localStorage.getItem('token'),

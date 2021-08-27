@@ -19,6 +19,7 @@ import {
 } from 'reactstrap'
 import { NavLink as RRNavLink } from 'react-router-dom'
 import { logout } from '../../actions/user'
+import { Store } from '../../reducers'
 
 interface IProps {
   isAuthenticated: boolean
@@ -99,7 +100,7 @@ const Navigation = ({ isAuthenticated, isAdmin, logout }: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   isAuthenticated: state.user.isAuthenticated,
   isAdmin: state.user.user?.admin
 })

@@ -15,15 +15,24 @@ import {
   Col
 } from 'reactstrap'
 import { connect } from 'react-redux'
-import { IRoom, IBuilding } from '../../types'
+import { IRoom, IBuilding, IEvent } from '../../types'
+import { Store } from '../../reducers'
 
 interface IProps {
   display: boolean
   toggle: (e: React.MouseEvent) => void
   buildings: Array<IBuilding>
+  events: Array<IEvent>
+  selectedDate: Date
 }
 
-const MenuModal = ({ display, toggle, buildings }: IProps) => {
+const MenuModal = ({
+  display,
+  toggle,
+  buildings,
+  events,
+  selectedDate
+}: IProps) => {
   const [displayCreate, setDisplayCreate] = useState(true)
   const [recur, setRecur] = useState(false)
 
@@ -59,6 +68,132 @@ const MenuModal = ({ display, toggle, buildings }: IProps) => {
     </>
   )
 
+  const create = (
+    <Form>
+      <Row form>
+        <Col md={12}>
+          <FormGroup>
+            <Label for='title'>Title</Label>
+            <Input type='text' id='title' />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label for='building'>Building</Label>
+            <Input type='select' id='building'>
+              {buildings.map((b: IBuilding) => (
+                <option key={b.id}>{b.name}</option>
+              ))}
+            </Input>
+          </FormGroup>
+        </Col>
+        <Col md={5}>
+          <FormGroup>
+            <Label for='room'>Room</Label>
+            <Input type='select' id='room'>
+              {rooms.map((r) => null)}
+            </Input>
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label for='date'>Date</Label>
+            <Input type='date' id='date' />
+          </FormGroup>
+        </Col>
+        <Col md={3}>
+          <FormGroup>
+            <Label for='startTime'>Start Time</Label>
+            <Input type='select' id='startTime'>
+              {dates}
+            </Input>
+          </FormGroup>
+        </Col>
+        <Col md={3}>
+          <FormGroup>
+            <Label for='endTime'>End Time</Label>
+            <Input type='select' id='endTiem'>
+              {dates}
+            </Input>
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row form>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' onClick={toggleRecur} /> Recurrance
+          </Label>
+        </FormGroup>
+      </Row>
+      <Row form>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Sun
+          </Label>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Mon
+          </Label>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Tues
+          </Label>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Wed
+          </Label>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Thurs
+          </Label>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Fri
+          </Label>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type='checkbox' disabled={!recur} /> Sat
+          </Label>
+        </FormGroup>
+        <FormGroup>
+          <Label for='recurEnd'>End Recur Date</Label>
+          <Input type='date' id='recurEnd' disabled={!recur} />
+        </FormGroup>
+      </Row>
+      <Button>Close</Button>
+      <Button>Create Event</Button>
+    </Form>
+  )
+
+  const view = (
+    <>
+      <h3 className='view-header'>
+        Events on {selectedDate.toLocaleDateString()}
+      </h3>
+      <div id='event-list'>
+        {events.length === 0 ? (
+          <h4 style={{ textAlign: 'center' }}>No events available</h4>
+        ) : (
+          events.map((e) => (
+            <div className='view-item'>
+              <div className='view-item-header'>{e.title}</div>
+            </div>
+          ))
+        )}
+      </div>
+    </>
+  )
+
   return (
     <>
       <Modal isOpen={display} toggle={toggle}>
@@ -82,127 +217,15 @@ const MenuModal = ({ display, toggle, buildings }: IProps) => {
             </NavItem>
           </Nav>
         </ModalHeader>
-        <ModalBody>
-          {displayCreate && (
-            <Form>
-              <Row form>
-                <Col md={12}>
-                  <FormGroup>
-                    <Label for='title'>Title</Label>
-                    <Input type='text' id='title' />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row form>
-                <Col md={6}>
-                  <FormGroup>
-                    <Label for='building'>Building</Label>
-                    <Input type='select' id='building'>
-                      {buildings.map((b: IBuilding) => (
-                        <option key={b.id}>{b.name}</option>
-                      ))}
-                    </Input>
-                  </FormGroup>
-                </Col>
-                <Col md={5}>
-                  <FormGroup>
-                    <Label for='room'>Room</Label>
-                    <Input type='select' id='room'>
-                      {rooms.map((r) => null)}
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row form>
-                <Col md={6}>
-                  <FormGroup>
-                    <Label for='date'>Date</Label>
-                    <Input type='date' id='date' />
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <Label for='startTime'>Start Time</Label>
-                    <Input type='select' id='startTime'>
-                      {dates}
-                    </Input>
-                  </FormGroup>
-                </Col>
-                <Col md={3}>
-                  <FormGroup>
-                    <Label for='endTime'>End Time</Label>
-                    <Input type='select' id='endTiem'>
-                      {dates}
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row form>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' onClick={toggleRecur} /> Recurrance
-                  </Label>
-                </FormGroup>
-              </Row>
-              <Row form>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Sun
-                  </Label>
-                </FormGroup>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Mon
-                  </Label>
-                </FormGroup>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Tues
-                  </Label>
-                </FormGroup>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Wed
-                  </Label>
-                </FormGroup>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Thurs
-                  </Label>
-                </FormGroup>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Fri
-                  </Label>
-                </FormGroup>
-                <FormGroup check inline>
-                  <Label check>
-                    <Input type='checkbox' disabled={!recur} /> Sat
-                  </Label>
-                </FormGroup>
-                <FormGroup>
-                  <Label for='recurEnd'>End Recur Date</Label>
-                  <Input type='date' id='recurEnd' disabled={!recur} />
-                </FormGroup>
-              </Row>
-              <Button>Close</Button>
-              <Button>Create Event</Button>
-            </Form>
-          )}
-          {!displayCreate && (
-            <>
-              <h3 className='view-header'>View Modal</h3>
-              <div id='event-list'></div>
-            </>
-          )}
-        </ModalBody>
+        <ModalBody>{displayCreate ? create : view}</ModalBody>
       </Modal>
     </>
   )
 }
 
-const mapStateToProps = (state: any) => ({
-  buildings: state.building.buildings
+const mapStateToProps = (state: Store) => ({
+  buildings: state.building.buildings,
+  events: state.event.events
 })
 
 const mapDispatchToProps = {}

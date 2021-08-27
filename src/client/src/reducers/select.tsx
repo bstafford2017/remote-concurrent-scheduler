@@ -41,6 +41,14 @@ export const generateDates = (state: any, next?: boolean) => {
   }
 }
 
+export interface SelectState {
+  building: string
+  room: string
+  byMonth: boolean
+  month: string
+  listOfDates: Array<Date>
+}
+
 const initialState = {
   building: '',
   room: '',

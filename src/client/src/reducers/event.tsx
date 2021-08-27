@@ -4,7 +4,12 @@ import {
   UPDATE_EVENT,
   DELETE_EVENT
 } from '../actions'
-import { IAction } from '../types'
+import { IAction, IEvent } from '../types'
+
+export interface EventState {
+  events: Array<IEvent>
+  dates: Array<Date>
+}
 
 const initialState = {
   events: [],

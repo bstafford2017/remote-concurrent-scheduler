@@ -1,5 +1,9 @@
 import { LOADED_ROOMS, CREATE_ROOM, UPDATE_ROOM, DELETE_ROOM } from '../actions'
-import { IAction } from '../types'
+import { IAction, IRoom } from '../types'
+
+export interface RoomState {
+  rooms: Array<IRoom>
+}
 
 const initialState = {
   rooms: []
