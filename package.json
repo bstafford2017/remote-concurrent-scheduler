@@ -21,7 +21,7 @@
   "homepage": "https://github.com/bstafford2017/remote-concurrent-scheduler#readme",
   "dependencies": {
     "@apollo/client": "^3.3.6",
-    "@typegoose/typegoose": "^7.6.0",
+    "@typegoose/typegoose": "^8.2.0",
     "@types/express": "^4.17.8",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.10.3",
