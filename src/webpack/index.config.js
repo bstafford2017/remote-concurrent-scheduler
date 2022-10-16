@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, '../../docs'),
-    publicPath: '/rcs'
+    publicPath: '/remote-concurrent-scheduler'
   },
   module: {
     rules: [
