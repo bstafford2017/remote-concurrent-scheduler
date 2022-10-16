@@ -1,0 +1,103 @@
+.month ul li {
+  color: white;
+  font-size: 25px;
+  letter-spacing: 3px;
+  display: inline;
+}
+
+.month ul li:first-child {
+  display: block;
+}
+
+/* Weekdays (Mon-Sun) */
+.header {
+  display: flex;
+}
+
+.header div {
+  flex: 1;
+  color: #666;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #ddd;
+  margin: 0;
+}
+
+/* Handles time scale */
+#blank {
+  flex: 0.22;
+  background-color: #eee;
+  border-right: solid 2px #ddd;
+}
+
+.scale {
+  flex: 0.02;
+  font-size: 14px;
+  background-color: #eee;
+  color: #666;
+  height: 794px;
+  text-align: center;
+  padding-top: 70px;
+
+  /* Center vertically each time increment */
+  display: flex;
+  flex-direction: column;
+}
+
+.scale div {
+  /* Center vertically each time increment */
+  flex: 1;
+}
+
+.calendar-table {
+  display: flex;
+  /* Remove Bootstrap default */
+  margin-bottom: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Change width scaling */
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #f3f3f3;
+}
+
+/* Days (1-31) */
+.table-row {
+  display: flex;
+  /* Remove Bootstrap default */
+  margin: 0;
+}
+
+.table-row .valid,
+.table-row .invalid {
+  flex: 1;
+  height: 150px;
+  padding: 5px;
+}
+
+.valid {
+  color: #666;
+  background-color: #eee;
+  border: solid 1px #ddd;
+}
+
+.valid:hover {
+  border: solid 1px #009a43;
+  cursor: pointer;
+}
+
+.invalid {
+  color: #666;
+  background-color: #ccc;
+  border: solid 1px #ddd;
+}
