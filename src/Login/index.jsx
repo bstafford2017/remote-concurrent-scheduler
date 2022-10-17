@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom'
 import { authStatus, login } from '../Http'
 import Button from '../components/Button'
 import Spinner from '../components/Spinner'
+import { HOME_URL } from '../Routes'
 
 const Login = ({ user, logOutAlert, dismissLogOutAlert }) => {
   const history = useHistory()
@@ -23,7 +24,7 @@ const Login = ({ user, logOutAlert, dismissLogOutAlert }) => {
 
   useEffect(() => {
     if (Object.keys(user).length != 0) {
-      history.push('/home')
+      history.push(HOME_URL)
     }
   }, [user])
 
@@ -62,7 +63,7 @@ const Login = ({ user, logOutAlert, dismissLogOutAlert }) => {
         setErrors('Invalid login.')
       } else {
         setUser(user)
-        history.push('/home')
+        history.push(HOME_URL)
       }
     } catch ({ message }) {
       setIsLoadingLogin(false)
